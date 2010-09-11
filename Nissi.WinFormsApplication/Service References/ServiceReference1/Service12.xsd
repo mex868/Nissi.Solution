@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Nissi.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Nissi.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="NotaFiscalVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element name="_bASCALICMSSUB" nillable="true" type="xs:decimal" />
+          <xs:element name="_baseCalcIcms" nillable="true" type="xs:decimal" />
+          <xs:element name="_cFOP" nillable="true" type="tns:CFOPVO" />
+          <xs:element name="_calcFrete" nillable="true" type="xs:decimal" />
+          <xs:element name="_cliente" nillable="true" type="tns:ClienteVO" />
+          <xs:element name="_codBanco" nillable="true" type="xs:int" />
+          <xs:element name="_codCFOP2" nillable="true" type="xs:int" />
+          <xs:element name="_codNF" nillable="true" type="xs:int" />
+          <xs:element name="_codPed" nillable="true" type="xs:int" />
+          <xs:element name="_dataAlteracao" nillable="true" type="xs:dateTime" />
+          <xs:element name="_dataCadastro" nillable="true" type="xs:dateTime" />
+          <xs:element name="_dataEmissao" nillable="true" type="xs:dateTime" />
+          <xs:element name="_dataEntradaSaida" nillable="true" type="xs:dateTime" />
+          <xs:element name="_duplicatas" nillable="true" type="tns:ArrayOfDuplicataVO" />
+          <xs:element name="_emitente" nillable="true" type="tns:EmitenteVO" />
+          <xs:element name="_especie" nillable="true" type="xs:string" />
+          <xs:element name="_funcionario" nillable="true" type="tns:FuncionarioVO" />
+          <xs:element name="_hora" nillable="true" type="xs:dateTime" />
+          <xs:element name="_iESUBTRI" nillable="true" type="xs:string" />
+          <xs:element name="_icms" nillable="true" type="xs:decimal" />
+          <xs:element name="_indBaixa" nillable="true" type="xs:boolean" />
+          <xs:element name="_indEntradaSaida" nillable="true" type="xs:boolean" />
+          <xs:element name="_indFaturamento" nillable="true" type="xs:boolean" />
+          <xs:element name="_indFinalidadeNF" nillable="true" type="xs:string" />
+          <xs:element name="_indFretePorConta" nillable="true" type="xs:boolean" />
+          <xs:element name="_indMovimento" nillable="true" type="xs:boolean" />
+          <xs:element name="_indTipo" nillable="true" type="xs:boolean" />
+          <xs:element name="_indVendaBeneficiamento" nillable="true" type="xs:boolean" />
+          <xs:element name="_indVendaFaturamento" nillable="true" type="xs:boolean" />
+          <xs:element name="_itens" nillable="true" type="tns:ArrayOfItemNotaFiscalVO" />
+          <xs:element name="_marca" nillable="true" type="xs:string" />
+          <xs:element name="_mensagemNF" nillable="true" type="tns:MensagemNFVO" />
+          <xs:element name="_nF" nillable="true" type="xs:int" />
+          <xs:element name="_naturezaOperacao" nillable="true" type="xs:string" />
+          <xs:element name="_nfe" nillable="true" type="tns:NfeVO" />
+          <xs:element name="_numero" nillable="true" type="xs:string" />
+          <xs:element name="_numeroPedido" nillable="true" type="xs:string" />
+          <xs:element name="_observacao" nillable="true" type="xs:string" />
+          <xs:element name="_observacao2" nillable="true" type="xs:string" />
+          <xs:element name="_outDespAce" nillable="true" type="xs:decimal" />
+          <xs:element name="_pesoBruto" nillable="true" type="xs:decimal" />
+          <xs:element name="_pesoLiquido" nillable="true" type="xs:string" />
+          <xs:element name="_placaVeiculo" nillable="true" type="xs:string" />
+          <xs:element name="_qtdTotal" nillable="true" type="xs:string" />
+          <xs:element name="_qtdVolumes" nillable="true" type="xs:string" />
+          <xs:element name="_refNFe" nillable="true" type="xs:string" />
+          <xs:element name="_semPedido" nillable="true" type="xs:string" />
+          <xs:element name="_serie" nillable="true" type="xs:string" />
+          <xs:element name="_status" type="xs:short" />
+          <xs:element name="_transportadora" nillable="true" type="tns:TransportadoraVO" />
+          <xs:element name="_uF" nillable="true" type="xs:string" />
+          <xs:element name="_usuarioAlt" nillable="true" type="xs:int" />
+          <xs:element name="_usuarioInc" nillable="true" type="xs:int" />
+          <xs:element name="_valTotalDesc" nillable="true" type="xs:decimal" />
+          <xs:element name="_valTotalImcs" nillable="true" type="xs:decimal" />
+          <xs:element name="_valTotalIpi" nillable="true" type="xs:decimal" />
+          <xs:element name="_valTotalNota" nillable="true" type="xs:decimal" />
+          <xs:element name="_valTotalProduto" nillable="true" type="xs:decimal" />
+          <xs:element name="_valorFrete" nillable="true" type="xs:decimal" />
+          <xs:element name="_valorSeguro" nillable="true" type="xs:decimal" />
+          <xs:element name="_vendedor" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="NotaFiscalVO" nillable="true" type="tns:NotaFiscalVO" />
+  <xs:complexType name="NissiBaseVO">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NissiBaseVO" nillable="true" type="tns:NissiBaseVO" />
+  <xs:complexType name="CFOPVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CFOP" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CodCFOP" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="DataAlteracao" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DataCadastro" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="NaturezaOperacao" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UsuarioAlt" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UsuarioInc" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CFOPVO" nillable="true" type="tns:CFOPVO" />
+  <xs:complexType name="ClienteVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PessoaVO">
+        <xs:sequence>
+          <xs:element name="_funcionario" nillable="true" type="tns:FuncionarioVO" />
+          <xs:element name="_transportadoras" nillable="true" type="tns:ArrayOfTransportadoraVO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClienteVO" nillable="true" type="tns:ClienteVO" />
+  <xs:complexType name="PessoaVO">
+    <xs:sequence>
+      <xs:element name="_ativo" nillable="true" type="xs:boolean" />
+      <xs:element name="_cNPJ" nillable="true" type="xs:string" />
+      <xs:element name="_celular" nillable="true" type="xs:string" />
+      <xs:element name="_cep" nillable="true" type="tns:CEPVO" />
+      <xs:element name="_codPessoa" nillable="true" type="xs:int" />
+      <xs:element name="_codRef" nillable="true" type="xs:string" />
+      <xs:element name="_complemento" nillable="true" type="xs:string" />
+      <xs:element name="_contato" nillable="true" type="xs:string" />
+      <xs:element name="_dataAlteracao" nillable="true" type="xs:dateTime" />
+      <xs:element name="_dataCadastro" nillable="true" type="xs:dateTime" />
+      <xs:element name="_email" nillable="true" type="xs:string" />
+      <xs:element name="_fax" nillable="true" type="xs:string" />
+      <xs:element name="_indPessoaTipo" nillable="true" type="xs:boolean" />
+      <xs:element name="_inscricaoEstadual" nillable="true" type="xs:string" />
+      <xs:element name="_nomeFantasia" nillable="true" type="xs:string" />
+      <xs:element name="_numero" nillable="true" type="xs:string" />
+      <xs:element name="_observacao" nillable="true" type="xs:string" />
+      <xs:element name="_razaoSocial" nillable="true" type="xs:string" />
+      <xs:element name="_site" nillable="true" type="xs:string" />
+      <xs:element name="_telefone" nillable="true" type="xs:string" />
+      <xs:element name="_tipo" nillable="true" type="xs:string" />
+      <xs:element name="_usuarioAlt" nillable="true" type="xs:int" />
+      <xs:element name="_usuarioInc" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PessoaVO" nillable="true" type="tns:PessoaVO" />
+  <xs:complexType name="CEPVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Bairro" nillable="true" type="tns:BairroVO" />
+          <xs:element minOccurs="0" name="Cidade" nillable="true" type="tns:CidadeVO" />
+          <xs:element minOccurs="0" name="CodCep" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NomEndereco" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TipoLogradouro" nillable="true" type="tns:TipoLogradouroVO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CEPVO" nillable="true" type="tns:CEPVO" />
+  <xs:complexType name="BairroVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodBairro" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="NomBairro" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BairroVO" nillable="true" type="tns:BairroVO" />
+  <xs:complexType name="CidadeVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodCidade" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="CodIBGE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NomCidade" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UF" nillable="true" type="tns:UnidadeFederacaoVO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CidadeVO" nillable="true" type="tns:CidadeVO" />
+  <xs:complexType name="UnidadeFederacaoVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodUF" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NomUF" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnidadeFederacaoVO" nillable="true" type="tns:UnidadeFederacaoVO" />
+  <xs:complexType name="TipoLogradouroVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodNomTipoLogradouro" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="NomTipoLogradouro" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TipoLogradouroVO" nillable="true" type="tns:TipoLogradouroVO" />
+  <xs:complexType name="FuncionarioVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PessoaVO">
+        <xs:sequence>
+          <xs:element name="_acessaSistema" type="xs:boolean" />
+          <xs:element name="_banco" nillable="true" type="tns:BancoVO" />
+          <xs:element name="_cargo" nillable="true" type="tns:CargoVO" />
+          <xs:element name="_codFuncionario" nillable="true" type="xs:int" />
+          <xs:element name="_dataAdmissao" nillable="true" type="xs:dateTime" />
+          <xs:element name="_dataDemissao" nillable="true" type="xs:dateTime" />
+          <xs:element name="_departamento" nillable="true" type="tns:DepartamentoVO" />
+          <xs:element name="_login" nillable="true" type="xs:string" />
+          <xs:element name="_modoDesenvolvedor" type="xs:boolean" />
+          <xs:element name="_perfils" nillable="true" type="tns:ArrayOfPerfilAcessoVO" />
+          <xs:element name="_senha" nillable="true" type="xs:base64Binary" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FuncionarioVO" nillable="true" type="tns:FuncionarioVO" />
+  <xs:complexType name="BancoVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Agencia" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Banco" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CodBanco" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="CodCompensacao" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="NumConta" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TipoConta" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BancoVO" nillable="true" type="tns:BancoVO" />
+  <xs:complexType name="CargoVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodCargo" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="DataAlteracao" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataCadastro" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsuarioAlt" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UsuarioInc" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CargoVO" nillable="true" type="tns:CargoVO" />
+  <xs:complexType name="DepartamentoVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodDepartamento" nillable="true" type="xs:short" />
+          <xs:element minOccurs="0" name="DataAlteracao" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DataCadastro" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UsuarioAlt" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UsuarioInc" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DepartamentoVO" nillable="true" type="tns:DepartamentoVO" />
+  <xs:complexType name="ArrayOfPerfilAcessoVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerfilAcessoVO" nillable="true" type="tns:PerfilAcessoVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerfilAcessoVO" nillable="true" type="tns:ArrayOfPerfilAcessoVO" />
+  <xs:complexType name="PerfilAcessoVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Ativo" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CodPerfilAcesso" nillable="true" type="xs:short" />
+          <xs:element minOccurs="0" name="DataAlteracao" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DataCadastro" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DescPerfilAcesso" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NomPerfilAcesso" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UsuarioAlt" type="xs:int" />
+          <xs:element minOccurs="0" name="UsuarioInc" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PerfilAcessoVO" nillable="true" type="tns:PerfilAcessoVO" />
+  <xs:complexType name="ArrayOfTransportadoraVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TransportadoraVO" nillable="true" type="tns:TransportadoraVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTransportadoraVO" nillable="true" type="tns:ArrayOfTransportadoraVO" />
+  <xs:complexType name="TransportadoraVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PessoaVO">
+        <xs:sequence>
+          <xs:element name="_codTransportadora" nillable="true" type="xs:int" />
+          <xs:element name="_custo" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TransportadoraVO" nillable="true" type="tns:TransportadoraVO" />
+  <xs:complexType name="ArrayOfDuplicataVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DuplicataVO" nillable="true" type="tns:DuplicataVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDuplicataVO" nillable="true" type="tns:ArrayOfDuplicataVO" />
+  <xs:complexType name="DuplicataVO">
+    <xs:sequence>
+      <xs:element name="_codDuplicata" nillable="true" type="xs:int" />
+      <xs:element name="_dias" nillable="true" type="xs:int" />
+      <xs:element name="_numero" nillable="true" type="xs:string" />
+      <xs:element name="_valor" nillable="true" type="xs:decimal" />
+      <xs:element name="_vencimento" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DuplicataVO" nillable="true" type="tns:DuplicataVO" />
+  <xs:complexType name="EmitenteVO">
+    <xs:sequence>
+      <xs:element name="_cep" nillable="true" type="tns:CEPVO" />
+      <xs:element name="_cnae" nillable="true" type="xs:string" />
+      <xs:element name="_cnpj" nillable="true" type="xs:string" />
+      <xs:element name="_codEmitente" nillable="true" type="xs:int" />
+      <xs:element name="_complemento" nillable="true" type="xs:string" />
+      <xs:element name="_image" nillable="true" type="xs:base64Binary" />
+      <xs:element name="_inscricaoEstadual" nillable="true" type="xs:string" />
+      <xs:element name="_inscricaoEstadualSub" nillable="true" type="xs:string" />
+      <xs:element name="_inscricaoMunicipal" nillable="true" type="xs:string" />
+      <xs:element name="_logradouro" nillable="true" type="xs:string" />
+      <xs:element name="_nomeFantasia" nillable="true" type="xs:string" />
+      <xs:element name="_numero" nillable="true" type="xs:int" />
+      <xs:element name="_pais" nillable="true" type="xs:string" />
+      <xs:element name="_razaoSocial" nillable="true" type="xs:string" />
+      <xs:element name="_telefone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmitenteVO" nillable="true" type="tns:EmitenteVO" />
+  <xs:complexType name="ArrayOfItemNotaFiscalVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemNotaFiscalVO" nillable="true" type="tns:ItemNotaFiscalVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfItemNotaFiscalVO" nillable="true" type="tns:ArrayOfItemNotaFiscalVO" />
+  <xs:complexType name="ItemNotaFiscalVO">
+    <xs:sequence>
+      <xs:element name="_baseICMS" nillable="true" type="xs:decimal" />
+      <xs:element name="_cOM" nillable="true" type="xs:decimal" />
+      <xs:element name="_calcICMSSobIpi" nillable="true" type="xs:boolean" />
+      <xs:element name="_codItemNotaFiscal" nillable="true" type="xs:int" />
+      <xs:element name="_codNF" nillable="true" type="xs:int" />
+      <xs:element name="_codPedido" nillable="true" type="xs:int" />
+      <xs:element name="_codigo" nillable="true" type="xs:string" />
+      <xs:element name="_dataAlteracao" nillable="true" type="xs:dateTime" />
+      <xs:element name="_dataCadastro" nillable="true" type="xs:dateTime" />
+      <xs:element name="_desconto" nillable="true" type="xs:decimal" />
+      <xs:element name="_iCMS" nillable="true" type="xs:decimal" />
+      <xs:element name="_iPI" nillable="true" type="xs:decimal" />
+      <xs:element name="_icms" nillable="true" type="tns:ICMSVO" />
+      <xs:element name="_indMov" nillable="true" type="xs:boolean" />
+      <xs:element name="_observacao" nillable="true" type="xs:string" />
+      <xs:element name="_produto" nillable="true" type="tns:ProdutoVO" />
+      <xs:element name="_qtd" nillable="true" type="xs:decimal" />
+      <xs:element name="_rED" nillable="true" type="xs:decimal" />
+      <xs:element name="_unidade" nillable="true" type="xs:string" />
+      <xs:element name="_usuarioAlt" nillable="true" type="xs:int" />
+      <xs:element name="_usuarioInc" nillable="true" type="xs:int" />
+      <xs:element name="_valor" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemNotaFiscalVO" nillable="true" type="tns:ItemNotaFiscalVO" />
+  <xs:complexType name="ICMSVO">
+    <xs:sequence>
+      <xs:element name="aliquota" nillable="true" type="xs:decimal" />
+      <xs:element name="aliquotaST" nillable="true" type="xs:decimal" />
+      <xs:element name="codBaseCalculo" nillable="true" type="xs:int" />
+      <xs:element name="codBaseCalculoICMSST" nillable="true" type="xs:int" />
+      <xs:element name="codOrigem" nillable="true" type="xs:int" />
+      <xs:element name="codProduto" nillable="true" type="xs:int" />
+      <xs:element name="codTipoTributacao" nillable="true" type="xs:string" />
+      <xs:element name="percentualMargemST" nillable="true" type="xs:decimal" />
+      <xs:element name="percentualReducao" nillable="true" type="xs:decimal" />
+      <xs:element name="percentualReducaoST" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ICMSVO" nillable="true" type="tns:ICMSVO" />
+  <xs:complexType name="ProdutoVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element name="_codProduto" nillable="true" type="xs:int" />
+          <xs:element name="_codigo" nillable="true" type="xs:string" />
+          <xs:element name="_descricao" nillable="true" type="xs:string" />
+          <xs:element name="_icms" nillable="true" type="tns:ArrayOfICMSVO" />
+          <xs:element name="_ncm" nillable="true" type="xs:string" />
+          <xs:element name="_unidade" nillable="true" type="tns:UnidadeVO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProdutoVO" nillable="true" type="tns:ProdutoVO" />
+  <xs:complexType name="ArrayOfICMSVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ICMSVO" nillable="true" type="tns:ICMSVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfICMSVO" nillable="true" type="tns:ArrayOfICMSVO" />
+  <xs:complexType name="UnidadeVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodUnidade" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Descricao" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TipoUnidade" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnidadeVO" nillable="true" type="tns:UnidadeVO" />
+  <xs:complexType name="MensagemNFVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodMensagemNF" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="DataAlteracao" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DataCadastro" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Descricao" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UsuarioAlt" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UsuarioInc" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MensagemNFVO" nillable="true" type="tns:MensagemNFVO" />
+  <xs:complexType name="NfeVO">
+    <xs:sequence>
+      <xs:element name="_cRT" nillable="true" type="xs:string" />
+      <xs:element name="_chaveNFE" nillable="true" type="xs:string" />
+      <xs:element name="_codNF" nillable="true" type="xs:int" />
+      <xs:element name="_codNFe" nillable="true" type="xs:int" />
+      <xs:element name="_codNumLote" nillable="true" type="xs:int" />
+      <xs:element name="_dataAlteracao" nillable="true" type="xs:dateTime" />
+      <xs:element name="_dataCadastro" nillable="true" type="xs:dateTime" />
+      <xs:element name="_indAmbiente" nillable="true" type="xs:boolean" />
+      <xs:element name="_indImpressao" nillable="true" type="xs:boolean" />
+      <xs:element name="_indStatus" nillable="true" type="xs:string" />
+      <xs:element name="_indTipoEmissao" nillable="true" type="xs:string" />
+      <xs:element name="_numProtocolo" nillable="true" type="xs:int" />
+      <xs:element name="_numRecibo" nillable="true" type="xs:string" />
+      <xs:element name="_usuarioAlt" nillable="true" type="xs:int" />
+      <xs:element name="_usuarioInc" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NfeVO" nillable="true" type="tns:NfeVO" />
+  <xs:complexType name="ArrayOfNotaFiscalVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NotaFiscalVO" nillable="true" type="tns:NotaFiscalVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNotaFiscalVO" nillable="true" type="tns:ArrayOfNotaFiscalVO" />
+  <xs:complexType name="ArrayOfParametroVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ParametroVO" nillable="true" type="tns:ParametroVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParametroVO" nillable="true" type="tns:ArrayOfParametroVO" />
+  <xs:complexType name="ParametroVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ambiente" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AtivaTrace" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNPJ" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DanfeInfo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DanfeLogo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataPacket" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataPacketFormSeg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeCancelamento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeConsultaProtocolo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeInutilizacao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeRecepcao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeRetRecepcao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NFeStatusServico" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoSerieCertificado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PathPrincipal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Schemas" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDanfe" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalizarCfop" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UnidadeFederada" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VerProc" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ParametroVO" nillable="true" type="tns:ParametroVO" />
+  <xs:complexType name="ArrayOfNfeVO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NfeVO" nillable="true" type="tns:NfeVO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNfeVO" nillable="true" type="tns:ArrayOfNfeVO" />
+  <xs:complexType name="LoteVO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NissiBaseVO">
+        <xs:sequence>
+          <xs:element name="_codNumLote" nillable="true" type="xs:int" />
+          <xs:element name="_codUsuario" nillable="true" type="xs:int" />
+          <xs:element name="_dataCadastro" nillable="true" type="xs:dateTime" />
+          <xs:element name="_nfe" nillable="true" type="tns:ArrayOfNfeVO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LoteVO" nillable="true" type="tns:LoteVO" />
+</xs:schema>

@@ -1,0 +1,1 @@
+<%@ WebService Language="C#" CodeBehind="~/App_Code/CascadingWS.cs" Class="Nissi.WebPresentation.App_Code.CascadingWS" %>

@@ -1,0 +1,122 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="Nissi.WebPresentation.MasterPage" %>
+<%@ Register Assembly="skmMenu" Namespace="skmMenu" TagPrefix="cc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+
+    <title>[Nissi] Módulo de Nota Fiscal</title>
+        <link href="App_Themes/Theme1/Model1.css" rel="stylesheet" type="text/css" />
+        <link href="App_Themes/css/south-street/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />
+        <script language="javascript" type="text/javascript">
+
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 26/10/2009
+        //Objetivo.....: Funções para exibição da div "Aguarde" durante o AsyncPostBack dos controles Asp.NET Ajax
+        //--------------------------------------------------------------------------------
+            function WaitAsyncPostBack(bool) {
+                       if (bool )
+                        OpenWaitModal();
+                       else
+                       CloseWaitModal();
+                    }
+                    function OpenWaitModal() {
+                        var modalPopupBehavior = $find('mpeAguardeID');
+
+                        if (modalPopupBehavior != null) {
+                            document.all('ctl00_PNL').style.zIndex = 1000000;
+                            modalPopupBehavior.show();
+                        }
+                    }
+                    function CloseWaitModal() {
+                        var modalPopupBehavior = $find('mpeAguardeID');
+
+                        if (modalPopupBehavior != null)
+                            modalPopupBehavior.hide();
+                    }
+
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 26/10/2009
+        //Objetivo.....: Esconder Cabeçalho e Menu
+        //--------------------------------------------------------------------------------
+        function InibirTopo()
+        {
+            document.getElementById('trTopo').style.display = 'none';
+            document.getElementById('trMenu').style.display = 'none';
+        }
+
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 26/10/2009
+        //Objetivo.....: Esconder Menu
+        //--------------------------------------------------------------------------------
+        function InibirMenu()
+        {
+            document.getElementById('trMenu').style.display = 'none';
+        }
+        //ImageUrl = "~/Imagens/NissiLogo.png"       
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server" enctype="multipart/form-data">
+        <asp:ScriptManager ID="scmPrincipal" EnableScriptGlobalization="true" 
+                    AllowCustomErrorsRedirect= "false" 
+                    EnableScriptLocalization="true" runat="server" 
+                    OnAsyncPostBackError="scmPrincipal_AsyncPostBackError">
+            <Scripts>
+                <asp:ScriptReference Path="JScripts/Common.js" ScriptMode="Release" />
+            </Scripts>
+        </asp:ScriptManager>
+        <ajaxtoolkit:modalpopupextender ID="mpeAguarde" PopupControlID="PNL" 
+            TargetControlID="hndTargetControlAguarde"  BehaviorID="mpeAguardeID" runat="server" BackgroundCssClass="modalBackground" />
+        <asp:Panel ID="PNL" runat="server" style="display:none; width:100px; background-color:White; border-width:2px; border-color:Black; border-style:solid; padding:20px;">
+                <div style="text-align:center;">
+                    <asp:Image ID="imgAguarde" ImageUrl="~/Imagens/ajax-loader.gif" runat="server" /> 
+                    <br />
+                    <asp:Label ID="lblAguarde" runat="server" Text="Aguarde..."></asp:Label>
+                </div>
+        </asp:Panel>
+        <asp:HiddenField ID="hndTargetControlAguarde" runat="server" />
+        <table border="0" style="width:100%; height:100%;" cellpadding="0" cellspacing="0">
+            <tr id="trTopo">
+                <td style="background-color:#CCFF33;height:60px;text-align:left;">
+                    <table border="0" style="width:100%;height:100%;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="width:15%; text-align:left;" valign="middle">
+                                <asp:Image ID="imgNissi" ImageUrl = "~/Imagens/NissiLogo.png" runat="server"  Height="48px" />
+                            </td>
+                            <td style="color: #800080; width:70%; text-align:center; font-size:13px;" valign="middle">
+                                <b>
+                                Nissi Metalúrgica
+                                    <br />
+                                    Módulo Nota Fiscal
+                                </b>
+                            </td>
+                            <td style="width:15%; text-align:center;" valign="middle">
+                                <asp:Label ID="lblUsuario" runat="server">
+                                    Usuário Conexão
+                                </asp:Label>
+                                <br />
+                                <asp:Label ID="lblData" runat="server">
+                                    Data
+                                </asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr id="trMenu" class="Menu">
+                <td style="height:20px; width:100%; border-style:outset; border-width:1px;" valign="middle">
+                    <cc1:Menu ID="menuPrincipal" runat="server">
+                    </cc1:Menu>
+                </td>
+            </tr>
+            <tr id="trPagina">
+                <td>
+                    <asp:contentplaceholder id="cphPrincipal" runat="server">
+                    </asp:contentplaceholder>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

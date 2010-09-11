@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\Macware_Projeto\Nissi\Nissi.Solution\Nissi.WcfService\Precompiled" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Web.config" publishTime="07/15/2010 08:59:37" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="05/11/2007 21:09:00" />
+    <file relUrl="bin/Nissi.WcfService.dll" publishTime="07/15/2010 08:57:17" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.xml" publishTime="05/22/2007 09:50:38" />
+    <file relUrl="bin/Nissi.Util.pdb" publishTime="07/15/2010 08:57:04" />
+    <file relUrl="Service1.svc" publishTime="06/21/2010 19:00:42" />
+    <file relUrl="bin/Microsoft.Practices.ObjectBuilder.dll" publishTime="05/22/2007 09:47:38" />
+    <file relUrl="bin/Nissi.Model.pdb" publishTime="07/15/2010 08:57:02" />
+    <file relUrl="bin/Nissi.DataAccess.dll" publishTime="07/15/2010 08:57:14" />
+    <file relUrl="bin/Nissi.DataAccess.pdb" publishTime="07/15/2010 08:57:13" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.xml" publishTime="05/22/2007 09:50:46" />
+    <file relUrl="bin/Nissi.WcfService.pdb" publishTime="07/15/2010 08:57:17" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.dll" publishTime="05/11/2007 21:08:00" />
+    <file relUrl="bin/Nissi.Business.pdb" publishTime="07/15/2010 08:57:16" />
+    <file relUrl="bin/Nissi.Business.dll" publishTime="07/15/2010 08:57:16" />
+    <file relUrl="bin/Nissi.Model.dll" publishTime="07/15/2010 08:57:03" />
+    <file relUrl="bin/ICSharpCode.SharpZipLib.dll" publishTime="09/18/2009 15:40:40" />
+    <file relUrl="bin/Nissi.Util.dll" publishTime="07/15/2010 08:57:04" />
+  </publishProfile>
+</publishData>

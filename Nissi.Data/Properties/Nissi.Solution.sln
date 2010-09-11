@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.Business", "Nissi.Business\Nissi.Business.csproj", "{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.DataAccess", "Nissi.Data\Nissi.DataAccess.csproj", "{075736A2-1C20-4710-8034-D446D19FAE2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.Model", "Nissi.Model\Nissi.Model.csproj", "{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.Teste", "Nissi.Teste\Nissi.Teste.csproj", "{62E18E69-1D7D-47E3-AD6E-1CF8F6E0E417}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{847B2083-30A6-47EB-938C-BB274DAB377B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.Util", "Nissi.Util\Nissi.Util.csproj", "{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nissi.WebPresentation", "Nissi.WebPresentation\Nissi.WebPresentation.csproj", "{56E38F95-1A87-41C4-BA2C-6EDF9E100407}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 7
+		SccProjectName0 = Nissi.Solution
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Jalindi\u0020Igloo
+		CanCheckoutShared = true
+		SccProjectUniqueName1 = Nissi.Business\\Nissi.Business.csproj
+		SccLocalPath1 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection1 = Nissi.Business\\
+		SccProjectUniqueName2 = Nissi.Data\\Nissi.DataAccess.csproj
+		SccLocalPath2 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection2 = Nissi.Data\\
+		SccProjectUniqueName3 = Nissi.Model\\Nissi.Model.csproj
+		SccLocalPath3 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection3 = Nissi.Model\\
+		SccProjectUniqueName4 = Nissi.Teste\\Nissi.Teste.csproj
+		SccLocalPath4 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection4 = Nissi.Teste\\
+		SccProjectUniqueName5 = Nissi.Util\\Nissi.Util.csproj
+		SccLocalPath5 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection5 = Nissi.Util\\
+		SccProjectUniqueName6 = Nissi.WebPresentation\\Nissi.WebPresentation.csproj
+		SccLocalPath6 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection6 = Nissi.WebPresentation\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075736A2-1C20-4710-8034-D446D19FAE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075736A2-1C20-4710-8034-D446D19FAE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075736A2-1C20-4710-8034-D446D19FAE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075736A2-1C20-4710-8034-D446D19FAE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E18E69-1D7D-47E3-AD6E-1CF8F6E0E417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E18E69-1D7D-47E3-AD6E-1CF8F6E0E417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E18E69-1D7D-47E3-AD6E-1CF8F6E0E417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E38F95-1A87-41C4-BA2C-6EDF9E100407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E38F95-1A87-41C4-BA2C-6EDF9E100407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E38F95-1A87-41C4-BA2C-6EDF9E100407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E38F95-1A87-41C4-BA2C-6EDF9E100407}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

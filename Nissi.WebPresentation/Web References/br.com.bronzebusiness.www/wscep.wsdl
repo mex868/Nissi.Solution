@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="cep">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strcep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cepResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cepResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DataSet" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="s:schema" />
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="cepSoapIn">
+    <wsdl:part name="parameters" element="tns:cep" />
+  </wsdl:message>
+  <wsdl:message name="cepSoapOut">
+    <wsdl:part name="parameters" element="tns:cepResponse" />
+  </wsdl:message>
+  <wsdl:message name="cepHttpGetIn">
+    <wsdl:part name="strcep" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="cepHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="cepHttpPostIn">
+    <wsdl:part name="strcep" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="cepHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:portType name="wscepSoap">
+    <wsdl:operation name="cep">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">retorna o endereço completo Copyright © 2002 Bronze &amp; Business</wsdl:documentation>
+      <wsdl:input message="tns:cepSoapIn" />
+      <wsdl:output message="tns:cepSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wscepHttpGet">
+    <wsdl:operation name="cep">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">retorna o endereço completo Copyright © 2002 Bronze &amp; Business</wsdl:documentation>
+      <wsdl:input message="tns:cepHttpGetIn" />
+      <wsdl:output message="tns:cepHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wscepHttpPost">
+    <wsdl:operation name="cep">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">retorna o endereço completo Copyright © 2002 Bronze &amp; Business</wsdl:documentation>
+      <wsdl:input message="tns:cepHttpPostIn" />
+      <wsdl:output message="tns:cepHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wscepSoap" type="tns:wscepSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cep">
+      <soap:operation soapAction="http://tempuri.org/cep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wscepSoap12" type="tns:wscepSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="cep">
+      <soap12:operation soapAction="http://tempuri.org/cep" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wscepHttpGet" type="tns:wscepHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="cep">
+      <http:operation location="/cep" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wscepHttpPost" type="tns:wscepHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="cep">
+      <http:operation location="/cep" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wscep">
+    <wsdl:port name="wscepSoap" binding="tns:wscepSoap">
+      <soap:address location="http://www.bronzebusiness.com.br/webservices/wscep.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wscepSoap12" binding="tns:wscepSoap12">
+      <soap12:address location="http://www.bronzebusiness.com.br/webservices/wscep.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wscepHttpGet" binding="tns:wscepHttpGet">
+      <http:address location="http://www.bronzebusiness.com.br/webservices/wscep.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wscepHttpPost" binding="tns:wscepHttpPost">
+      <http:address location="http://www.bronzebusiness.com.br/webservices/wscep.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,173 @@
+﻿body
+{
+	color: #000;
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	cursor: default;
+	margin: 0;
+	background-repeat   : no-repeat;
+	background-position: center center;
+}
+
+input, select {
+	color           : #000;
+	font-family     : Verdana, sans-serif;
+	font-size       : 11px;
+	border          : solid 1px black;
+	margin-left: 17px;
+	margin-right: 2px;
+}
+
+.asterisco {
+	color: #f00;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: Verdana, sans-serif;
+}
+
+.headerGrid
+{
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#77AA1F);
+	background-color: #596F80;
+	color: #FDFFF3;
+	font-size: 11px;
+	text-align: left;
+	font-weight: bold;
+}
+.botao
+{
+	background-image: url('../../Imagens/menufundo.jpg');
+	background-color: #00CC99;
+	border: 2px outset #008080;
+	cursor: hand;
+	color: #fffffe;
+	font-family: Verdana,sans-serif;
+	font-weight: 700;
+	font-size: 9px;
+	letter-spacing: 2px;
+	text-decoration: none;
+	text-align: center;
+	}
+
+.modalBackground 
+{
+	background-color:Gray;
+	filter          :alpha(opacity=70);
+	opacity         :0.7;
+}
+
+.FundoLinha1 {
+	background-color: #f3f3f3;
+}
+
+.FundoLinha2 {
+	background-color: #e3e3e3;
+}
+
+.Menu
+{
+	background-image:url("../../Imagens/menufundo.jpg");
+	color           :White;
+	font-weight     : bold;
+	font-size       : 11px;
+	font-family     :Verdana;
+	width           : 140px;
+	cursor          : hand;
+}
+
+.MenuItemSelecionado
+{
+	background-image:url("../../Imagens/cinza.jpg");
+	color:#ffffff;
+	font-weight: bold;
+	font-size: 11px;
+	font-family:Verdana;
+	width: 140px;
+	cursor: hand;
+}
+.fundoTabela
+{
+	BORDER-RIGHT: black 1px solid; 
+	BORDER-TOP: black 1px solid; 
+	MARGIN-LEFT: auto; 
+	BORDER-LEFT: black 1px solid; 
+	WIDTH: 95%; 
+	MARGIN-RIGHT: auto; 
+	BORDER-BOTTOM: black 1px solid; 
+	TEXT-ALIGN: left;
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF);
+}
+.alinhamento
+{
+	border: 1px solid #000000;
+	margin-right: auto;
+	margin-left: auto;
+	}
+.tabelaSelecionada {
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #fff;
+	background-color: #000080;
+	text-align: center;
+}
+.fundoTitulo
+{
+	color            : #BA622B;
+	font-weight      : bold;
+	background-color : #FEE8BA;
+	text-align       : left;
+}
+
+.titulo {
+	font-family: Verdana;
+	font-size: 13px;
+	font-weight: bold;
+	color: #000;
+	letter-spacing: 1px;
+}
+.formNovo {
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	color: #000 ;
+	letter-spacing: 1px;
+}
+.hiperlink {
+	color: #000;
+	cursor: hand;
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.DesligarTextBox
+{
+    background-color: #CCCCCC;
+    color:Black;
+}
+
+.BotaoImg
+{
+	cursor: hand;
+}
+
+.TabPanelImportar .ajax__tab_header{background:url("images/tabs/tab-line.gif") repeat-x bottom;}
+.TabPanelImportar .ajax__tab_outer{background:url("images/tabs/tab-right.gif") no-repeat right;}
+.TabPanelImportar .ajax__tab_inner{background:url("images/tabs/tab-left.gif") no-repeat;}
+.TabPanelImportar .ajax__tab_tab{background:url("images/tabs/tab.gif") repeat-x;}
+.TabPanelImportar .ajax__tab_hover .ajax__tab_outer{background:url("images/tabs/tab-hover-right.gif") no-repeat right;}
+.TabPanelImportar .ajax__tab_hover .ajax__tab_inner{background:url("images/tabs/tab-hover-left.gif") no-repeat;}
+.TabPanelImportar .ajax__tab_hover .ajax__tab_tab{background:url("images/tabs/tab-hover.gif") repeat-x;}
+.TabPanelImportar .ajax__tab_active .ajax__tab_outer{background:url("images/tabs/tab-active-right.gif") no-repeat right;}
+.TabPanelImportar .ajax__tab_active .ajax__tab_inner{background:url("images/tabs/tab-active-left.gif") no-repeat;}
+.TabPanelImportar .ajax__tab_active .ajax__tab_tab{background:url("images/tabs/tab-active.gif") repeat-x;}
+.TabPanelImportar .ajax__tab_header{font-family:verdana,tahoma,helvetica; font-size:11px;}
+.TabPanelImportar .ajax__tab_outer{height:29px;}
+.TabPanelImportar .ajax__tab_inner{padding-left:2px;}
+.TabPanelImportar .ajax__tab_tab{padding:8px 32px; margin:0;}
+.TabPanelImportar .ajax__tab_body{font-family:verdana,tahoma,helvetica; font-size:10pt; border: 1px solid #999999; border-top:0; padding-top:10px; padding:0; filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF)}
+.AutoComplete_ListItemHighlightText {font-weight:bold;}
+.noBorder
+{
+    border:0px;
+}

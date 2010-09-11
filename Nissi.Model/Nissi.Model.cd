@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Nissi.Model.BairroVO">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAABAAAABAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BairroVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.CargoVO">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAQAAEAAAUAAQQIAAAAAAAAIgAAAAAIgEAAAA=</HashCode>
+      <FileName>CargoVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.CEPVO">
+    <Position X="16.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAACIAAAAAAAAAABgAAAACAAAAAAAFAAAAAACACAAA=</HashCode>
+      <FileName>CEPVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.CidadeVO">
+    <Position X="18.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAACAAIgAAAAAAABAAAgAAAAAAAAAA=</HashCode>
+      <FileName>CidadeVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.ClienteVO">
+    <Position X="8.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAQBBAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClienteVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.DepartamentoVO">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQIAAAAAAFAAAUAAAQIAAAAAAAAIgAAAAAIgEAAAA=</HashCode>
+      <FileName>DepartamentoVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.FornecedorVO">
+    <Position X="13" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAABAQAABAFAAAIgAAQAAgAAAAAIAAAIBIAAAA=</HashCode>
+      <FileName>FornecedorVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.FuncionarioVO">
+    <Position X="15" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AmAAABIACAQQAAAVAgBIAACAACwAAAABABAwIAMACAA=</HashCode>
+      <FileName>FuncionarioVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.NissiBaseVO">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Nissi.Model.NissiBaseVO.enTipoExecucaoProc" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NissiBaseVO.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NissiBaseVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.PessoaVO">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEARAAAgCgUmCIUAAEQIBBAEAkJAIiAIIAIIhgBCgU=</HashCode>
+      <FileName>PessoaVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.TransportadoraVO">
+    <Position X="5.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAwACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>TransportadoraVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nissi.Model.UnidadeFederacaoVO">
+    <Position X="20.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAACAA=</HashCode>
+      <FileName>UnidadeFederacaoVO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
