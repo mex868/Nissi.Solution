@@ -138,6 +138,15 @@ public partial class CadastraCliente {
     protected global::System.Web.UI.WebControls.TextBox txtRazao;
     
     /// <summary>
+    /// AutoCompleteExtender1 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
+    
+    /// <summary>
     /// cvRazao control.
     /// </summary>
     /// <remarks>
@@ -156,6 +165,15 @@ public partial class CadastraCliente {
     protected global::System.Web.UI.WebControls.TextBox txtNomeFantasiaPesq;
     
     /// <summary>
+    /// AutoCompleteExtender2 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender2;
+    
+    /// <summary>
     /// btnVoltar control.
     /// </summary>
     /// <remarks>
@@ -172,6 +190,15 @@ public partial class CadastraCliente {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.UpdatePanel updBotoes;
+    
+    /// <summary>
+    /// hdfIdRazaoSocial control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocial;
     
     /// <summary>
     /// btnPesquisar control.

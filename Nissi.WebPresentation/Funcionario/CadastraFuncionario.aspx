@@ -4,6 +4,7 @@
 <%@ Register src="../UserControl/Endereco.ascx" tagname="Endereco" tagprefix="uc1" %>
 <%@ Register src="../UserControl/Banco.ascx" tagname="Banco" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
+<link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
         <script type="text/javascript" language="javascript">
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -106,6 +107,14 @@
                 $get('tdLogin').style.display = 'none';
             }
         }
+        //--------------------------------------------------------------------------------
+        //Criado por...:Alexandre Maximiano - 04/11/2010
+        //Objetivo.....: Efetua consulta com o retorno do autocomplete
+        //--------------------------------------------------------------------------------
+        function CarregarValores(source, eventArgs) {
+            $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+            $get('<%=btnPesquisar.ClientID%>').click();
+        }
     </script>
     <table style="margin-left: auto; width: 95%; margin-right: auto;">
         <tr>
@@ -144,6 +153,10 @@
                 </div>
                 <div id="divNome" style="display:none">
                     <asp:TextBox ID="txtNome" runat="server" Height="16px" Width="667px"></asp:TextBox>
+                            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNome"
+                            MinimumPrefixLength="1" ServiceMethod="GetFuncionario" CompletionInterval="800" EnableCaching="true"
+                            CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
+                            </ajaxToolkit:AutoCompleteExtender>
                 </div>
             </td>
         </tr>
@@ -158,6 +171,7 @@
                         <td colspan="2" style="text-align:right">
                             <asp:UpdatePanel ID="updBotoes" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
+                                    <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
                                     <asp:Button ID="btnPesquisar" runat="server" CssClass="botao" 
                                         Text="Pesquisar" Width="100px" ValidationGroup="ValidarCPF" OnClientClick="return ValidaCampos()"  OnClick="btnPesquisar_Click" />
                                         &nbsp;<asp:Button ID="btnIncluir" runat="server" CssClass="botao" Width="100px"
@@ -184,9 +198,9 @@
                     onpageindexchanging="grdListaResultado_PageIndexChanging" 
                     onrowcommand="grdListaResultado_RowCommand" 
                     onrowdatabound="grdListaResultado_RowDataBound" 
-                    onselectedindexchanged="grdListaResultado_SelectedIndexChanged">
+                    onselectedindexchanged="grdListaResultado_SelectedIndexChanged" Width="95%">
                     <Columns>
-                        <asp:TemplateField HeaderText="Ações">
+                        <asp:TemplateField HeaderText="A&ccedil&otildees">
                             <itemtemplate>
                                 <asp:ImageButton  ID="imgEditar" runat="server" ImageUrl="~/Imagens/editar.png" />
                                 <asp:ImageButton ID="imgReiniciar" runat="server" ImageUrl="~/Imagens/undo.png" />

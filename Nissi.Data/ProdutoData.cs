@@ -59,7 +59,36 @@ namespace Nissi.DataAccess
                 CloseCommand();
             }
         }
-
+        public List<ProdutoVO> ListaProdutoPorNome(ProdutoVO identProdutoVo)
+        {
+            OpenCommand("pr_selecionar_produto");
+            try
+            {
+                if (!string.IsNullOrEmpty(identProdutoVo.Descricao))
+                    AddInParameter("@Descricao", DbType.String, identProdutoVo.Descricao);
+                List<ProdutoVO> lstProdutoVo = new List<ProdutoVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        ProdutoVO produtoVo = new ProdutoVO();
+                        produtoVo.CodProduto = GetReaderValue<int>(dr, "CodProduto");
+                        produtoVo.Descricao = GetReaderValue<string>(dr, "Descricao");
+                        lstProdutoVo.Add(produtoVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstProdutoVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
         /// <summary>
         /// Método para listar os icms dos produtos
         /// </summary>

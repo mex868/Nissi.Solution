@@ -154,17 +154,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\nfec#-vr.6.01\nfe-source\nfedll\nfec\nfec.csproj">
-      <Project>{51FF88F7-ADE2-4842-BF57-ED1D80A54CC8}</Project>
-      <Name>nfec</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Nissi.Business\Nissi.Business.csproj">
       <Project>{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}</Project>
       <Name>Nissi.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Nissi.Data\Nissi.DataAccess.csproj">
+      <Project>{075736A2-1C20-4710-8034-D446D19FAE2F}</Project>
+      <Name>Nissi.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nissi.Model\Nissi.Model.csproj">
       <Project>{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}</Project>
       <Name>Nissi.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nissi.Util\Nissi.Util.csproj">
+      <Project>{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}</Project>
+      <Name>Nissi.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -75,7 +75,14 @@ namespace Nissi.Business
             return novaLista;
         }
 
-
+        public List<TransportadoraVO> ListaTransportadoraPorNome(TransportadoraVO identTransportadoraVO)
+        {
+            return new TransportadoraData().ListaTransportadoraPorNome(identTransportadoraVO);
+        }
+        public List<TransportadoraVO> ListaTransportadoraNomeFantasia(TransportadoraVO identTransportadoraVO)
+        {
+            return new TransportadoraData().ListaTransportadoraNomeFantasia(identTransportadoraVO);
+        }
         /// <summary>
         /// Geração de string XML com lista de Transportadoras associadas
         /// </summary>

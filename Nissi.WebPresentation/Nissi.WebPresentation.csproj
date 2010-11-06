@@ -33,7 +33,7 @@
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -123,6 +123,8 @@
     <Content Include="Classificado\CadastraClassificado.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Imagens\ajax-loader.gif" />
+    <Content Include="Imagens\btn-SolicitacaoDocumentos.gif" />
+    <Content Include="Imagens\Calendar_scheduleHS.png" />
     <Content Include="Imagens\cinza.jpg" />
     <Content Include="Imagens\editar.png" />
     <Content Include="Imagens\exclusao_Canc.png" />
@@ -141,6 +143,7 @@
     <Content Include="Parametro\NFEParametros.aspx" />
     <Content Include="Produto\ListaProduto.aspx" />
     <Content Include="Relatorios\EmitirRelatorios.aspx" />
+    <Content Include="Relatorios\NotaFiscal\RelNotaFiscalPrincipal.aspx" />
     <Content Include="Relatorios\relCliente.aspx" />
     <Content Include="Relatorios\RelDuplicata.aspx" />
     <Content Include="Relatorios\relFornecedor.aspx" />
@@ -169,7 +172,9 @@
     <Compile Include="App_Code\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Content Include="App_Code\CascadingWS.cs" />
+    <Compile Include="App_Code\CascadingWS.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CFOP\CadastraCFOP.aspx.cs">
       <DependentUpon>CadastraCFOP.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -184,12 +189,10 @@
     <Compile Include="Classificado\CadastraClassificado.aspx.designer.cs">
       <DependentUpon>CadastraClassificado.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DataSet.cs">
-      <DependentUpon>DataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="DataSet.Designer.cs">
-      <DependentUpon>DataSet.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Emitente\CadastraEmitente.aspx.cs">
       <DependentUpon>CadastraEmitente.aspx</DependentUpon>
@@ -225,6 +228,15 @@
     </Compile>
     <Compile Include="MensagenNF\CadastraMensagemNF.aspx.designer.cs">
       <DependentUpon>CadastraMensagemNF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="nfe-procNFe.cs">
+      <DependentUpon>nfe-procNFe.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="nfe-procNFe.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>nfe-procNFe.xsd</DependentUpon>
     </Compile>
     <Compile Include="NFe\CadastraItemNFe.aspx.cs">
       <DependentUpon>CadastraItemNFe.aspx</DependentUpon>
@@ -363,6 +375,13 @@
     <Compile Include="Relatorios\EmitirRelatorios.aspx.designer.cs">
       <DependentUpon>EmitirRelatorios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\NotaFiscal\RelNotaFiscalPrincipal.aspx.cs">
+      <DependentUpon>RelNotaFiscalPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Relatorios\NotaFiscal\RelNotaFiscalPrincipal.aspx.designer.cs">
+      <DependentUpon>RelNotaFiscalPrincipal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\relCliente.aspx.cs">
       <DependentUpon>relCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -479,10 +498,24 @@
     <None Include="DataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
     </None>
     <None Include="DataSet.xss">
       <DependentUpon>DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="nfe-procNFe.xsc">
+      <DependentUpon>nfe-procNFe.xsd</DependentUpon>
+    </None>
+    <None Include="nfe-procNFe.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>nfe-procNFe.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="nfe-procNFe.xss">
+      <DependentUpon>nfe-procNFe.xsd</DependentUpon>
+    </None>
+    <None Include="nfe-procNFe_app1.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web References\WSCEPServices1\cep.disco" />
   </ItemGroup>
@@ -534,6 +567,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Relatorios\NotaFiscal\RelPrincipal.rdlc" />
     <EmbeddedResource Include="Relatorios\relClientes.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

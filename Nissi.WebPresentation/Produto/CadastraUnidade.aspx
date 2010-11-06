@@ -91,7 +91,7 @@
                                 CssClass="alinhamento" 
                                 onpageindexchanging="grdListaResultado_PageIndexChanging" 
                                 onrowcommand="grdListaResultado_RowCommand" 
-                                onrowdatabound="grdListaResultado_RowDataBound">
+                                onrowdatabound="grdListaResultado_RowDataBound" Width="95%">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Ações">
                                         <itemtemplate>

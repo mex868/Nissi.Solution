@@ -1,11 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPage.Master" CodeBehind="EmitirRelatorios.aspx.cs" Inherits="Nissi.WebPresentation.Relatorios.EmitirRelatorios" %>
 <asp:Content runat="server" ContentPlaceHolderID="cphPrincipal">
-    <link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
+<link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
 <script type="text/javascript" src="../JScripts/Common.js"></script>
 <script type="text/javascript">
     function ValidaDataPesquisa(src, args) {
         var CustonValidator;
         //Custon Validator
+
         CustonValidator = $get('<%=ctvValidaDataPesquisa.ClientID %>');
         if ($get('<%=ddlRelatorio.ClientID %>').value == "2") {
             var strDataInicial;
@@ -66,28 +67,21 @@
             }
         }*/
     }
-    function AbrirRelatorio(dtIni, dtFim,strRegiao,strtipo, codIni,codFim) {
 
-        if (strtipo == 1) {
-            window.open('<%=caminhoAplicacao%>' + "Relatorios/relCliente.aspx?Inicio=" + dtIni + "&Fim=" + dtFim + "&UF=" + strRegiao + "&codIni=" + codIni + "&codFim=" + codFim, '_blank', 'width=890,height=650,toolbar=no,menubar=no,scrollbars=yes');
+    function AbrirRelatorio(urlRelatorio, arrParametros) {
+        var parametros = "";
+        var _arr = arrParametros.split('|');
+
+        for (var i = 0; i < _arr.length; i++) {
+            var _arr1 = _arr[i].split('!');
+            if (parametros != "")
+                parametros += "&";
+            parametros += _arr1[0] + "=" + _arr1[1];
+
         }
-        else if (strtipo == 2) {
-            window.open('<%=caminhoAplicacao%>' + "Relatorios/relNotaFiscal.aspx?Inicio=" + dtIni + "&Fim=" + dtFim + "&UF=" + strRegiao, '_blank', 'width=890,height=650,toolbar=no,menubar=no,scrollbars=yes');
-        }
-        else if (strtipo == 3) {
-            window.open('<%=caminhoAplicacao%>' + "Relatorios/relFornecedor.aspx?Inicio=" + dtIni + "&Fim=" + dtFim + "&UF=" + strRegiao, '_blank', 'width=890,height=650,toolbar=no,menubar=no,scrollbars=yes');
-        }
-        else if (strtipo == 4) {
-            window.open('<%=caminhoAplicacao%>' + "Relatorios/relTransportadora.aspx?Inicio=" + dtIni + "&Fim=" + dtFim + "&UF=" + strRegiao, '_blank', 'width=890,height=650,toolbar=no,menubar=no,scrollbars =yes');
-        }
-        else if (strtipo == 5) {
-            window.open('<%=caminhoAplicacao%>' + "Relatorios/relProduto.aspx?Inicio=" + dtIni + "&Fim=" + dtFim + "&Codigo=" + strRegiao+"&Descricao="+codIni, '_blank', 'width=890,height=650,toolbar=no,menubar=no,scrollbars =yes');
-        }
+        window.open(urlRelatorio + parametros, "_blank", "top=0,left=0,width=800,height=600,scrollbars=yes,resizable=no,toolbar=no");
     }
-    function limparProduto() 
-    {
-           $get('<%=txtCodigoDescricao.ClientID%>').value = "";
-    }
+
     function Limpar(tvar) {
         if (tvar == "1") {
             $get('<%=txtInicio.ClientID%>').value = "";
@@ -99,6 +93,36 @@
         }
     }
 
+    function Habilita(tvar) {
+
+        if (tvar == 1) {
+            document.getElementById("ctl00_cphPrincipal_tdDescricao").style.display = "block";
+            document.getElementById("ctl00_cphPrincipal_tdCodigo").style.display = "none";
+            document.getElementById("<%=txtCodigo.ClientID %>").value = "";
+        }
+        else if(tvar == 2) {
+            document.getElementById("ctl00_cphPrincipal_tdCodigo").style.display = "block";
+            document.getElementById("ctl00_cphPrincipal_tdDescricao").style.display = "none";
+            document.getElementById("<%=txtDescricao.ClientID %>").value = "";
+        }
+
+
+    }
+
+    //--------------------------------------------------------------------------------
+    //Criado por...:Alexandre Maximiano - 05/11/2010
+    //Objetivo.....: Efetua consulta com o retorno do autocomplete
+    //--------------------------------------------------------------------------------
+    function CarregarValoresIni(source, eventArgs) {
+        $get('<%=hdfIdRazaoSocialIni.ClientID%>').value = eventArgs.get_value();
+    }
+    //--------------------------------------------------------------------------------
+    //Criado por...:Alexandre Maximiano - 05/11/2010
+    //Objetivo.....: Efetua consulta com o retorno do autocomplete
+    //--------------------------------------------------------------------------------
+    function CarregarValoresFim(source, eventArgs) {
+        $get('<%=hdfIdRazaoSocialFim.ClientID%>').value = eventArgs.get_value();
+    }
  
 </script>
 <table style="margin-left: auto; width:95%; margin-right: auto;">
@@ -128,7 +152,6 @@
                                     <asp:ListItem Text="Nota Fiscal" Value="2"></asp:ListItem>
                                     <asp:ListItem Text="Fornecedor" Value="3"></asp:ListItem>
                                     <asp:ListItem Text="Transportadora" Value="4"></asp:ListItem>
-                                    <asp:ListItem Text="Produto" Value="5"></asp:ListItem>
                                 </asp:DropDownList>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -137,6 +160,7 @@
                 <tr>
                     <td valign="bottom">
                         <asp:Button runat="server" ID="btnGerar" ValidationGroup="ValidaDados" CssClass="botao" Text="Gerar" onclick="btnGerar_Click" />
+                        <asp:HiddenField ID="hdfCFOP" runat="server" />
                     </td>
                 </tr>
              </table>
@@ -150,6 +174,8 @@
                            <asp:AsyncPostBackTrigger ControlID="ddlRelatorio" />
                         </Triggers>
                             <ContentTemplate>
+                            <asp:HiddenField ID="hdfIdRazaoSocialIni" runat="server" />
+                            <asp:HiddenField ID="hdfIdRazaoSocialFim" runat="server" />
                                    <table id="tableVarios" runat="server" style="display:none" >
                                         <tr>
                                             <td runat="server" id="tbRadioCliente">
@@ -160,15 +186,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="padding-left:20px" id="tdRazao1" runat="server">Razão Social Inicial</td>
-                                            <td style="padding-left:20px" id="tdRazao2" runat="server">Razão Social Inicial</td>
+                                            <td style="padding-left:20px" id="tdRazao1" runat="server">Razão Social De</td>
+                                            <td style="padding-left:20px" id="tdRazao2" runat="server">Razão Social Até</td>
                                             <td style="padding-left:20px" id="tdCod1" runat="server">Código Inicial </td>
                                             <td style="padding-left:20px" id="tdCod2" runat="server">Código Final</td>
                                             <td style="padding-left:20px" id="tdUf1" runat="server">UF </td>
                                         </tr>
                                         <tr>
-                                            <td id="tdRazao3" runat="server"><asp:TextBox runat="server" ID="txtInicio"></asp:TextBox></td>
-                                            <td id="tdRazao4" runat="server"><asp:TextBox runat="server" ID="txtFim"></asp:TextBox></td>
+                                            <td id="tdRazao3" runat="server"><asp:TextBox runat="server" ID="txtInicio"></asp:TextBox>
+                                                <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtInicio"
+                                                MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800" EnableCaching="true"
+                                                CompletionSetCount="10" OnClientItemSelected="CarregarValoresIni" OnClientPopulated="ClientPopulated">
+                                                </ajaxToolkit:AutoCompleteExtender>
+                                            </td>
+                                            <td id="tdRazao4" runat="server"><asp:TextBox runat="server" ID="txtFim"></asp:TextBox>
+                                                <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtFim"
+                                                MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800" EnableCaching="true"
+                                                CompletionSetCount="10" OnClientItemSelected="CarregarValoresFim" OnClientPopulated="ClientPopulated">
+                                                </ajaxToolkit:AutoCompleteExtender>
+                                            </td>
                                             <td id="tdCod3" runat="server"><asp:TextBox runat="server" ID="txtCodIni"></asp:TextBox></td>
                                             <td id="tdCod4" runat="server"><asp:TextBox runat="server" ID="txtCodFim"></asp:TextBox></td>
                                             <td id="tdUf2" runat="server"><asp:DropDownList runat="server" ID="ddlUF"></asp:DropDownList></td>
@@ -178,7 +214,7 @@
                                     <table id="tableNotaFiscal" runat="server" style="display:none" >
                                         <tr>
                                             <td class="tituloCampo" style="height: 12px">Período</td>
-                                            <td class="tituloCampo" style="height: 12px">Região</td>
+                                            <td class="tituloCampo" style="height: 12px;padding-left:18px">Região</td>
                                         </tr>
                                         <tr>
                                             <td class="tituloCampo" style="height: 23px">
@@ -206,46 +242,63 @@
                                                     ValidationGroup="ValidaDados" ErrorMessage="Datas inválidas" CssClass="asterisco">*</asp:CustomValidator>
                                                 &nbsp;
                                             </td>
-                                            <td><asp:DropDownList runat="server" ID="ddlRegiao"></asp:DropDownList> </td>
+                                            <td class="tituloCampo" style="height: 12px"><asp:DropDownList runat="server" ID="ddlRegiao"></asp:DropDownList></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                              
+                                            </td>
                                         </tr>
                                     </table>
-                                    <table id="tableProduto" runat="server" style="display:none" >
-                                        <tr>
-                                            <td class="tituloCampo" style="height: 12px"><asp:RadioButton ID="rbCodigo" 
-                                                    runat="server" onclick="LimparProduto()"  Text="Código" Checked="True" GroupName="opcao" />
-                                                <asp:RadioButton ID="rbDescricao" onclick="LimparProduto()"  runat="server" Text="Descrição" 
-                                                    GroupName="opcao"/></td>
-                                            <td class="tituloCampo" style="height: 12px">Período</td>
-                                        </tr>
-                                        <tr>
-                                            <td><asp:TextBox ID="txtCodigoDescricao" runat="server"></asp:TextBox></td>
-                                            <td class="tituloCampo" style="height: 23px">
-                                                <b>De:</b>
-                                                <asp:TextBox ID="tbxDataIni" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
+                                    <table  style="display:none;text-align:left" runat="server" id="tableProduto" >
+                                    <tr>
+                                        <td class="tituloCampo" style="height: 23px">
+                                                <b>Período  De:</b>
+                                                <asp:TextBox ID="tbxPeriodoIni" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
                                                     MaxLength="10" runat="server" CssClass="formNovo"  Width="75px"></asp:TextBox>
-                                                <img alt="" id="imgDataIni" align="absmiddle"  style="cursor: pointer;" src="../Imagens/Calendar_scheduleHS.png" />
-                                                <asp:RegularExpressionValidator ControlToValidate="tbxDataIni" Text="*" CssClass="asterisco"
+                                                <img alt="" id="imgPeriodoIni" align="absmiddle"  style="cursor: pointer;" src="../Imagens/Calendar_scheduleHS.png" />
+                                                <asp:RegularExpressionValidator ControlToValidate="tbxPeriodoIni" Text="*" CssClass="asterisco"
                                                     ID="RegularExpressionValidator3" ErrorMessage="Período inicial Inválido." ValidationGroup="ValidaDados"
                                                     runat="server" ValidationExpression="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></asp:RegularExpressionValidator>
-                                                <ajaxToolkit:CalendarExtender Format="dd/MM/yyyy" ID="CalendarExtender1" PopupButtonID="imgDataIni"
-                                                    runat="server" TargetControlID="tbxDataIni" Animated="true">
+                                                <ajaxToolkit:CalendarExtender Format="dd/MM/yyyy" ID="CalendarExtender1" PopupButtonID="imgPeriodoIni"
+                                                    runat="server" TargetControlID="tbxPeriodoIni" Animated="true">
                                                 </ajaxToolkit:CalendarExtender>
+
                                                 &nbsp; &nbsp; <b>Até:</b>
-                                                <asp:TextBox ID="tbxDataFim" runat="server" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
+                                                <asp:TextBox ID="tbxFinal" runat="server" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
                                                     MaxLength="10" CssClass="formNovo" TabIndex="12" Width="75px"></asp:TextBox>
-                                                <img alt="" align="absmiddle" id="imgDataFim" style="cursor: pointer" src="../Imagens/Calendar_scheduleHS.png" />
-                                                <asp:RegularExpressionValidator ControlToValidate="tbxDataFim" Text="*" CssClass="asterisco"
+                                                <img alt="" align="absmiddle" id="imgFinal" style="cursor: pointer" src="../Imagens/Calendar_scheduleHS.png" />
+                                                <asp:RegularExpressionValidator ControlToValidate="tbxFinal" Text="*" CssClass="asterisco"
                                                     ID="RegularExpressionValidator4" ErrorMessage="Período final Inválido." ValidationGroup="ValidaDados"
                                                     runat="server" ValidationExpression="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></asp:RegularExpressionValidator>
-                                                <ajaxToolkit:CalendarExtender Format="dd/MM/yyyy" ID="CalendarExtender2" PopupButtonID="imgDataFim"
-                                                    runat="server" TargetControlID="tbxDataFim" Animated="true">
+                                                <ajaxToolkit:CalendarExtender Format="dd/MM/yyyy" ID="CalendarExtender2" PopupButtonID="imgFinal"
+                                                    runat="server" TargetControlID="tbxFinal" Animated="true">
                                                 </ajaxToolkit:CalendarExtender>
                                                 <asp:CustomValidator ID="CustomValidator1" runat="server" ClientValidationFunction="ValidaDataPesquisa"
                                                     ValidationGroup="ValidaDados" ErrorMessage="Datas inválidas" CssClass="asterisco">*</asp:CustomValidator>
                                                 &nbsp;
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td runat="server">
+                                                <asp:RadioButton runat="server" onclick="Habilita(1)"  ID="rbtDescricao" Checked="true" GroupName="tipoProduto" 
+                                                    Text="Descrição" />
+                                                 <asp:RadioButton onclick="Habilita(2)"  AutoPostBack="true" runat="server" ID="rbtCodigo"  Text="Código" GroupName="tipoProduto" 
+                                                    />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td id="tdDescricao">
+                                                <span>Descrição</span>
+                                                <asp:TextBox runat="server" ID="txtDescricao" CssClass="formNovo"></asp:TextBox>
+                                            </td>
+                                            <td id="tdCodigo" style="display:none">
+                                                <span>Código</span>
+                                                <asp:TextBox runat="server" ID="txtCodigo" CssClass="formNovo"></asp:TextBox>
+                                            </td>
+                                        </tr>
                                     </table>
+
                             </ContentTemplate>
                         </asp:UpdatePanel>
                    </td>

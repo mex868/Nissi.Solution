@@ -99,6 +99,67 @@ namespace Nissi.DataAccess
             fornecedorVO.Cep = tempCep;
         }
         // ------------------------------------------------------------------------- // 
+        public List<FornecedorVO> ListaFornecedorPorNome(FornecedorVO identfornecedorVo)
+        {
+            OpenCommand("pr_selecionar_fornecedor");
+            try
+            {
+                if (!string.IsNullOrEmpty(identfornecedorVo.RazaoSocial))
+                    AddInParameter("@RazaoSocial", DbType.String, identfornecedorVo.RazaoSocial);
+                List<FornecedorVO> lstFornecedorVo = new List<FornecedorVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        FornecedorVO fornecedorVo = new FornecedorVO();
+                        fornecedorVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        fornecedorVo.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
+                        lstFornecedorVo.Add(fornecedorVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstFornecedorVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
+
+        public List<FornecedorVO> ListaFornecedorNomeFantasia(FornecedorVO identfornecedorVo)
+        {
+            OpenCommand("pr_selecionar_fornecedor");
+            try
+            {
+                if (!string.IsNullOrEmpty(identfornecedorVo.RazaoSocial))
+                    AddInParameter("@NomeFantasia", DbType.String, identfornecedorVo.NomeFantasia);
+                List<FornecedorVO> lstFornecedorVo = new List<FornecedorVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        FornecedorVO clienteVo = new FornecedorVO();
+                        clienteVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        clienteVo.RazaoSocial = GetReaderValue<string>(dr, "NomeFantasia");
+                        lstFornecedorVo.Add(clienteVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstFornecedorVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
         #endregion
         #region Métodos de Inclusão
         /// <summary>

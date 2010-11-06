@@ -39,7 +39,7 @@
             <SelectParameters>
                 <asp:Parameter Name="DataEmissaoIni" Type="DateTime" />
                 <asp:Parameter Name="DataEmissaoFim" Type="DateTime" />
-                <asp:Parameter Name="UF" Type="String" />
+                <asp:Parameter Name="CFOP" Type="String" />
             </SelectParameters>
         </asp:ObjectDataSource>
         <asp:ObjectDataSource ID="ObjEmitente" runat="server" 

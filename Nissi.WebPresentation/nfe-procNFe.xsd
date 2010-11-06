@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" targetNamespace="http://www.portalfiscal.inf.br/nfe" xmlns:mstns="http://www.portalfiscal.inf.br/nfe" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:app1="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="nfe-procNFe_app1.xsd" />
+  <xs:element name="nfeProc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NFe" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="infNFe" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ide" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="cUF" type="xs:string" minOccurs="0" />
+                          <xs:element name="cNF" type="xs:string" minOccurs="0" />
+                          <xs:element name="natOp" type="xs:string" minOccurs="0" />
+                          <xs:element name="indPag" type="xs:string" minOccurs="0" />
+                          <xs:element name="mod" type="xs:string" minOccurs="0" />
+                          <xs:element name="serie" type="xs:string" minOccurs="0" />
+                          <xs:element name="nNF" type="xs:string" minOccurs="0" />
+                          <xs:element name="dEmi" type="xs:string" minOccurs="0" />
+                          <xs:element name="dSaiEnt" type="xs:string" minOccurs="0" />
+                          <xs:element name="tpNF" type="xs:string" minOccurs="0" />
+                          <xs:element name="cMunFG" type="xs:string" minOccurs="0" />
+                          <xs:element name="tpImp" type="xs:string" minOccurs="0" />
+                          <xs:element name="tpEmis" type="xs:string" minOccurs="0" />
+                          <xs:element name="cDV" type="xs:string" minOccurs="0" />
+                          <xs:element name="tpAmb" type="xs:string" minOccurs="0" />
+                          <xs:element name="finNFe" type="xs:string" minOccurs="0" />
+                          <xs:element name="procEmi" type="xs:string" minOccurs="0" />
+                          <xs:element name="verProc" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="emit" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="CNPJ" type="xs:string" minOccurs="0" />
+                          <xs:element name="xNome" type="xs:string" minOccurs="0" />
+                          <xs:element name="xFant" type="xs:string" minOccurs="0" />
+                          <xs:element name="IE" type="xs:string" minOccurs="0" />
+                          <xs:element name="CRT" type="xs:string" minOccurs="0" />
+                          <xs:element name="enderEmit" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="xLgr" type="xs:string" minOccurs="0" />
+                                <xs:element name="nro" type="xs:string" minOccurs="0" />
+                                <xs:element name="xBairro" type="xs:string" minOccurs="0" />
+                                <xs:element name="cMun" type="xs:string" minOccurs="0" />
+                                <xs:element name="xMun" type="xs:string" minOccurs="0" />
+                                <xs:element name="UF" type="xs:string" minOccurs="0" />
+                                <xs:element name="CEP" type="xs:string" minOccurs="0" />
+                                <xs:element name="cPais" type="xs:string" minOccurs="0" />
+                                <xs:element name="xPais" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="dest" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="CNPJ" type="xs:string" minOccurs="0" />
+                          <xs:element name="xNome" type="xs:string" minOccurs="0" />
+                          <xs:element name="IE" type="xs:string" minOccurs="0" />
+                          <xs:element name="enderDest" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="xLgr" type="xs:string" minOccurs="0" />
+                                <xs:element name="nro" type="xs:string" minOccurs="0" />
+                                <xs:element name="xCpl" type="xs:string" minOccurs="0" />
+                                <xs:element name="xBairro" type="xs:string" minOccurs="0" />
+                                <xs:element name="cMun" type="xs:string" minOccurs="0" />
+                                <xs:element name="xMun" type="xs:string" minOccurs="0" />
+                                <xs:element name="UF" type="xs:string" minOccurs="0" />
+                                <xs:element name="CEP" type="xs:string" minOccurs="0" />
+                                <xs:element name="cPais" type="xs:string" minOccurs="0" />
+                                <xs:element name="xPais" type="xs:string" minOccurs="0" />
+                                <xs:element name="fone" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="det" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="prod" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="cProd" type="xs:string" minOccurs="0" />
+                                <xs:element name="cEAN" type="xs:string" minOccurs="0" />
+                                <xs:element name="xProd" type="xs:string" minOccurs="0" />
+                                <xs:element name="NCM" type="xs:string" minOccurs="0" />
+                                <xs:element name="CFOP" type="xs:string" minOccurs="0" />
+                                <xs:element name="uCom" type="xs:string" minOccurs="0" />
+                                <xs:element name="qCom" type="xs:string" minOccurs="0" />
+                                <xs:element name="vUnCom" type="xs:string" minOccurs="0" />
+                                <xs:element name="vProd" type="xs:string" minOccurs="0" />
+                                <xs:element name="cEANTrib" type="xs:string" minOccurs="0" />
+                                <xs:element name="uTrib" type="xs:string" minOccurs="0" />
+                                <xs:element name="qTrib" type="xs:string" minOccurs="0" />
+                                <xs:element name="vUnTrib" type="xs:string" minOccurs="0" />
+                                <xs:element name="indTot" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="imposto" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="ICMS" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="ICMS40" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="orig" type="xs:string" minOccurs="0" />
+                                            <xs:element name="CST" type="xs:string" minOccurs="0" />
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="PIS" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="PISOutr" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="CST" type="xs:string" minOccurs="0" />
+                                            <xs:element name="vBC" type="xs:string" minOccurs="0" />
+                                            <xs:element name="pPIS" type="xs:string" minOccurs="0" />
+                                            <xs:element name="vPIS" type="xs:string" minOccurs="0" />
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="COFINS" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="COFINSOutr" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="CST" type="xs:string" minOccurs="0" />
+                                            <xs:element name="vBC" type="xs:string" minOccurs="0" />
+                                            <xs:element name="pCOFINS" type="xs:string" minOccurs="0" />
+                                            <xs:element name="vCOFINS" type="xs:string" minOccurs="0" />
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="nItem" form="unqualified" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="total" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ICMSTot" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="vBC" type="xs:string" minOccurs="0" />
+                                <xs:element name="vICMS" type="xs:string" minOccurs="0" />
+                                <xs:element name="vBCST" type="xs:string" minOccurs="0" />
+                                <xs:element name="vST" type="xs:string" minOccurs="0" />
+                                <xs:element name="vProd" type="xs:string" minOccurs="0" />
+                                <xs:element name="vFrete" type="xs:string" minOccurs="0" />
+                                <xs:element name="vSeg" type="xs:string" minOccurs="0" />
+                                <xs:element name="vDesc" type="xs:string" minOccurs="0" />
+                                <xs:element name="vII" type="xs:string" minOccurs="0" />
+                                <xs:element name="vIPI" type="xs:string" minOccurs="0" />
+                                <xs:element name="vPIS" type="xs:string" minOccurs="0" />
+                                <xs:element name="vCOFINS" type="xs:string" minOccurs="0" />
+                                <xs:element name="vOutro" type="xs:string" minOccurs="0" />
+                                <xs:element name="vNF" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="transp" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="modFrete" type="xs:string" minOccurs="0" />
+                          <xs:element name="transporta" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="CNPJ" type="xs:string" minOccurs="0" />
+                                <xs:element name="xNome" type="xs:string" minOccurs="0" />
+                                <xs:element name="IE" type="xs:string" minOccurs="0" />
+                                <xs:element name="xEnder" type="xs:string" minOccurs="0" />
+                                <xs:element name="xMun" type="xs:string" minOccurs="0" />
+                                <xs:element name="UF" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="vol" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="qVol" type="xs:string" minOccurs="0" />
+                                <xs:element name="esp" type="xs:string" minOccurs="0" />
+                                <xs:element name="marca" type="xs:string" minOccurs="0" />
+                                <xs:element name="nVol" type="xs:string" minOccurs="0" />
+                                <xs:element name="pesoL" type="xs:string" minOccurs="0" />
+                                <xs:element name="pesoB" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cobr" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="fat" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="nFat" type="xs:string" minOccurs="0" />
+                                <xs:element name="vOrig" type="xs:string" minOccurs="0" />
+                                <xs:element name="vLiq" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="dup" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="nDup" type="xs:string" minOccurs="0" />
+                                <xs:element name="dVenc" type="xs:string" minOccurs="0" />
+                                <xs:element name="vDup" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="infAdic" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="infCpl" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="exporta" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="UFEmbarq" type="xs:string" minOccurs="0" />
+                          <xs:element name="xLocEmbarq" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="compra" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="xNEmp" type="xs:string" minOccurs="0" />
+                          <xs:element name="xPed" type="xs:string" minOccurs="0" />
+                          <xs:element name="xCont" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                  <xs:attribute name="versao" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="app1:Signature" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="protNFe" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="infProt" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="tpAmb" type="xs:string" minOccurs="0" />
+                    <xs:element name="verAplic" type="xs:string" minOccurs="0" />
+                    <xs:element name="chNFe" type="xs:string" minOccurs="0" />
+                    <xs:element name="dhRecbto" type="xs:string" minOccurs="0" />
+                    <xs:element name="cStat" type="xs:string" minOccurs="0" />
+                    <xs:element name="xMotivo" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="versao" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="versao" form="unqualified" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="nfeProc" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

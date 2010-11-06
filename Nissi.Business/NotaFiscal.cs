@@ -27,6 +27,11 @@ namespace Nissi.Business
         {
             return new NotaFiscalData().gerar_numero_nf();
         }
+        public int ListarNumeroNf(int codNf)
+        {
+            return new NotaFiscalData().ListarNumeroNf(codNf);
+        }
+
         /// <summary>
         /// Método para incluir um registro na tabela  NotaFiscal 
         /// </summary>

@@ -108,11 +108,17 @@ namespace Nissi.WinFormsApplication
                 {
                     prod[x, 0] = identItemNotaFiscal.Produto.Codigo.Trim();//<cProd>
                     prod[x, 1] = "";					//<cEAN>
-                    prod[x, 2] = identItemNotaFiscal.Produto.Descricao.Trim(); //<xProd>
+                    string Op = string.Empty;
+                    if (!string.IsNullOrEmpty(identItemNotaFiscal.OP))
+                        Op = " - OP.: " + identItemNotaFiscal.OP.Trim();
+                    string pedido = string.Empty;
+                    if (!string.IsNullOrEmpty(identItemNotaFiscal.CodPedidoCliente))
+                        pedido = " - Ped.: " + identItemNotaFiscal.CodPedidoCliente.Trim();
+                    prod[x, 2] = identItemNotaFiscal.Produto.Descricao.Trim()+pedido+Op; //<xProd>
                     prod[x, 3] = identItemNotaFiscal.Produto.NCM;//"73181500";                        //<NCM>
                     prod[x, 4] = "";                                //<EXTIPI> //Antes da vr 2.00, esta posicao era o GENERO.
                     prod[x, 5] = identNotaFiscal.CFOP.CFOP;//<CFOP>
-                    prod[x, 6] = identItemNotaFiscal.Produto.Unidade.TipoUnidade;//<uCom>
+                    prod[x, 6] = identItemNotaFiscal.Produto.Unidade.TipoUnidade.Trim();//<uCom>
                     prod[x, 7] = identItemNotaFiscal.Qtd.ToString(); //<qCom>
                     prod[x, 8] = identItemNotaFiscal.Valor.ToString();//<vUnCom>
                     prod[x, 9] = identItemNotaFiscal.TotalItem.ToString();// "10.00";//<vProd>
@@ -294,16 +300,23 @@ namespace Nissi.WinFormsApplication
                 cobr[4] = vencimento;//"2008-05-30;2008-06-30;";    //dup <dVenc>
                 cobr[5] = valor;//"226.64;226.64;";					//dup <vDup>
                 /*<infAdic> Informações Adicionais da NF-e*/
-                infAdic[0] = identNotaFiscal.MensagemNF.Descricao;
+                infAdic[0] = "";
+                string mensagemnfe = string.Empty;
                 string observacao = string.Empty;
+                string enderecoCobranca = string.Empty;
                 Regex remover = new Regex(@"[\t\r\n]",RegexOptions.Compiled);
                 string mensagemnf = string.Empty;
                 if (!string.IsNullOrEmpty(mensagemnf))
                     mensagemnf =" - "+ identNotaFiscal.MensagemNF.Descricao.Trim();
                 if (!string.IsNullOrEmpty(identNotaFiscal.Observacao))
                     observacao = " - "+remover.Replace(identNotaFiscal.Observacao, "");
+                if (!string.IsNullOrEmpty(identNotaFiscal.Cliente.CepCobranca))
+                    enderecoCobranca = " - Endereço de Cobrança: Cep: " + identNotaFiscal.Cliente.CepCobranca.Trim();
+                if (!string.IsNullOrEmpty(identNotaFiscal.Cliente.EnderecoCobranca))
+                    enderecoCobranca += " - "+identNotaFiscal.Cliente.EnderecoCobranca.Trim();
+
                 infAdic[1] = "DOCUMENTO EMITIDO POR ME OPTANTE PELO SIMPLES NACIONAL. NAO GERA DIREITO A CREDITO FISCAL DE ICMS, ISS E IPI. - " +  //infAdFisco
-                               "Valor R$ " + FormataValor(identNotaFiscal.ValTotalImcs.ToString(), 2) + " Aliquota " + identNotaFiscal.ICMS.ToString() + "% Nos termos do Art. 23 da LC 123/2006"+observacao; 		//infCpl
+                               "Valor R$ " + FormataValor(identNotaFiscal.ValTotalImcs.ToString(), 2) + " Aliquota " + identNotaFiscal.ICMS.ToString() + "% Nos termos do Art. 23 da LC 123/2006" + observacao + enderecoCobranca + mensagemnf; 		//infCpl
 
 
 
@@ -471,7 +484,7 @@ namespace Nissi.WinFormsApplication
             sbBody.Append("<br /><br />");
             sbBody.Append("<b>Powered By:</b><br />");
             //Adiciona texto digitado no TextBox txtMensagem  
-            sbBody.Append("Macware Sistemas - http://www.macware.net.br");
+            sbBody.Append("Macware Sistemas -  http://www.macware.net");
             sbBody.Append("<br /><br />");
             sbBody.Append("</div>");
             sbBody.Append("</div>");
@@ -498,6 +511,7 @@ namespace Nissi.WinFormsApplication
         {
             new nfec.nfecsharp().NFeDanfe(pathXML, pathPDF, ambiente, tipoImp, formSeguranca, PathPrincipal, TotalizarCfop, DataPacketFormSeg, TipoDanfe, DanfeLogo, DanfeInfo, DataPacket);
         }
+
     }
 
 }

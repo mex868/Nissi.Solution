@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using nfec;
+using Nissi.Model;
+using Nissi.Business;
 
 namespace Nissi.WinFormsApplication
 {
@@ -25,6 +28,55 @@ namespace Nissi.WinFormsApplication
         {
             frmNfeTransmite nfeTransmite = new frmNfeTransmite();
             nfeTransmite.ShowDialog();
+        }
+        nfec.Parametro parametroNfe = new nfec.Parametro();
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            List<ParametroVO> lstParametro = new Nissi.Business.Parametro().Listar();
+            foreach (ParametroVO identParametro in lstParametro)
+            {
+                parametroNfe.Ambiente = identParametro.Ambiente;
+                parametroNfe.AtivaTrace = identParametro.AtivaTrace;
+                parametroNfe.DanfeInfo = identParametro.DanfeInfo;
+                parametroNfe.DanfeLogo = identParametro.DanfeLogo;
+                parametroNfe.DataPacket = identParametro.DataPacket;
+                parametroNfe.DataPacketFormSeg = identParametro.DataPacketFormSeg;
+                parametroNfe.Modelo = identParametro.Modelo;
+                parametroNfe.NFeCancelamento = identParametro.NFeCancelamento;
+                parametroNfe.NFeConsultaProtocolo = identParametro.NFeConsultaProtocolo;
+                parametroNfe.NFeInutilizacao = identParametro.NFeInutilizacao;
+                parametroNfe.NFeRecepcao = identParametro.NFeRecepcao;
+                parametroNfe.NFeRetRecepcao = identParametro.NFeRetRecepcao;
+                parametroNfe.NFeStatusServico = identParametro.NFeStatusServico;
+                parametroNfe.NoSerieCertificado = identParametro.NoSerieCertificado;
+                parametroNfe.PathPrincipal = identParametro.PathPrincipal;
+                parametroNfe.Schemas = identParametro.Schemas;
+                parametroNfe.Serie = identParametro.Serie;
+                parametroNfe.TipoDanfe = identParametro.TipoDanfe;
+                parametroNfe.TotalizarCfop = identParametro.TotalizarCfop;
+                parametroNfe.VerProc = identParametro.VerProc;
+                parametroNfe.CNPJ = identParametro.CNPJ;
+                parametroNfe.UnidadeFederada = identParametro.UnidadeFederada;
+            }
+            //lblAmbiente.Text = parametroNfe.Ambiente == "1" ? "Produção(Oficial)" : "Homologação(Testes)";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new NotaFiscalControler().NFeDanfe(parametroNfe.PathPrincipal + @"\nfe\arquivos\procNFe\" +
+             "35100705533093000133550010000000021000000025-procNFe.xml" + "|",
+            parametroNfe.PathPrincipal + @"\nfe\arquivos\" + "35100705533093000133550010000000021000000025-procNFe.pdf" + "|",
+            Convert.ToInt32(parametroNfe.Ambiente),
+            2,
+            false,
+            parametroNfe.PathPrincipal + "|",
+            parametroNfe.TotalizarCfop + "|",
+            parametroNfe.DataPacketFormSeg + "|",
+            parametroNfe.TipoDanfe + "|",
+            parametroNfe.DanfeLogo + "|",
+            parametroNfe.DanfeInfo + "|",
+            parametroNfe.DataPacket + "|"
+            );
         }
 
     }

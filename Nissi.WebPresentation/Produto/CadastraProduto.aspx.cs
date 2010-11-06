@@ -86,24 +86,32 @@ using System.Linq;
         private void Pesquisar()
         {
             ProdutoVO identProduto = new ProdutoVO();
-            if ((hdfTipoAcao.Value == "Incluir" || hdfTipoAcao.Value == "Editar" || hdfTipoAcao.Value == "IncluirItem") && (!string.IsNullOrEmpty(hdfCodProduto.Value) || !string.IsNullOrEmpty(hdfCodigo.Value)))
+            if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
             {
-                if (!string.IsNullOrEmpty(hdfCodProduto.Value))
-                {
-                    identProduto.CodProduto = Convert.ToInt32(hdfCodProduto.Value);
-                }
-                if (!string.IsNullOrEmpty(hdfCodigo.Value))
-                {
-                    identProduto.Codigo = hdfCodigo.Value;
-                }
-                LimparCampos();
+                identProduto.CodProduto = Convert.ToInt32(hdfIdRazaoSocial.Value);
             }
             else
             {
+                if ((hdfTipoAcao.Value == "Incluir" || hdfTipoAcao.Value == "Editar" || hdfTipoAcao.Value == "IncluirItem") && (!string.IsNullOrEmpty(hdfCodProduto.Value) || !string.IsNullOrEmpty(hdfCodigo.Value)))
+                {
+                    if (!string.IsNullOrEmpty(hdfCodProduto.Value))
+                    {
+                        identProduto.CodProduto = Convert.ToInt32(hdfCodProduto.Value);
+                    }
+                    if (!string.IsNullOrEmpty(hdfCodigo.Value))
+                    {
+                        identProduto.Codigo = hdfCodigo.Value;
+                    }
+                    LimparCampos();
+                }
+                else
+                {
 
-                if (!string.IsNullOrEmpty(txtCodigoPesq.Text))
-                    identProduto.Codigo = txtCodigoPesq.Text;
-                identProduto.Descricao = txtDescricaoPesq.Text;
+                    if (!string.IsNullOrEmpty(txtCodigoPesq.Text))
+                        identProduto.Codigo = txtCodigoPesq.Text;
+                    identProduto.Descricao = txtDescricaoPesq.Text;
+                }
+                
             }
             List<ProdutoVO> lProduto = new List<ProdutoVO>();
             lProduto = new Produto().Listar(identProduto);
@@ -127,6 +135,7 @@ using System.Linq;
             txtDescricaoPesq.Text = 
             txtCodigo.Text = 
             hdfCodProduto.Value = 
+            hdfIdRazaoSocial.Value =
             hdfCodigo.Value =
             txtDescricao.Text = string.Empty;
             LimparCamposICMS();

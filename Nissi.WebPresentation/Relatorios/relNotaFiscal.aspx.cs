@@ -12,18 +12,21 @@ namespace Nissi.WebPresentation.Relatorios
         protected void Page_Load(object sender, EventArgs e)
         {
             DateTime dataIni= DateTime.MinValue;
-            DateTime dataFim;
-            string TipoPesq="" ;
-            string strDataIni = "";
-            string strDataFim = "";
-            if (!string.IsNullOrEmpty(Request.QueryString["Inicio"].ToString()))
+            DateTime dataFim=DateTime.MinValue;
+            string TipoPesq=null;
+
+            if (!string.IsNullOrEmpty(Request.QueryString["DtIni"].ToString()))
             {
-                dataIni = Convert.ToDateTime(Request.QueryString["Inicio"].ToString());
-                dataFim = Convert.ToDateTime(Request.QueryString["Fim"].ToString());
-                strDataIni = dataIni.ToString("yyyy-MM-dd 00:00:00.000");
-                strDataFim = dataFim.ToString("yyyy-MM-dd 00:00:00.000"); 
+                dataIni = Convert.ToDateTime(Request.QueryString["DtIni"].ToString());
+                dataFim = Convert.ToDateTime(Request.QueryString["DtFim"].ToString());
+
             }
-            TipoPesq = Request.QueryString["UF"].ToString();
+            if (!string.IsNullOrEmpty(Request.QueryString["Tipo"].ToString()))
+            {
+                TipoPesq = Request.QueryString["Tipo"].ToString();
+            }
+
+            //DataSet Emitente
             ObjEmitente.SelectMethod = "GetData";
             ObjEmitente.SelectParameters.Clear();
             ObjEmitente.SelectParameters.Add("CodEmitente", "");
@@ -31,10 +34,11 @@ namespace Nissi.WebPresentation.Relatorios
 
             SouceNotaFiscal.SelectMethod = "GetData";
             SouceNotaFiscal.SelectParameters.Clear();
-            SouceNotaFiscal.SelectParameters.Add("DataEmissaoIni",strDataIni);
-            SouceNotaFiscal.SelectParameters.Add("DataEmissaoFim", strDataFim);
-            SouceNotaFiscal.SelectParameters.Add("UF",TipoPesq);
+            SouceNotaFiscal.SelectParameters.Add("DataEmissaoIni",dataIni.ToString("yyyy-MM-dd 00:00:00.000"));
+            SouceNotaFiscal.SelectParameters.Add("DataEmissaoFim", dataFim.ToString("yyyy-MM-dd 00:00:00.000"));
+            SouceNotaFiscal.SelectParameters.Add("TIPO", TipoPesq);
             SouceNotaFiscal.DataBind();
+
 
             rwNota.DataBind();
 

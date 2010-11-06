@@ -58,6 +58,15 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.WebControls.Button btnGerar;
         
         /// <summary>
+        /// hdfCFOP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfCFOP;
+        
+        /// <summary>
         /// upDivs control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,24 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upDivs;
+        
+        /// <summary>
+        /// hdfIdRazaoSocialIni control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocialIni;
+        
+        /// <summary>
+        /// hdfIdRazaoSocialFim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocialFim;
         
         /// <summary>
         /// tableVarios control.
@@ -166,6 +193,15 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.WebControls.TextBox txtInicio;
         
         /// <summary>
+        /// AutoCompleteExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
+        
+        /// <summary>
         /// tdRazao4 control.
         /// </summary>
         /// <remarks>
@@ -182,6 +218,15 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFim;
+        
+        /// <summary>
+        /// AutoCompleteExtender2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender2;
         
         /// <summary>
         /// tdCod3 control.
@@ -328,40 +373,13 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.HtmlControls.HtmlTable tableProduto;
         
         /// <summary>
-        /// rbCodigo control.
+        /// tbxPeriodoIni control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbCodigo;
-        
-        /// <summary>
-        /// rbDescricao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbDescricao;
-        
-        /// <summary>
-        /// txtCodigoDescricao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoDescricao;
-        
-        /// <summary>
-        /// tbxDataIni control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxDataIni;
+        protected global::System.Web.UI.WebControls.TextBox tbxPeriodoIni;
         
         /// <summary>
         /// RegularExpressionValidator3 control.
@@ -382,13 +400,13 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::AjaxControlToolkit.CalendarExtender CalendarExtender1;
         
         /// <summary>
-        /// tbxDataFim control.
+        /// tbxFinal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxDataFim;
+        protected global::System.Web.UI.WebControls.TextBox tbxFinal;
         
         /// <summary>
         /// RegularExpressionValidator4 control.
@@ -416,5 +434,59 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+        
+        /// <summary>
+        /// rbtDescricao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbtDescricao;
+        
+        /// <summary>
+        /// rbtCodigo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbtCodigo;
+        
+        /// <summary>
+        /// tdDescricao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdDescricao;
+        
+        /// <summary>
+        /// txtDescricao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescricao;
+        
+        /// <summary>
+        /// tdCodigo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCodigo;
+        
+        /// <summary>
+        /// txtCodigo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigo;
     }
 }

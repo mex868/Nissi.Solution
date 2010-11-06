@@ -40,7 +40,7 @@ namespace Nissi.WebPresentation.Produto
                 MensagemCliente("Não existem registros para o filtro informado.");
         }
 
-        #region Métodos do Grid
+        #region Métodos do Grid Produto
         protected void grdListaResultado_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
 

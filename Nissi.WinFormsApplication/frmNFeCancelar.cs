@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Nissi.Model;
+using Nissi.Business;
 
 namespace Nissi.WinFormsApplication
 {
@@ -19,7 +20,7 @@ namespace Nissi.WinFormsApplication
 
         NfeVO identNFe = new NfeVO();
         nfec.Parametro parametroNfe = new nfec.Parametro();
-        ServiceReference1.Service1Client ServiceClient = new ServiceReference1.Service1Client();
+        Nfe ServiceClient = new Nfe();
         public frmNFeCancelar(NfeVO tempNFe, nfec.Parametro tempParametro) 
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace Nissi.WinFormsApplication
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtJustificativa.Text) && (txtJustificativa.TextLength > 0))
+            if (!string.IsNullOrEmpty(txtJustificativa.Text) && (txtJustificativa.TextLength > 14))
             {
                 NotaFiscalControler controler = new NotaFiscalControler();
                 string retorno = controler.CancelamentoNFe(identNFe.ChaveNFE, identNFe.NumProtocolo, txtJustificativa.Text, parametroNfe);

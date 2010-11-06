@@ -9,7 +9,7 @@
 	background-position: center center;
 }
 
-input, select {
+input[type=text], select {
 	color           : #000;
 	font-family     : Verdana, sans-serif;
 	font-size       : 11px;
@@ -34,6 +34,7 @@ input, select {
 	text-align: left;
 	font-weight: bold;
 }
+
 .botao
 {
 	background-image: url('../../Imagens/menufundo.jpg');
@@ -47,7 +48,7 @@ input, select {
 	letter-spacing: 2px;
 	text-decoration: none;
 	text-align: center;
-	}
+}
 
 .modalBackground 
 {
@@ -64,15 +65,31 @@ input, select {
 	background-color: #e3e3e3;
 }
 
+.FundoLinha3 {
+	background-color: #FF0000;
+}
+
+iframe.skm 
+{
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:none;
+    }
+    
 .Menu
 {
+    text-align : left; 
+	color :White;
 	background-image:url("../../Imagens/menufundo.jpg");
-	color           :White;
-	font-weight     : bold;
+    z-index:auto;
+    font-family : Verdana; 
 	font-size       : 11px;
-	font-family     :Verdana;
-	width           : 140px;
-	cursor          : hand;
+    font-weight : bold; 
+    width : 140px;
+    line-height :20px;
+    vertical-align  :middle;
+	cursor : hand;
 }
 
 .MenuItemSelecionado
@@ -85,6 +102,7 @@ input, select {
 	width: 140px;
 	cursor: hand;
 }
+
 .fundoTabela
 {
 	BORDER-RIGHT: black 1px solid; 
@@ -97,12 +115,14 @@ input, select {
 	TEXT-ALIGN: left;
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF);
 }
+
 .alinhamento
 {
 	border: 1px solid #000000;
 	margin-right: auto;
 	margin-left: auto;
-	}
+}
+	
 .tabelaSelecionada {
 	font-family: Verdana, sans-serif;
 	font-size: 11px;
@@ -111,6 +131,7 @@ input, select {
 	background-color: #000080;
 	text-align: center;
 }
+
 .fundoTitulo
 {
 	color            : #BA622B;
@@ -126,12 +147,14 @@ input, select {
 	color: #000;
 	letter-spacing: 1px;
 }
+
 .formNovo {
 	font-family: Verdana, sans-serif;
 	font-size: 11px;
 	color: #000 ;
 	letter-spacing: 1px;
 }
+
 .hiperlink {
 	color: #000;
 	cursor: hand;
@@ -140,6 +163,7 @@ input, select {
 	font-weight: bold;
 	text-decoration: underline;
 }
+
 .DesligarTextBox
 {
     background-color: #CCCCCC;
@@ -170,4 +194,12 @@ input, select {
 .noBorder
 {
     border:0px;
+}
+.dataEmissao
+{
+    cursor: pointer;
+}
+.dataSaida
+{
+    cursor: pointer;
 }

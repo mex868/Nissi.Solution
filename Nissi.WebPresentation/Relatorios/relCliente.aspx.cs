@@ -7,21 +7,15 @@ using System.Web.UI.WebControls;
 
 namespace Nissi.WebPresentation.Relatorios
 {
-    public partial class relClientes : BasePage
+    public partial class RelClientes : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string codIni = string.Empty;
-            string codFim = string.Empty;
-            string NomIni = string.Empty;
-            string NomFim = string.Empty;
-            string UF = string.Empty;
-
-             NomIni = Request.QueryString["Inicio"].ToString();
-             NomFim = Request.QueryString["Fim"].ToString();
-             codIni = Request.QueryString["codIni"].ToString();
-             codFim = Request.QueryString["codFim"].ToString();
-             UF = Request.QueryString["UF"].ToString();
+             string nomIni = Request.QueryString["RazaoIni"].ToString();
+             string nomFim = Request.QueryString["RazaoFim"].ToString();
+             string codIni = Request.QueryString["CodIni"].ToString();
+             string codFim = Request.QueryString["CodFim"].ToString();
+             string uf = Request.QueryString["UF"].ToString();
 
             ODSemitente.SelectMethod = "GetData";
             ODSemitente.SelectParameters.Clear();
@@ -32,9 +26,9 @@ namespace Nissi.WebPresentation.Relatorios
             ODScliente.SelectParameters.Clear();
             ODScliente.SelectParameters.Add("CodPessoaIni", codIni);
             ODScliente.SelectParameters.Add("CodPessoaFim", codFim);
-            ODScliente.SelectParameters.Add("RazaoSocialIni", NomIni);
-            ODScliente.SelectParameters.Add("RazaoSocialFim", NomFim);
-            ODScliente.SelectParameters.Add("UF", UF);
+            ODScliente.SelectParameters.Add("RazaoSocialIni", nomIni);
+            ODScliente.SelectParameters.Add("RazaoSocialFim", nomFim);
+            ODScliente.SelectParameters.Add("UF", uf);
             ODScliente.DataBind();
             ReportViewer1.DataBind();
         }

@@ -78,11 +78,6 @@
         <url>NFe/ListaNFe.aspx</url>
         <resolveurl>true</resolveurl>
       </menuItem>
-      <menuItem>
-        <text>Consulta de Produtos</text>
-        <url>Produto/ListaProduto.aspx</url>
-        <resolveurl>true</resolveurl>
-      </menuItem>
     </subMenu>
   </menuItem>
   <menuItem>

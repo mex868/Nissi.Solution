@@ -184,16 +184,23 @@ public partial class CadastraFuncionario : BasePage
         identFuncionario.RG = null;
         identFuncionario.Nome = null;
         identFuncionario.CPF = null;
-        if (!string.IsNullOrEmpty(hdfCodFuncionario.Value))
-            identFuncionario.CodFuncionario = Convert.ToInt32(hdfCodFuncionario.Value);
-        if (rbCpf.Checked)
-            identFuncionario.CPF = txtCPFPesq.Text.Replace(".", "").Replace("-", "");
+        if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
+        {
+            identFuncionario.CodFuncionario = Convert.ToInt32(hdfIdRazaoSocial.Value);
+        }
         else
-            if (rbRg.Checked)
-                identFuncionario.RG = txtRGPesq.Text;
+        {
+            if (!string.IsNullOrEmpty(hdfCodFuncionario.Value))
+                identFuncionario.CodFuncionario = Convert.ToInt32(hdfCodFuncionario.Value);
+            if (rbCpf.Checked)
+                identFuncionario.CPF = txtCPFPesq.Text.Replace(".", "").Replace("-", "");
             else
-                if (rbNome.Checked)
-                    identFuncionario.Nome = txtNome.Text;
+                if (rbRg.Checked)
+                    identFuncionario.RG = txtRGPesq.Text;
+                else
+                    if (rbNome.Checked)
+                        identFuncionario.Nome = txtNome.Text;
+        }
         
         List<FuncionarioVO> lFuncionario = new Funcionario().Listar(identFuncionario);
         if (lFuncionario.Count > 0)
@@ -203,6 +210,7 @@ public partial class CadastraFuncionario : BasePage
         }
         else
             MensagemCliente("Não existe resultados para esta pesquisa.");
+        hdfIdRazaoSocial.Value = string.Empty;
     }
 
     #endregion

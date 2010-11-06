@@ -23,6 +23,9 @@ namespace Nissi.DataAccess
                 AddInParameter("@NF", DbType.Int32, identNotaFiscal.NF);
                 AddInParameter("@DataEmissao", DbType.DateTime, identNotaFiscal.DataEmissao);
                 AddInParameter("@RazaoSocial", DbType.String, identNotaFiscal.Cliente.RazaoSocial);
+                if (!string.IsNullOrEmpty(identNotaFiscal.Cliente.CodRef))
+                    AddInParameter("@CodRef", DbType.String, identNotaFiscal.Cliente.CodRef);
+                AddInParameter("@CodCliente", DbType.Int32, identNotaFiscal.Cliente.CodPessoa);
 
                 List<NotaFiscalVO> lstNotaFiscalVO = new List<NotaFiscalVO>();
 
@@ -304,6 +307,8 @@ namespace Nissi.DataAccess
 					tempItemNotaFiscal.Icms.CodTipoTributacao = GetReaderValue<string>(dr, "CodTipoTributacao");
                     tempItemNotaFiscal.Icms.CodOrigem = GetReaderValue<int?>(dr, "CodOrigem");
                     tempItemNotaFiscal.Produto.NCM = GetReaderValue<string>(dr, "NCM");
+                    tempItemNotaFiscal.CodPedidoCliente = GetReaderValue<string>(dr, "CodPedidoCliente");
+				    tempItemNotaFiscal.OP = GetReaderValue<string>(dr, "OP");
                     tempItemNotaFiscal.Produto.ICMS.Add(tempItemNotaFiscal.Icms);
                     identNotaFiscal.Itens.Add(tempItemNotaFiscal);
 				}
@@ -342,6 +347,19 @@ namespace Nissi.DataAccess
             }
             return identNotaFiscal;
         }
+        /// <summary>
+        /// Metodo que lista o número da NF
+        /// </summary>
+        /// <param name="codNf">Código da Nota Fiscal</param>
+        /// <returns></returns>
+        public int ListarNumeroNf(int codNf)
+        {
+            OpenCommand("pr_selecionar_numero_nf");
+            if (codNf > 0)
+                AddInParameter("@CodNF", DbType.Int32, codNf);
+            return ExecuteScalar<int>();
+        }
+
         // ------------------------------------------------------------------------- // 
         // ------------------------------------------------------------------------- // 
         /// <summary>

@@ -236,22 +236,30 @@ public partial class CadastraCliente : BasePage
     private void Pesquisar()
     {
         ClienteVO identCliente = new ClienteVO();
-        identCliente.IndPessoaTipo = ddlTipoPessoa.SelectedValue == "1"? true: false;
-        if (!string.IsNullOrEmpty(hdfCodCliente.Value))
-            identCliente.CodPessoa = Convert.ToInt32(hdfCodCliente.Value);
-        if (rbCodigo.Checked)
-            identCliente.CodRef = txtCodigoPesq.Text;
-        if (rbCNPJ.Checked)
+        if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
         {
-            if (ddlTipoPessoa.SelectedValue == "1")
-                identCliente.CNPJ = txtCNPJPesq.Text.Replace(".", "").Replace("-", "").Replace("/", "").Trim();
-            if (ddlTipoPessoa.SelectedValue == "2")
-                identCliente.CNPJ = txtCPFPesq.Text.Replace(".", "").Replace("-", "").Trim();
+            identCliente.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
+            identCliente.IndPessoaTipo = null;
         }
-        if (rbNomeFantasia.Checked)
-               identCliente.NomeFantasia = txtNomeFantasiaPesq.Text;
-        if (rbRazaoSocial.Checked)
+        else
+        {
+            identCliente.IndPessoaTipo = ddlTipoPessoa.SelectedValue == "1" ? true : false;
+            if (!string.IsNullOrEmpty(hdfCodCliente.Value))
+                identCliente.CodPessoa = Convert.ToInt32(hdfCodCliente.Value);
+            if (rbCodigo.Checked)
+                identCliente.CodRef = txtCodigoPesq.Text;
+            if (rbCNPJ.Checked)
+            {
+                if (ddlTipoPessoa.SelectedValue == "1")
+                    identCliente.CNPJ = txtCNPJPesq.Text.Replace(".", "").Replace("-", "").Replace("/", "").Trim();
+                if (ddlTipoPessoa.SelectedValue == "2")
+                    identCliente.CNPJ = txtCPFPesq.Text.Replace(".", "").Replace("-", "").Trim();
+            }
+            if (rbNomeFantasia.Checked)
+                identCliente.NomeFantasia = txtNomeFantasiaPesq.Text;
+            if (rbRazaoSocial.Checked)
                 identCliente.RazaoSocial = txtRazao.Text;
+        }
 
         List<ClienteVO>lCliente = new Cliente().Listar(identCliente);
         if (lCliente.Count > 0)
@@ -265,6 +273,7 @@ public partial class CadastraCliente : BasePage
             limparCampos();
             MensagemCliente("Não existem registros para o filtro informado.");
         }
+        hdfIdRazaoSocial.Value = string.Empty;
     }
     #endregion
 
@@ -435,6 +444,7 @@ public partial class CadastraCliente : BasePage
         }
     }
     #endregion
+
 
 
 }

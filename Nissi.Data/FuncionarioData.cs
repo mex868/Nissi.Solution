@@ -420,5 +420,36 @@ namespace Nissi.DataAccess
             CloseCommand();
         }
     }
+
+    public List<FuncionarioVO> ListaFuncionarioPorNome(FuncionarioVO identFuncionarioVo)
+    {
+        OpenCommand("pr_selecionar_cliente");
+        try
+        {
+            if (!string.IsNullOrEmpty(identFuncionarioVo.RazaoSocial))
+                AddInParameter("@RazaoSocial", DbType.String, identFuncionarioVo.RazaoSocial);
+            List<FuncionarioVO> lstFuncionarioVo = new List<FuncionarioVO>();
+            IDataReader dr = ExecuteReader();
+            try
+            {
+                while (dr.Read())
+                {
+                    FuncionarioVO FuncionarioVo = new FuncionarioVO();
+                    FuncionarioVo.CodFuncionario = GetReaderValue<int>(dr, "CodFuncionario");
+                    FuncionarioVo.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
+                    lstFuncionarioVo.Add(FuncionarioVo);
+                }
+            }
+            finally
+            {
+                dr.Close();
+            }
+            return lstFuncionarioVo;
+        }
+        finally
+        {
+            CloseCommand();
+        }
+    }
     }
 }

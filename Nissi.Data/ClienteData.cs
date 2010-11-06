@@ -97,7 +97,69 @@ namespace Nissi.DataAccess
             clienteVO.Cep = tempCep;
         }
 
+        public List<ClienteVO> ListaClientePorNome(ClienteVO identClienteVo)
+        {
+            OpenCommand("pr_selecionar_cliente");
+            try
+            {
+                if (!string.IsNullOrEmpty(identClienteVo.RazaoSocial))
+                    AddInParameter("@RazaoSocial", DbType.String, identClienteVo.RazaoSocial);
+                List<ClienteVO> lstClienteVo = new List<ClienteVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        ClienteVO clienteVo = new ClienteVO();
+                        clienteVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        clienteVo.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
+                        lstClienteVo.Add(clienteVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstClienteVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
 
+        }
+
+        public List<ClienteVO> ListaClientePorNomeFantasia(ClienteVO identCliente)
+        {
+            OpenCommand("pr_selecionar_cliente");
+            try
+            {
+                if (!string.IsNullOrEmpty(identCliente.RazaoSocial))
+                    AddInParameter("@NomeFantasia", DbType.String, identCliente.NomeFantasia);
+                List<ClienteVO> lstClienteVo = new List<ClienteVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        ClienteVO clienteVo = new ClienteVO();
+                        clienteVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        clienteVo.RazaoSocial = GetReaderValue<string>(dr, "NomeFantasia");
+                        lstClienteVo.Add(clienteVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstClienteVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
+ 
         // ------------------------------------------------------------------------- // 
         #endregion
         #region Métodos de Listagem de Transportadoras
@@ -360,5 +422,8 @@ namespace Nissi.DataAccess
 
 
         #endregion
+
+
+
     }
 }

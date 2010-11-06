@@ -31,7 +31,9 @@ public partial class CadastraItemNFe : BasePage
             txtIPI.Text = value.IPI.ToString(); //IPI
             txtValorIPI.Text = value.CalcIPI.ToString(); //Valor do IPI
             txtSituacaoTributaria.Text = value.Icms.CodTipoTributacao; //Situação Tributária
-
+            tbxCodPedido.Text = value.CodPedidoCliente;
+            tbxOP.Text = value.OP;
+      
             if (value.CalcICMSSobIpi == true) //Calcular ICMS Sob IPI
                 ckbCalcSobIpi.Checked = true;
             else
@@ -72,7 +74,9 @@ public partial class CadastraItemNFe : BasePage
             identItemNotaFiscalVO.IPI = strToDecimal(txtIPI.Text); //IPI
             identItemNotaFiscalVO.Produto.NCM = ddlClassificacaoFiscal.SelectedValue; //Classificação Fiscal
             identItemNotaFiscalVO.CalcICMSSobIpi = (ckbCalcSobIpi.Checked ? true : false); //Calcular ICMS Sob IPI
-
+            if (!string.IsNullOrEmpty(tbxCodPedido.Text))
+                identItemNotaFiscalVO.CodPedidoCliente = tbxCodPedido.Text.Trim();
+            identItemNotaFiscalVO.OP = tbxOP.Text.Trim();
 
             return identItemNotaFiscalVO;
         }

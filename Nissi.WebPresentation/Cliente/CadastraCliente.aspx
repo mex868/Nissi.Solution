@@ -258,7 +258,14 @@
             }
             args.IsValid = valido;
         }
-
+        //--------------------------------------------------------------------------------
+        //Criado por...:Alexandre Maximiano - 04/11/2010
+        //Objetivo.....: Efetua consulta com o retorno do autocomplete
+        //--------------------------------------------------------------------------------
+        function CarregarValores(source, eventArgs) {
+            $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+            $get('<%=btnPesquisar.ClientID%>').click();
+        }
     </script>
     <div style="text-align:center;">
         <table style="margin-left: auto; width: 95%; margin-right: auto;">
@@ -324,10 +331,18 @@
                         </div>
                         <div id="divRazao" style="display:none">
                             <asp:TextBox ID="txtRazao" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtRazao"
+                            MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800" EnableCaching="true"
+                            CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
+                            </ajaxToolkit:AutoCompleteExtender>
                             <asp:CustomValidator Text="*" CssClass="asterisco" ID="cvRazao" ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar a Razão Social." runat="server"></asp:CustomValidator>
                         </div>
                         <div id="divNomeFantasia" style="display:none">
                             <asp:TextBox ID="txtNomeFantasiaPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNomeFantasiaPesq"
+                            MinimumPrefixLength="1" ServiceMethod="GetNamesFantasy" CompletionInterval="800" EnableCaching="true"
+                            CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
+                            </ajaxToolkit:AutoCompleteExtender>
                             <asp:CustomValidator ValidationGroup="pesquisar" Text="*" cv="cvNomeFant" CssClass="asterisco" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar o Nome Fantasia." runat="server"></asp:CustomValidator>
                         </div>
                     </td>
@@ -340,6 +355,7 @@
                     <td colspan="2" style="text-align:right">
                         <asp:UpdatePanel ID="updBotoes" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
+                                <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
                                 <asp:Button ID="btnPesquisar" OnClientClick="return ValidaCampos()" runat="server" ValidationGroup="pesquisar" CssClass="botao"
                                     Text="Pesquisar" Width="100px" OnClick="btnPesquisar_Click" />
                                     &nbsp;<asp:Button ID="btnIncluir" runat="server" CssClass="botao" Width="100px"
@@ -372,7 +388,7 @@
                         CssClass="alinhamento" 
                         onpageindexchanging="grdListaResultado_PageIndexChanging" 
                         onrowcommand="grdListaResultado_RowCommand" 
-                        onrowdatabound="grdListaResultado_RowDataBound">
+                        onrowdatabound="grdListaResultado_RowDataBound" Width="95%">
                         <Columns>
                             <asp:TemplateField HeaderText="Ações">
                                 <itemtemplate>
@@ -467,7 +483,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <asp:TextBox CssClass="formNovo"  ID="txtInscricaoEstadual" onkeypress="return digitos(event, this);" runat="server" Width="150px"></asp:TextBox>
+                                                                        <asp:TextBox CssClass="formNovo"  ID="txtInscricaoEstadual" onkeypress="ConverterCaixaAlta();"  runat="server" Width="150px"></asp:TextBox>
                                                                     </td>
                                                                 </tr>
                                                             </table>

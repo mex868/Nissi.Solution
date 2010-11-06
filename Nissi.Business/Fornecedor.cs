@@ -23,7 +23,14 @@ namespace Nissi.Business
         {
             return new FornecedorData().Listar(identFornecedor);
         }
-
+        public List<FornecedorVO> ListaFornecedorPorNome(FornecedorVO identfornecedorVo)
+        {
+            return new FornecedorData().ListaFornecedorPorNome(identfornecedorVo);
+        }
+        public List<FornecedorVO> ListaFornecedorNomeFantasia(FornecedorVO identfornecedorVo)
+        {
+            return new FornecedorData().ListaFornecedorNomeFantasia(identfornecedorVo);
+        }
         // ------------------------------------------------------------------------- // 
         #endregion
         #region Métodos de Inclusão

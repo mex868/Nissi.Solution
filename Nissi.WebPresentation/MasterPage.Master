@@ -64,6 +64,9 @@
                     OnAsyncPostBackError="scmPrincipal_AsyncPostBackError">
             <Scripts>
                 <asp:ScriptReference Path="JScripts/Common.js" ScriptMode="Release" />
+                <asp:ScriptReference Path="JScripts/jquery-1.4.2.min.js" />
+                <asp:ScriptReference Path="JScripts/jquery-ui-1.8.2.custom.min.js" />
+                <asp:ScriptReference Path="JScripts/jquery.ui.datepicker-pt-BR.js" />
             </Scripts>
         </asp:ScriptManager>
         <ajaxtoolkit:modalpopupextender ID="mpeAguarde" PopupControlID="PNL" 
@@ -106,7 +109,7 @@
             </tr>
             <tr id="trMenu" class="Menu">
                 <td style="height:20px; width:100%; border-style:outset; border-width:1px;" valign="middle">
-                    <cc1:Menu ID="menuPrincipal" runat="server">
+                    <cc1:Menu ID="menuPrincipal" runat="server" >
                     </cc1:Menu>
                 </td>
             </tr>

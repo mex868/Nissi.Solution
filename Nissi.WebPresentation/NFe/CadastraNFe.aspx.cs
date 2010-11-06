@@ -10,6 +10,7 @@ using System.Web.Caching;
 using Nissi.Model;
 using Nissi.Business;
 using Nissi.Util;
+using System.Globalization;
 
 public partial class CadastrarNFe : BasePage
 {
@@ -40,7 +41,8 @@ public partial class CadastrarNFe : BasePage
         get
         {
             ClienteVO clienteVO = new ClienteVO();
-            clienteVO.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
+            if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
+                clienteVO.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
             return clienteVO;
         }
     }
@@ -260,6 +262,7 @@ public partial class CadastrarNFe : BasePage
                 txtEmissao.Text = DateTime.Now.ToString("dd/MM/yyyy");
                 ddlFreteConta.SelectedValue = "1";
                 ddlTipoDocumento.SelectedValue = "1";
+                btnVoltar.Enabled = false;
             }
             else
             if (hdfTipoAcao.Value.Equals("Editar"))
@@ -269,6 +272,9 @@ public partial class CadastrarNFe : BasePage
                 DadosNotaFiscal = identNotaFiscal;
                 lstItemNotaFiscal = identNotaFiscal.Itens;
                 lstDuplicata = identNotaFiscal.Duplicatas;
+                btnVoltar.Enabled = true;
+                if (identNotaFiscal.NFe.IndStatus != "0" && !string.IsNullOrEmpty(identNotaFiscal.NFe.IndStatus))
+                    btnSalvar.Enabled = false;
             }
             btnIncluirProduto.Attributes.Add("onclick", "ChamaPopup();");
             //criar Session para armazenar valores do grid dos Itens da Nota Fiscal
@@ -293,13 +299,22 @@ public partial class CadastrarNFe : BasePage
             if (hdfTipoAcao.Value.Equals("Incluir"))
             {
               codnf = new NotaFiscal().Incluir(DadosNotaFiscal, 1);
+              txtNF.Text =
+              txtNumeroFatura.Text = new NotaFiscal().ListarNumeroNf(codnf).ToString().PadLeft(8, '0');
+              hdfCodNF.Value = codnf.ToString();
             }
             else
             {
                 new NotaFiscal().Alterar(DadosNotaFiscal, 1);
                 codnf = int.Parse(hdfCodNF.Value);
             }
-            Response.Redirect("ListaNFe.aspx?CodNF="+codnf.ToString());
+            if (DadosNotaFiscal.Duplicatas.Count <= 0)
+            {
+                TabContainer1.ActiveTabIndex = 1;
+                hdfTipoAcao.Value = "Editar";
+            }
+            else
+                Response.Redirect("ListaNFe.aspx?CodNF=" + codnf.ToString());
         }
         else
             MensagemCliente("Não foi associado nenhum produto a Nota Fiscal!");
@@ -309,9 +324,9 @@ public partial class CadastrarNFe : BasePage
     {
         ClienteVO identCliente = new ClienteVO();
         //Todo: Depois do tratamento na procedure, remover a linha abaixo
-        identCliente.IndPessoaTipo = true;
+        identCliente.IndPessoaTipo = null;
         identCliente.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
-        DadosRazaoSocial = new Cliente().Listar(identCliente)[0];
+        DadosRazaoSocial = new Cliente().Listar(identCliente).First();
         
         //lista transportadoras do cliente
         List<TransportadoraVO> listaTransportadoraCliente = new List<TransportadoraVO>();
@@ -430,6 +445,7 @@ public partial class CadastrarNFe : BasePage
                         item.Numero = txtNumeroFatura.Text + "-" + Letra(i).ToString();
                     item.Valor = valor / newlstDuplicata.Count;
                     iLinhaFor++;
+                    i++;
                 }
             }
             grdFatura.DataSource = newlstDuplicata;
@@ -577,6 +593,8 @@ public partial class CadastrarNFe : BasePage
                 res.Icms.CodTipoTributacao = itemNotaFiscalVO.Icms.CodTipoTributacao;
                 res.CalcICMSSobIpi = itemNotaFiscalVO.CalcICMSSobIpi;
                 res.Produto.ICMS = itemNotaFiscalVO.Produto.ICMS;
+                res.CodPedidoCliente = itemNotaFiscalVO.CodPedidoCliente;
+                res.OP = itemNotaFiscalVO.OP;
                 //***********************************************************************************************
 
                 Session["lstItemNotaFiscal"] = lstitemNotaFiscalVO;
@@ -676,23 +694,30 @@ public partial class CadastrarNFe : BasePage
         }
 
     }
-
+    private decimal? TotalGeral = 0;
     protected void grdProduto_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             ItemNotaFiscalVO identItemNotaFiscal = (ItemNotaFiscalVO)e.Row.DataItem;
             e.Row.Cells[1].Text = identItemNotaFiscal.Produto.Codigo;
-            e.Row.Cells[2].Text = identItemNotaFiscal.Produto.Descricao;
-            e.Row.Cells[3].Text = identItemNotaFiscal.Produto.NCM;
-            e.Row.Cells[4].Text = identItemNotaFiscal.Icms.CodTipoTributacao;
-            e.Row.Cells[5].Text = identItemNotaFiscal.Produto.Unidade.TipoUnidade;
-            e.Row.Cells[6].Text = identItemNotaFiscal.Qtd.ToString();
-            e.Row.Cells[7].Text = identItemNotaFiscal.Valor.ToString();
-            e.Row.Cells[8].Text = identItemNotaFiscal.TotalItem.ToString();
-            e.Row.Cells[9].Text = identItemNotaFiscal.ICMS.ToString();
-            e.Row.Cells[10].Text = identItemNotaFiscal.IPI.ToString();
-            e.Row.Cells[11].Text = identItemNotaFiscal.CalcIPI.ToString();
+            if (!string.IsNullOrEmpty(identItemNotaFiscal.OP))
+                e.Row.Cells[2].Text = identItemNotaFiscal.OP.Trim();
+            string pedido = string.Empty;
+            if (!string.IsNullOrEmpty(identItemNotaFiscal.CodPedidoCliente))
+                pedido = " - Ped.: " + identItemNotaFiscal.CodPedidoCliente.Trim();
+
+            e.Row.Cells[3].Text = identItemNotaFiscal.Produto.Descricao +pedido;
+            e.Row.Cells[4].Text = identItemNotaFiscal.Produto.NCM;
+            e.Row.Cells[5].Text = identItemNotaFiscal.Icms.CodTipoTributacao;
+            e.Row.Cells[6].Text = identItemNotaFiscal.Produto.Unidade.TipoUnidade;
+            e.Row.Cells[7].Text = identItemNotaFiscal.Qtd.ToString();
+            e.Row.Cells[8].Text = identItemNotaFiscal.Valor.ToString();
+            TotalGeral += identItemNotaFiscal.TotalItem;
+            e.Row.Cells[9].Text = identItemNotaFiscal.TotalItem.ToString();
+            e.Row.Cells[10].Text = identItemNotaFiscal.ICMS.ToString();
+            e.Row.Cells[11].Text = identItemNotaFiscal.IPI.ToString();
+            e.Row.Cells[12].Text = identItemNotaFiscal.CalcIPI.ToString();
 
             #region Botão Editar
             ImageButton imgEditarFatura = (ImageButton)e.Row.FindControl("imgEditar");
@@ -721,6 +746,16 @@ public partial class CadastrarNFe : BasePage
             else if (e.Row.RowState == DataControlRowState.Alternate)
                 e.Row.CssClass = "FundoLinha2";
         }
+        if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.Cells[8].Text = "Total";
+            e.Row.Cells[9].Text = "dos";
+            e.Row.Cells[10].Text = "Produtos:";
+            //e.Row.Cells[9].Attributes.Add("align", "left");
+            e.Row.Cells[12].Attributes.Add("align", "right");
+            e.Row.Cells[12].Text = TotalGeral.ToString();
+        }
+
     }
         
     #endregion
@@ -780,6 +815,7 @@ public partial class CadastrarNFe : BasePage
             e.Row.Cells[1].Text = identDuplicata.Dias.ToString();
             e.Row.Cells[2].Text = identDuplicata.Vencimento.ToString();
             e.Row.Cells[3].Text = identDuplicata.Numero;
+
             e.Row.Cells[4].Text = identDuplicata.Valor.ToString();
 
             #region Botão Editar
@@ -810,25 +846,6 @@ public partial class CadastrarNFe : BasePage
     }
     #endregion
 
-        
-    [System.Web.Services.WebMethod]
-    public static string[] GetNames(string prefixText)
-    {
-        ClienteVO identCliente = new ClienteVO();
-        //Todo: Depois do tratamento na procedure, remover a linha abaixo
-        identCliente.IndPessoaTipo = true;
-        identCliente.RazaoSocial = prefixText;
-        List<ClienteVO> lCliente = new Cliente().Listar(identCliente);
-
-        List<string> items = new List<string>(); 
-        foreach (ClienteVO item in lCliente)
-        {
-            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
-                item.RazaoSocial, item.CodPessoa.ToString()));
-        }
-        return items.ToArray();
-    }
-
     protected void ddlCFOP_SelectedIndexChanged(object sender, EventArgs e)
     {
     }
@@ -850,5 +867,19 @@ public partial class CadastrarNFe : BasePage
     {
 
     }
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+
+    }
+
+    protected void btnVoltar_Click(object sender, EventArgs e)
+    {
+        var opcao = Request.QueryString["opcao"] ?? string.Empty;
+        var valor = Request.QueryString["valor"] ?? string.Empty;
+        var campo = Request.QueryString["campo"] ?? string.Empty;
+        Response.Redirect("ListaNFe.aspx?valor="+valor+"&opcao="+opcao+"&campo="+campo);
+    }
+
 
 }

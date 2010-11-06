@@ -180,16 +180,23 @@ public partial class CadastraTransportadora :BasePage
     private void Pesquisar()
     {
         TransportadoraVO identTransportadora = new TransportadoraVO();
-        if (!string.IsNullOrEmpty(hdfCodTransportadora.Value)) 
-            identTransportadora.CodTransportadora = Convert.ToInt32(hdfCodTransportadora.Value);
-        if (rbCNPJ.Checked)
-            identTransportadora.CNPJ = txtCNPJ.Text;
+        if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
+        {
+            identTransportadora.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(hdfCodTransportadora.Value))
+                identTransportadora.CodTransportadora = Convert.ToInt32(hdfCodTransportadora.Value);
+            if (rbCNPJ.Checked)
+                identTransportadora.CNPJ = txtCNPJ.Text;
 
-        if (rbNomeFantasia.Checked)
-            identTransportadora.NomeFantasia = txtNomeFantasiaPesq.Text;
+            if (rbNomeFantasia.Checked)
+                identTransportadora.NomeFantasia = txtNomeFantasiaPesq.Text;
 
-        if (rbRazaoSocial.Checked)
-            identTransportadora.RazaoSocial = txtRazao.Text;
+            if (rbRazaoSocial.Checked)
+                identTransportadora.RazaoSocial = txtRazao.Text;
+        }
 
          List<TransportadoraVO> lTransportadora = new Transportadora().Listar(identTransportadora);
 
@@ -202,6 +209,7 @@ public partial class CadastraTransportadora :BasePage
          {
              MensagemCliente("Não Existem Transportadoras Cadastradas");
          }
+        hdfIdRazaoSocial.Value = string.Empty;
     }
 
 

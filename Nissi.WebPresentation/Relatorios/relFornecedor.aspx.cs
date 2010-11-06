@@ -7,21 +7,21 @@ using System.Web.UI.WebControls;
 
 namespace Nissi.WebPresentation.Relatorios
 {
-    public partial class relFornecedor : BasePage
+    public partial class RelFornecedor : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            string Inicio = Request.QueryString["Inicio"].ToString();
-            string Fim = Request.QueryString["Fim"].ToString();
+            string inicio = Request.QueryString["strRazaoIni"].ToString();
+            string fim = Request.QueryString["strRazaoFim"].ToString();
 
-            string Uf = Request.QueryString["UF"].ToString();
+           // string Uf = Request.QueryString["UF"].ToString();
 
             odsFornecedor.SelectMethod = "GetData";
             odsFornecedor.SelectParameters.Clear();
-            odsFornecedor.SelectParameters.Add("CodPessoaIni", Inicio);
-            odsFornecedor.SelectParameters.Add("CodPessoaFim", Fim);
-            odsFornecedor.SelectParameters.Add("UF", Uf);
+            odsFornecedor.SelectParameters.Add("RazaoSocialIni", inicio);
+            odsFornecedor.SelectParameters.Add("RazaoSocialFim", fim);
+           // odsFornecedor.SelectParameters.Add("UF", Uf);
             odsFornecedor.DataBind();
 
             odsEmitente.SelectMethod = "GetData";

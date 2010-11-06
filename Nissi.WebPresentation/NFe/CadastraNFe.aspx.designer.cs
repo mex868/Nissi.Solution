@@ -228,6 +228,15 @@ public partial class CadastrarNFe {
     protected global::System.Web.UI.WebControls.TextBox txtNaturezaOperacao;
     
     /// <summary>
+    /// RequiredFieldValidator6 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+    
+    /// <summary>
     /// hdfCodCFOP control.
     /// </summary>
     /// <remarks>
@@ -406,6 +415,15 @@ public partial class CadastrarNFe {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.TextBox txtNumeroFatura;
+    
+    /// <summary>
+    /// CustomValidator1 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
     
     /// <summary>
     /// txtValorOriginal control.
@@ -840,6 +858,15 @@ public partial class CadastrarNFe {
     protected global::System.Web.UI.WebControls.Button btnCancelar;
     
     /// <summary>
+    /// btnVoltar control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btnVoltar;
+    
+    /// <summary>
     /// btnSalvar control.
     /// </summary>
     /// <remarks>
@@ -865,6 +892,15 @@ public partial class CadastrarNFe {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button btnCarregarValores;
+    
+    /// <summary>
+    /// ValidationSummary2 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary2;
     
     /// <summary>
     /// ValidationSummary1 control.

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblAno = new System.Windows.Forms.Label();
             this.lblNumInicial = new System.Windows.Forms.Label();
             this.lblNumFinal = new System.Windows.Forms.Label();
@@ -38,6 +39,8 @@
             this.tbxJustificativa = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnInutilizar = new System.Windows.Forms.Button();
+            this.erroValidation = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.erroValidation)).BeginInit();
             this.SuspendLayout();
             // 
             // lblAno
@@ -54,9 +57,9 @@
             this.lblNumInicial.AutoSize = true;
             this.lblNumInicial.Location = new System.Drawing.Point(12, 38);
             this.lblNumInicial.Name = "lblNumInicial";
-            this.lblNumInicial.Size = new System.Drawing.Size(75, 13);
+            this.lblNumInicial.Size = new System.Drawing.Size(77, 13);
             this.lblNumInicial.TabIndex = 1;
-            this.lblNumInicial.Text = "Número Inical:";
+            this.lblNumInicial.Text = "Número Inicial:";
             // 
             // lblNumFinal
             // 
@@ -79,9 +82,11 @@
             // tbxAno
             // 
             this.tbxAno.Location = new System.Drawing.Point(95, 9);
+            this.tbxAno.MaxLength = 2;
             this.tbxAno.Name = "tbxAno";
             this.tbxAno.Size = new System.Drawing.Size(100, 20);
             this.tbxAno.TabIndex = 4;
+            this.tbxAno.Validating += new System.ComponentModel.CancelEventHandler(this.tbxAno_Validating);
             // 
             // tbxNumInicial
             // 
@@ -89,6 +94,7 @@
             this.tbxNumInicial.Name = "tbxNumInicial";
             this.tbxNumInicial.Size = new System.Drawing.Size(100, 20);
             this.tbxNumInicial.TabIndex = 5;
+            this.tbxNumInicial.Validating += new System.ComponentModel.CancelEventHandler(this.tbxNumInicial_Validating);
             // 
             // tbxNumFinal
             // 
@@ -96,6 +102,7 @@
             this.tbxNumFinal.Name = "tbxNumFinal";
             this.tbxNumFinal.Size = new System.Drawing.Size(100, 20);
             this.tbxNumFinal.TabIndex = 6;
+            this.tbxNumFinal.Validating += new System.ComponentModel.CancelEventHandler(this.tbxNumFinal_Validating);
             // 
             // tbxJustificativa
             // 
@@ -104,6 +111,7 @@
             this.tbxJustificativa.Name = "tbxJustificativa";
             this.tbxJustificativa.Size = new System.Drawing.Size(519, 73);
             this.tbxJustificativa.TabIndex = 7;
+            this.tbxJustificativa.Validating += new System.ComponentModel.CancelEventHandler(this.tbxJustificativa_Validating);
             // 
             // btnSair
             // 
@@ -113,6 +121,7 @@
             this.btnSair.TabIndex = 8;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
             // btnInutilizar
             // 
@@ -123,6 +132,10 @@
             this.btnInutilizar.Text = "Inutilizar NF-e";
             this.btnInutilizar.UseVisualStyleBackColor = true;
             this.btnInutilizar.Click += new System.EventHandler(this.btnInutilizar_Click);
+            // 
+            // erroValidation
+            // 
+            this.erroValidation.ContainerControl = this;
             // 
             // frmNFeInutilizar
             // 
@@ -140,7 +153,9 @@
             this.Controls.Add(this.lblNumInicial);
             this.Controls.Add(this.lblAno);
             this.Name = "frmNFeInutilizar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNFeInutilizar";
+            ((System.ComponentModel.ISupportInitialize)(this.erroValidation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,5 +173,6 @@
         private System.Windows.Forms.TextBox tbxJustificativa;
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnInutilizar;
+        private System.Windows.Forms.ErrorProvider erroValidation;
     }
 }

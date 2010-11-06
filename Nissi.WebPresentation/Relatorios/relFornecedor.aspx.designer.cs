@@ -10,7 +10,7 @@
 namespace Nissi.WebPresentation.Relatorios {
     
     
-    public partial class relFornecedor {
+    public partial class RelFornecedor {
         
         /// <summary>
         /// form1 control.

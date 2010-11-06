@@ -120,6 +120,10 @@
           <DataField>Contato</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CodRef">
+          <DataField>CodRef</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>DataSet</DataSourceName>
@@ -127,7 +131,7 @@
       </Query>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Nissi\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Macware_Projeto\Nissi\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
         <rd:TableName>pr_relatorio_cliente</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -144,21 +148,21 @@
               <Width>0.69721in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.52053in</Width>
+              <Width>3.62742in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.68654in</Width>
+              <Width>0.38175in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.874in</Width>
+              <Width>1.26983in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.11891in</Width>
+              <Width>1.92099in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.40289in</Height>
+              <Height>0.24664in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -177,7 +181,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -188,8 +192,11 @@
                         </Border>
                         <TopBorder>
                           <Style>Solid</Style>
-                          <Width>1.25pt</Width>
                         </TopBorder>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -227,6 +234,10 @@
                         <TopBorder>
                           <Style>Solid</Style>
                         </TopBorder>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -263,6 +274,10 @@
                         <TopBorder>
                           <Style>Solid</Style>
                         </TopBorder>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -288,7 +303,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -302,7 +317,7 @@
                           <Color>Black</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Style>None</Style>
+                          <Color>Black</Color>
                         </BottomBorder>
                         <LeftBorder>
                           <Style>None</Style>
@@ -310,6 +325,7 @@
                         <RightBorder>
                           <Style>None</Style>
                         </RightBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -335,7 +351,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -349,7 +365,7 @@
                           <Color>Black</Color>
                         </TopBorder>
                         <BottomBorder>
-                          <Style>None</Style>
+                          <Color>Black</Color>
                         </BottomBorder>
                         <LeftBorder>
                           <Style>None</Style>
@@ -357,6 +373,7 @@
                         <RightBorder>
                           <Style>None</Style>
                         </RightBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -368,7 +385,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.40289in</Height>
+              <Height>0.26747in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -379,12 +396,12 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CodPessoa.Value</Value>
+                              <Value>=Fields!CodRef.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -470,12 +487,12 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Telefone.Value</Value>
+                              <Value>=Format(val(Fields!Telefone.Value),"\(00\)0000\-0000")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -506,7 +523,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -547,10 +564,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet2</DataSetName>
-        <Top>0.17639cm</Top>
+        <Top>0.10583cm</Top>
         <Left>0.45681cm</Left>
-        <Height>2.04668cm</Height>
-        <Width>20.05888cm</Width>
+        <Height>1.30584cm</Height>
+        <Width>20.05889cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -558,7 +575,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.89504in</Height>
+    <Height>0.58356in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -594,7 +611,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Relatório de Nota Fiscal</Value>
+                  <Value>Relatório de Clientes</Value>
                   <Style>
                     <FontSize>11pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -691,7 +708,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!InscricaoEstadual.Value, "DataSetEmitente")</Value>
+                  <Value>=First(Format(Int(Fields!InscricaoEstadual.Value),"000\.000\.000\.000"), "DataSetEmitente")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -721,7 +738,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!CNPJ.Value, "DataSetEmitente")</Value>
+                  <Value>=First(Format(Int(Fields!CNPJ.Value), "00\.000\.000\/0000\-00"),"DataSetEmitente")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -801,6 +818,7 @@
   </Page>
   <Language>pt-BR</Language>
   <DeferVariableEvaluation>true</DeferVariableEvaluation>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportID>c08914ec-a1c3-4f21-82a0-cb36f40cbd58</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>

@@ -358,4 +358,152 @@ public class BasePage : Page
         else
             return Convert.ToInt32(sAltura);
     }
+    #region Método que Carrega os Clientes
+    [System.Web.Services.WebMethod]
+    public static string[] GetNames(string prefixText)
+    {
+        ClienteVO identCliente = new ClienteVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identCliente.IndPessoaTipo = null;
+        identCliente.RazaoSocial = prefixText;
+        List<ClienteVO> lCliente = new Cliente().ListaClientePorNome(identCliente);
+
+        List<string> items = new List<string>();
+        foreach (ClienteVO item in lCliente)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Clientes pelo Nome Fantasia
+    [System.Web.Services.WebMethod]
+    public static string[] GetNamesFantasy(string prefixText)
+    {
+        ClienteVO identCliente = new ClienteVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identCliente.IndPessoaTipo = null;
+        identCliente.NomeFantasia = prefixText;
+        List<ClienteVO> lCliente = new Cliente().ListaClientePorNomeFantasia(identCliente);
+
+        List<string> items = new List<string>();
+        foreach (ClienteVO item in lCliente)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Fornecedor
+    [System.Web.Services.WebMethod]
+    public static string[] GetFornecedor(string prefixText)
+    {
+        FornecedorVO identFornecedor = new FornecedorVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identFornecedor.RazaoSocial = prefixText;
+        List<FornecedorVO> lFornecedor = new Fornecedor().ListaFornecedorPorNome(identFornecedor);
+
+        List<string> items = new List<string>();
+        foreach (FornecedorVO item in lFornecedor)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Fornecedor pelo Nome Fantasia
+    [System.Web.Services.WebMethod]
+    public static string[] GetFornecedorFantasia(string prefixText)
+    {
+        FornecedorVO identForneced = new FornecedorVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identForneced.IndPessoaTipo = null;
+        identForneced.NomeFantasia = prefixText;
+        List<FornecedorVO> lfornecedor = new Fornecedor().ListaFornecedorNomeFantasia(identForneced);
+
+        List<string> items = new List<string>();
+        foreach (FornecedorVO item in lfornecedor)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Transportadora
+    [System.Web.Services.WebMethod]
+    public static string[] GetTransportadora(string prefixText)
+    {
+        TransportadoraVO identTransportadoraVo = new TransportadoraVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identTransportadoraVo.RazaoSocial = prefixText;
+        List<TransportadoraVO> ltransportadora = new Transportadora().ListaTransportadoraPorNome(identTransportadoraVo);
+
+        List<string> items = new List<string>();
+        foreach (TransportadoraVO item in ltransportadora)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Transportadora pelo Nome Fantasia
+    [System.Web.Services.WebMethod]
+    public static string[] GetTransortadoraFantasia(string prefixText)
+    {
+        TransportadoraVO identTransportadoraVo = new TransportadoraVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identTransportadoraVo.NomeFantasia = prefixText;
+        List<TransportadoraVO> ltransportadora = new Transportadora().ListaTransportadoraNomeFantasia(identTransportadoraVo);
+
+        List<string> items = new List<string>();
+        foreach (TransportadoraVO item in ltransportadora)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.RazaoSocial, item.CodPessoa.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Produto
+    [System.Web.Services.WebMethod]
+    public static string[] GetProduto(string prefixText)
+    {
+        ProdutoVO identProdutoVo = new ProdutoVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identProdutoVo.Descricao = prefixText;
+        List<ProdutoVO> lProduto = new Produto().ListaProdutoPorNome(identProdutoVo);
+
+        List<string> items = new List<string>();
+        foreach (ProdutoVO item in lProduto)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Descricao, item.CodProduto.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+
+    #region Método que Carrega os Fornecedor pelo Nome Fantasia
+    [System.Web.Services.WebMethod]
+    public static string[] GetFuncionario(string prefixText)
+    {
+        FuncionarioVO identFuncionarioVo = new FuncionarioVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identFuncionarioVo.Nome = prefixText;
+        List<FuncionarioVO> lFuncionario = new Funcionario().ListaFuncionarioPorNome(identFuncionarioVo);
+
+        List<string> items = new List<string>();
+        foreach (FuncionarioVO item in lFuncionario)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Nome, item.CodFuncionario.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
 }

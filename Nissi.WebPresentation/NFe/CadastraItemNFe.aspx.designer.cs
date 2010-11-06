@@ -183,6 +183,24 @@ public partial class CadastraItemNFe {
     protected global::System.Web.UI.WebControls.DropDownList ddlClassificacaoFiscal;
     
     /// <summary>
+    /// tbxCodPedido control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.TextBox tbxCodPedido;
+    
+    /// <summary>
+    /// tbxOP control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.TextBox tbxOP;
+    
+    /// <summary>
     /// ckbCalcSobIpi control.
     /// </summary>
     /// <remarks>

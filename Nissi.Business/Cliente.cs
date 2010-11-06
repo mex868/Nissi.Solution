@@ -25,7 +25,16 @@ namespace Nissi.Business
         {
            return new ClienteData().Listar(identCliente);
         }
+        public List<ClienteVO> ListaClientePorNome(ClienteVO identclienteVo)
+        {
+            return new ClienteData().ListaClientePorNome(identclienteVo);
+        }
+        public List<ClienteVO> ListaClientePorNomeFantasia(ClienteVO identCliente)
+        {
+            return new ClienteData().ListaClientePorNomeFantasia(identCliente);
+        }
         #endregion
+
         #region Métodos de Listagem de Transportadoras
         /// <summary>
         /// Método para executar a proc pr_selecionar_tranportadoraporcliente 
@@ -135,6 +144,8 @@ namespace Nissi.Business
         }
         // ------------------------------------------------------------------------- // 
         #endregion
+
+
 
     }
 }

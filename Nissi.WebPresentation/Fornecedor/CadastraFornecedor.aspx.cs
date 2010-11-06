@@ -171,17 +171,23 @@ public partial class CadastraFornecedor : BasePage
     private void Pesquisar()
     {
         FornecedorVO identFornecedor = new FornecedorVO();
-        if (!string.IsNullOrEmpty(hdfCodFornecedor.Value))
-            identFornecedor.CodFornecedor = Convert.ToInt32(hdfCodFornecedor.Value);
-        if (rbCNPJ.Checked)
-            identFornecedor.CNPJ = txtCNPJPesq.Text.Replace(".", "").Replace("-", "").Replace("/", ""); ;
+        if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
+        {
+            identFornecedor.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(hdfCodFornecedor.Value))
+                identFornecedor.CodFornecedor = Convert.ToInt32(hdfCodFornecedor.Value);
+            if (rbCNPJ.Checked)
+                identFornecedor.CNPJ = txtCNPJPesq.Text.Replace(".", "").Replace("-", "").Replace("/", ""); ;
 
-        if (rbNomeFantasia.Checked)
-            identFornecedor.NomeFantasia = txtNomeFantasiaPesq.Text;
+            if (rbNomeFantasia.Checked)
+                identFornecedor.NomeFantasia = txtNomeFantasiaPesq.Text;
 
-        if (rbRazaoSocial.Checked)
-            identFornecedor.RazaoSocial = txtRazao.Text;
-
+            if (rbRazaoSocial.Checked)
+                identFornecedor.RazaoSocial = txtRazao.Text;
+        }
         List<FornecedorVO> lFornecedor = new Fornecedor().Listar(identFornecedor);
 
         if (lFornecedor.Count > 0)
@@ -193,6 +199,7 @@ public partial class CadastraFornecedor : BasePage
         {
             MensagemCliente("Não Existem Fornecedors Cadastradas");
         }
+        hdfIdRazaoSocial.Value = string.Empty;
     }
 
     private void CarregaComboTipoFornecimento()

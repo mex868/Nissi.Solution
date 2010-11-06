@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Nissi.Model;
 using System.IO;
 using System.Threading;
+using Nissi.Business;
 
 
 namespace Nissi.WinFormsApplication
@@ -78,7 +79,7 @@ namespace Nissi.WinFormsApplication
             }
         }
         DGVColumnHeader dgvColumnHeader;
-        private void MontarColunas(DataGridView dgvSource, NotaFiscalVO[] identNotaFiscal)
+        private void MontarColunas(DataGridView dgvSource, List<NotaFiscalVO> identNotaFiscal)
         {
             dgvNotaFiscal.Columns.Clear();
             //initialize DGVColumnHeader object
@@ -231,11 +232,11 @@ namespace Nissi.WinFormsApplication
 
         }
         nfec.Parametro parametroNfe = new nfec.Parametro();
-        ServiceReference1.Service1Client ServiceClient = new ServiceReference1.Service1Client();
+        Nfe ServiceClient = new Nfe();
         private void frmNfeTransmite_Load(object sender, EventArgs e)
         {
             btnFiltro_Click(sender, e);           
-            ParametroVO[] lstParametro = ServiceClient.ListarParametro();
+            List<ParametroVO> lstParametro = new Parametro().Listar();
             foreach (ParametroVO identParametro in lstParametro)
             {
                 parametroNfe.Ambiente = identParametro.Ambiente;
@@ -570,17 +571,8 @@ namespace Nissi.WinFormsApplication
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NotaFiscalControler controler = new NotaFiscalControler();
-            for (int i = 0; i < dgvNotaFiscal.RowCount; i++)
-            {
-                NotaFiscalVO identNotaFiscal = (NotaFiscalVO)dgvNotaFiscal.Rows[i].DataBoundItem;
-                //Verifica quais notas fiscais foram selecionadas para gerar e assinar o xml
-                if (dgvNotaFiscal[0, i].Value != null && (bool)dgvNotaFiscal[0, i].Value == true)
-                {
-                    string mensagem = controler.GerarNFe(identNotaFiscal, parametroNfe);
-                    MessageBox.Show(mensagem);
-                }
-            }
+            frmNFeInutilizar inutilizar = new frmNFeInutilizar(parametroNfe);
+            inutilizar.Show();
         }
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
@@ -621,7 +613,7 @@ namespace Nissi.WinFormsApplication
                         //Notas Fiscais com erro no XML
                         identNotaFiscal.NFe.IndStatus = "2";
                     }
-            MontarColunas(dgvNotaFiscal, ServiceClient.ListarNotaFiscal(identNotaFiscal));
+            MontarColunas(dgvNotaFiscal, new NotaFiscal().ListarTudo(identNotaFiscal));
         }
 
         private void ckbData_CheckedChanged(object sender, EventArgs e)
@@ -658,6 +650,25 @@ namespace Nissi.WinFormsApplication
             string retorno = new NotaFiscalControler().DistribuicaoNFe(identNotaFiscal.NFe.ChaveNFE, identNotaFiscal.NFe.NumRecibo, identNotaFiscal.NFe.CodNumLote.ToString(), parametroNfe);
             MessageBox.Show(retorno);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            NotaFiscalVO identNotaFiscal = (NotaFiscalVO)dgvNotaFiscal.CurrentRow.DataBoundItem;
+            new NotaFiscalControler().NFeDanfe(parametroNfe.PathPrincipal + @"\nfe\arquivos\procNFe\" +
+            identNotaFiscal.NFe.ChaveNFE + "-procNFe.xml" + "|",
+            parametroNfe.PathPrincipal + @"\nfe\arquivos\pdf\" + identNotaFiscal.NFe.ChaveNFE + ".pdf" + "|",
+            Convert.ToInt32(parametroNfe.Ambiente),
+            2,
+            false,
+            parametroNfe.PathPrincipal + "|",
+            parametroNfe.TotalizarCfop + "|",
+            parametroNfe.DataPacketFormSeg + "|",
+            parametroNfe.TipoDanfe + "|",
+            parametroNfe.DanfeLogo + "|",
+            parametroNfe.DanfeInfo + "|",
+            parametroNfe.DataPacket + "|"
+            );
         }
     }
 }

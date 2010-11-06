@@ -17,7 +17,6 @@ namespace Nissi.WinFormsApplication
         }
         
         nfec.Parametro parametroNfe = new nfec.Parametro();
-        ServiceReference1.Service1Client ServiceClient = new ServiceReference1.Service1Client();
         public frmNFeInutilizar(nfec.Parametro tempParametro) 
         {
             InitializeComponent();
@@ -36,9 +35,68 @@ namespace Nissi.WinFormsApplication
                 tbxNumInicial.Text,
                 tbxNumFinal.Text,
                 tbxJustificativa.Text, parametroNfe);
-
+            MessageBox.Show("Inutilizado com sucesso Nº protocolo: " + retorno);
             btnInutilizar.Enabled = true;
-            Cursor = Cursors.Default;	
+            Cursor = Cursors.Default;
+            this.Close();
+        }
+
+        private void tbxAno_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbxAno.Text))
+            {
+                erroValidation.SetError(this.tbxAno, "Digite um Ano");
+                e.Cancel = true;
+            }
+            else
+            {
+                erroValidation.SetError(this.tbxAno, "");
+            }
+        }
+
+        private void tbxNumInicial_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbxNumInicial.Text))
+            {
+                erroValidation.SetError(this.tbxNumInicial, "Digite o Número Inicial");
+                e.Cancel = true;
+            }
+            else
+            {
+                erroValidation.SetError(this.tbxNumInicial, "");
+            }
+
+        }
+
+        private void tbxNumFinal_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbxNumFinal.Text))
+            {
+                erroValidation.SetError(this.tbxNumFinal, "Digite o Número Inicial");
+                e.Cancel = true;
+            }
+            else
+            {
+                erroValidation.SetError(this.tbxNumFinal, "");
+            }
+        }
+
+        private void tbxJustificativa_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbxJustificativa.Text) && (tbxJustificativa.MaxLength > 14))
+            {
+                erroValidation.SetError(this.tbxJustificativa, "Justificativa tem que ter no mínimo 15 caracteres!");
+                e.Cancel = true;
+            }
+            else
+            {
+                erroValidation.SetError(this.tbxNumFinal, "");
+            }
+        }
+
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

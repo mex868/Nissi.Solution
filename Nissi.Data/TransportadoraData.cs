@@ -134,6 +134,67 @@ namespace Nissi.DataAccess
             transportadoraVO.Cep = tempCep;
         }
         // ------------------------------------------------------------------------- // 
+        public List<TransportadoraVO> ListaTransportadoraPorNome(TransportadoraVO identTransportadoraVO)
+        {
+            OpenCommand("pr_selecionar_transportadora");
+            try
+            {
+                if (!string.IsNullOrEmpty(identTransportadoraVO.RazaoSocial))
+                    AddInParameter("@RazaoSocial", DbType.String, identTransportadoraVO.RazaoSocial);
+                List<TransportadoraVO> lstTransportadoraVo = new List<TransportadoraVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        TransportadoraVO transportadoraVo = new TransportadoraVO();
+                        transportadoraVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        transportadoraVo.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
+                        lstTransportadoraVo.Add(transportadoraVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstTransportadoraVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
+        public List<TransportadoraVO> ListaTransportadoraNomeFantasia(TransportadoraVO identTransportadoraVo)
+        {
+            OpenCommand("pr_selecionar_transportadora");
+            try
+            {
+                if (!string.IsNullOrEmpty(identTransportadoraVo.RazaoSocial))
+                    AddInParameter("@NomeFantasia", DbType.String, identTransportadoraVo.NomeFantasia);
+                List<TransportadoraVO> lstTransportadoraVo = new List<TransportadoraVO>();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        TransportadoraVO transportadoraVo = new TransportadoraVO();
+                        transportadoraVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
+                        transportadoraVo.RazaoSocial = GetReaderValue<string>(dr, "NomeFantasia");
+                        lstTransportadoraVo.Add(transportadoraVo);
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return lstTransportadoraVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
+
         #endregion
         #region Métodos de Inclusão
         /// <summary>
@@ -287,5 +348,7 @@ namespace Nissi.DataAccess
 
 
         #endregion
+
+
     }
 }

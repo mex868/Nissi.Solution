@@ -19,6 +19,10 @@ namespace Nissi.Business
         {
             return new ProdutoData().Lista(identProduto);
         }
+        public List<ProdutoVO> ListaProdutoPorNome(ProdutoVO identProdutoVo)
+        {
+            return new ProdutoData().ListaProdutoPorNome(identProdutoVo);
+        }
         #endregion
 
         #region Métodos de Inclusão

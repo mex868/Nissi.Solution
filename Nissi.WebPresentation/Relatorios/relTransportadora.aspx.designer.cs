@@ -10,7 +10,7 @@
 namespace Nissi.WebPresentation.Relatorios {
     
     
-    public partial class relTransportadora {
+    public partial class RelTransportadora {
         
         /// <summary>
         /// form1 control.

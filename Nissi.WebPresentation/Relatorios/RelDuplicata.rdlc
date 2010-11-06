@@ -199,7 +199,7 @@
       </Query>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Nissi\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
         <rd:TableName>pr_relatorio_duplicata</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -213,30 +213,30 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.128in</Width>
+              <Width>1.13587in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.5655in</Width>
+              <Width>1.57337in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.77384in</Width>
+              <Width>1.92754in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.51167in</Width>
+              <Width>1.51954in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.51342in</Width>
+              <Width>1.51087in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.43028in</Height>
+              <Height>0.43215in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
                     <Image Name="Image10">
                       <Source>Database</Source>
-                      <Value>=First(Fields!Logo.Value, "DataSet1")</Value>
+                      <Value>=Fields!Logo.Value</Value>
                       <MIMEType>image/png</MIMEType>
                       <Sizing>FitProportional</Sizing>
                       <Style>
@@ -339,7 +339,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.18364in</Height>
+              <Height>0.18551in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -423,7 +423,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.18364in</Height>
+              <Height>0.18551in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -434,9 +434,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!LogradouroEmitente.Value &amp;","&amp; Fields!NumeroEmitente.Value  &amp;" - "&amp; Fields!BairroEmitente.Value &amp;" - "&amp;Fields!CidadeEmitente.Value &amp; " - SP - CEP: "&amp; Fields!CodCepEmitente.Value</Value>
+                              <Value>=Fields!LogradouroEmitente.Value &amp;","&amp; Fields!NumeroEmitente.Value  &amp;" - "&amp; Fields!BairroEmitente.Value &amp;" - "&amp;Fields!CidadeEmitente.Value &amp; " - SP - CEP: "&amp; Format(Int(Fields!CodCepEmitente.Value),"00000\-000")</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -512,7 +512,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.19406in</Height>
+              <Height>0.19593in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -523,9 +523,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Fone: "&amp; Fields!TelefoneEmitente.Value &amp;"  Fax: "&amp; Fields!FaxEmitente.Value</Value>
+                              <Value>="Fone: (11)2726-0456 "&amp; Format(Int(Fields!TelefoneEmitente.Value),"\(00\)0000\-0000") &amp;"  Fax: "&amp; Format(Int(Fields!FaxEmitente.Value),"\(00\)0000\-0000")</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -568,7 +568,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Inscrição no CNPJ Nº "&amp; Fields!CNPJEmitente.Value</Value>
+                              <Value>="Inscrição no CNPJ Nº "&amp; Format(Int (Fields!CNPJEmitente.Value),"00\.000\.000\/0000\-00")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -600,7 +600,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.17323in</Height>
+              <Height>0.1751in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -655,7 +655,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Inscrição Estadual Nº "&amp; Fields!InscricaoEstadualEmitente.Value</Value>
+                              <Value>="Inscrição Estadual Nº "&amp; Format(Int(Fields!InscricaoEstadualEmitente.Value),"000\.000\.000\.000")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -687,7 +687,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.21103in</Height>
+              <Height>0.2129in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -851,7 +851,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.03125in</Height>
+              <Height>0.03312in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1001,7 +1001,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.18364in</Height>
+              <Height>0.18551in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1260,7 +1260,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.17323in</Height>
+              <Height>0.1751in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1271,7 +1271,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!NF.Value</Value>
+                              <Value>=Right(StrDup(8,"0") &amp; Fields!NF.Value, 8)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1476,7 +1476,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.19406in</Height>
+              <Height>0.19593in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1647,7 +1647,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.19406in</Height>
+              <Height>0.19593in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1794,7 +1794,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20448in</Height>
+              <Height>0.20635in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1885,7 +1885,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23573in</Height>
+              <Height>0.23761in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1932,7 +1932,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!NomLogr.Value &amp;", "&amp; Fields!Numero.Value &amp;" - "&amp; Fields!NomBairro.Value</Value>
+                              <Value>=Fields!NomLogr.Value &amp;", "&amp; Fields!Numero.Value &amp;" - "&amp; Fields!NomBairro.Value &amp;" - "&amp; First(Fields!Complemento.Value, "DataSet1")</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -1966,7 +1966,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.21489in</Height>
+              <Height>0.21676in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2075,7 +2075,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="  Estado "&amp; Fields!CodUF.Value &amp;"  CEP "&amp; Fields!CodCep.Value</Value>
+                              <Value>="  Estado "&amp; Fields!CodUF.Value &amp;"  CEP "&amp; Format(Int(Fields!CodCep.Value),"00000\-000")</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -2107,7 +2107,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.22531in</Height>
+              <Height>0.22718in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2188,7 +2188,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.19406in</Height>
+              <Height>0.19594in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2269,7 +2269,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.22531in</Height>
+              <Height>0.22718in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2321,7 +2321,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CNPJ.Value</Value>
+                              <Value>=Format(Int(Fields!CNPJ.Value),"00\.000\.000\/0000\-00")</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -2430,7 +2430,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.31906in</Height>
+              <Height>0.32093in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2533,7 +2533,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.66954in</Height>
+              <Height>0.67142in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2651,131 +2651,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.70112in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox139">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Silmara Aparecida Brilhante Navarro - EPP</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>________________________________________________________________________</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>ASSINATURA DO EMITENTE</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox139</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <BottomBorder>
-                          <Style>Solid</Style>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Style>Solid</Style>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Style>Solid</Style>
-                        </RightBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                    <ColSpan>5</ColSpan>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell />
-                <TablixCell />
-                <TablixCell />
-                <TablixCell />
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>0.06907in</Height>
+              <Height>0.47094in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2851,16 +2727,15 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>0.018cm</Top>
-        <Left>0.09737cm</Left>
-        <Height>13.23503cm</Height>
-        <Width>19.03077cm</Width>
+        <Left>0.35737cm</Left>
+        <Height>12.56538cm</Height>
+        <Width>19.47466cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2868,7 +2743,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>5.21773in</Height>
+    <Height>6.42332in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -2883,14 +2758,14 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.66618in</Width>
+  <Width>7.82365in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
+    <LeftMargin>0.5cm</LeftMargin>
+    <RightMargin>0.3cm</RightMargin>
+    <TopMargin>1.2cm</TopMargin>
+    <BottomMargin>1.5cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -2914,6 +2789,7 @@ FLlHUWdMBlAhS2sNUeMRFyDyElljWuYh6rfKEtlH3feIDERzyF5ZImp4ymet+xTXcgEiL5ElprUW1B5o
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>pt-BR</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportID>d74e576a-2402-4764-9c7c-ce583eae7efc</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>

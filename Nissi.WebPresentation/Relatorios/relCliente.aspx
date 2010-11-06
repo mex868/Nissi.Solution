@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="relCliente.aspx.cs" Inherits="Nissi.WebPresentation.Relatorios.relClientes" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="relCliente.aspx.cs" Inherits="Nissi.WebPresentation.Relatorios.RelClientes" %>
 
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 

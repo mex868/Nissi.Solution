@@ -32,10 +32,10 @@ namespace Nissi.WebPresentation.Relatorios
                 ddlUF.DataBind();
                 ddlUF.Items.Insert(0, new ListItem("Todos", ""));
 
-                ddlRegiao.Items.Add(new ListItem("Todos",""));
-                ddlRegiao.Items.Add(new ListItem("Notas Fiscais no Estado","SP"));
-                ddlRegiao.Items.Add(new ListItem("Notas Fiscais Fora do Estado","3"));
+                ddlRegiao.Items.Add(new ListItem("Notas Fiscais no Estado", "1"));
+                ddlRegiao.Items.Add(new ListItem("Notas Fiscais Fora do Estado", "2"));
                 ddlRegiao.DataBind();
+
             
           
         }
@@ -55,9 +55,9 @@ namespace Nissi.WebPresentation.Relatorios
             tableVarios.Style.Add("display", "none");
             tableNotaFiscal.Style.Add("display", "none");
             tbRadioCliente.Style.Add("display", "none");
+            tableProduto.Style.Add("display", "none");
             tdUf1.Style.Add("display", "none");
             tdUf2.Style.Add("display", "none");
-            tableProduto.Style.Add("display", "none");
             if (ddlRelatorio.SelectedIndex > 0)
             {
                 if (ddlRelatorio.SelectedValue != "2")
@@ -75,7 +75,8 @@ namespace Nissi.WebPresentation.Relatorios
                             tdCod2.Style.Add("display", "block");
                             tdCod3.Style.Add("display", "block");
                             tdCod4.Style.Add("display", "block");
-                        }
+                        }                        
+
                         else
                         {
                             tdRazao1.Style.Add("display", "block");
@@ -83,11 +84,11 @@ namespace Nissi.WebPresentation.Relatorios
                             tdRazao3.Style.Add("display", "block");
                             tdRazao4.Style.Add("display", "block");
                         }
-
                     }
-                    else
-                        if (ddlRelatorio.SelectedValue == "5")
-                            tableProduto.Style.Add("display", "block");
+                    else if (ddlRelatorio.SelectedValue == "5")
+                    {
+                        tableProduto.Style.Add("display", "block");
+                    }
                     else
                     {
                         tdRazao1.Style.Add("display", "block");
@@ -95,7 +96,7 @@ namespace Nissi.WebPresentation.Relatorios
                         tdRazao3.Style.Add("display", "block");
                         tdRazao4.Style.Add("display", "block");
 
-                    
+
                     }
                 }
                 else
@@ -109,58 +110,54 @@ namespace Nissi.WebPresentation.Relatorios
         {
             if (ddlRelatorio.SelectedIndex > 0)
             {
-                string tipo =ddlRelatorio.SelectedValue ;
-                string regiao=string.Empty;
-                string strInicio = "";
-                string strFim = "";
-                string codIni = "";
-                string codFim = "";
+                string strUrl = "";
+                StringBuilder parametro = new StringBuilder();
 
-
-                switch (tipo)
+                switch(ddlRelatorio.SelectedValue)
                 {
-                    case "1":
-                        if (rbtCod.Checked)
-                        {
-                            codIni = txtCodIni.Text;
-                            codFim = txtCodFim.Text;
-                            regiao = ddlRegiao.SelectedValue;
-                            strInicio = tbxPeriodoInicial.Text;
-                            strFim = tbxPeriodoFinal.Text;
-                        }
-                        break;
-                    case "2":
-                            regiao = ddlRegiao.SelectedValue;
-                            strInicio = tbxPeriodoInicial.Text;
-                            strFim = tbxPeriodoFinal.Text;
-                        break;
-                    case "5":
+                    case "1"://Clientes
+                        parametro.Append("RazaoIni!"+txtInicio.Text);
+                        parametro.Append("|RazaoFim!" + txtFim.Text);
+                        parametro.Append("|CodIni!" + txtCodIni.Text);
+                        parametro.Append("|CodFim!" + txtCodFim.Text);
+                        parametro.Append("|UF!" + ddlUF.SelectedValue);
+                    strUrl = "relCliente.aspx?";
+                    break;
+                    case "2":// NotaFiscal
 
-                        if (rbCodigo.Checked)
-                        {
-                            regiao = txtCodigoDescricao.Text;
-                            codIni = string.Empty;
-                        }
-                        else
-                        {
-                            codIni = txtCodigoDescricao.Text;
-                            regiao = string.Empty;
-                        }
-                        strInicio = tbxDataIni.Text;
-                        strFim = tbxDataFim.Text;
+                    parametro.Append("DtIni!" + tbxPeriodoInicial.Text);
+                    parametro.Append("|DtFim!" + tbxPeriodoFinal.Text);
+                    parametro.Append("|Tipo!" + ddlRegiao.SelectedValue);
+                    strUrl = "relNotaFiscal.aspx?";
+
                         break;
-                    default:
-                            regiao = ddlUF.SelectedValue;
-                            strInicio = txtInicio.Text;
-                            strFim = txtFim.Text;
+
+                    case "3"://fornecedor
+                         parametro.Append("strRazaoIni!"+txtInicio.Text);
+                        parametro.Append("|strRazaoFim!" + txtFim.Text);
+                        strUrl = "relFornecedor.aspx?";
+                        break;
+                    case "4"://transportadora
+                        parametro.Append("strRazaoIni!"+txtInicio.Text);
+                        parametro.Append("|strRazaoFim!" + txtFim.Text);
+                        strUrl="relTransportadora.aspx?";
+                        break;
+
+                    case "5"://Produto
+                        parametro.Append("Codigo!"+txtCodigo.Text);
+                        parametro.Append("|Descricao!" + txtDescricao.Text);
+                        parametro.Append("|DtIni!" + tbxPeriodoIni.Text);
+                        parametro.Append("|DtFim!" + tbxFinal.Text);
+                        strUrl = "relProduto.aspx?";
                         break;
 
                 }
-                    ExecutarScript(new StringBuilder("AbrirRelatorio('" + strInicio + "','" + strFim + "','" + regiao + "','"+tipo+"','"+codIni+"','"+codFim+"');"));
+                
+
+                    ExecutarScript(new StringBuilder("AbrirRelatorio('" + strUrl + "','" +parametro.ToString()+ "');"));
             }
 
         }
-
 
     }
 }

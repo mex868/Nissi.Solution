@@ -188,5 +188,10 @@ namespace Nissi.Business
         {
             return new FuncionarioData().Lista();
         }
+
+        public List<FuncionarioVO> ListaFuncionarioPorNome(FuncionarioVO identFuncionarioVo)
+        {
+            return new FuncionarioData().ListaFuncionarioPorNome(identFuncionarioVo);
+        }
     }
 }

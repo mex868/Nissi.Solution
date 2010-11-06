@@ -9,9 +9,9 @@ namespace Nissi.Business
 {
     public class ProdutoNF
     {
-        public List<ProdutoNFVO> Lista(string codigo, string descricao, DateTime? dataEmissaoIni, DateTime? dataEmissaoFim)
+        public List<ProdutoNFVO> Lista(string codigo, string Op, DateTime? dataEmissaoIni, DateTime? dataEmissaoFim)
         {
-            return new ProdutoNFData().Lista(codigo, descricao, dataEmissaoIni, dataEmissaoFim);
+            return new ProdutoNFData().Lista(codigo, Op, dataEmissaoIni, dataEmissaoFim);
         }
     }
 }
