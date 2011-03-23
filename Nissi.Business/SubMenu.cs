@@ -17,6 +17,11 @@ namespace Nissi.Business
         {
             return new SubMenuData().Listar(identSubMenu);
         }
+
+        public int ListarOrdem(SubMenuVO identSuMenu)
+        {
+            return new SubMenuData().ListarOrdem(identSuMenu);
+        }  
         #endregion
         /// <summary>
         /// Método para incluir um registro na tabela SubMenu 

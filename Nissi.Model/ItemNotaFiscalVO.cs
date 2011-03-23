@@ -204,7 +204,7 @@ namespace Nissi.Model
         }
         public decimal? CalcIPI
         {
-            get { return (IPI * Valor / 100) * IPI; }
+            get { return (IPI * Valor / 100) * Qtd; }
         }
         public decimal? CalcIcmsSobIpiValor
         {

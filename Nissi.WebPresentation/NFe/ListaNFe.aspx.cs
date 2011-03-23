@@ -104,7 +104,7 @@ namespace Nissi.WebPresentation.NFe
             else
             {
                 NotaFiscalVO identNFe = new NotaFiscalVO();
-                if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
+                if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value) && !hdfIdRazaoSocial.Value.Equals("null"))
                 {
                     identNFe.Cliente.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
                 }
@@ -191,7 +191,8 @@ namespace Nissi.WebPresentation.NFe
                 NotaFiscalVO identNFe = (NotaFiscalVO)e.Row.DataItem;
                 e.Row.Cells[1].Text = identNFe.Serie;
                 e.Row.Cells[2].Text = identNFe.NF.ToString().PadLeft(8, '0'); ;
-                e.Row.Cells[3].Text = identNFe.DataEmissao.Value.ToString("dd/MM/yyyy");
+                if (identNFe.DataEmissao != null)
+                    e.Row.Cells[3].Text = identNFe.DataEmissao.Value.ToString("dd/MM/yyyy");
                 e.Row.Cells[4].Text = identNFe.Cliente.RazaoSocial;
                 e.Row.Cells[5].Text = identNFe.Cliente.NomeFantasia;
                 e.Row.Cells[6].Text = identNFe.NFe.ChaveNFE;
@@ -244,6 +245,14 @@ namespace Nissi.WebPresentation.NFe
                 imgDuplicata.Attributes.Add("onclick", "ChamaDuplicata(" + identNFe.CodNF.ToString() + ")");
                 imgDuplicata.CommandArgument = identNFe.CodNF.ToString();
                 imgDuplicata.CommandName = "Duplicata";
+                #endregion
+                #region Botao Visualizar
+                ImageButton imgVisualizarNf = (ImageButton)e.Row.FindControl("imgVisualizarNF");
+                imgVisualizarNf.ImageUrl = caminhoAplicacao + @"Imagens\apps.png";
+                imgVisualizarNf.ToolTip = "Visualizar nota fiscal [" + identNFe.NF.ToString().PadLeft(8, '0') + "]";
+                imgVisualizarNf.Attributes.Add("onclick", "ChamaVisualizarNF(" + identNFe.CodNF + ")");
+                imgVisualizarNf.CommandArgument = identNFe.CodNF.ToString();
+                imgVisualizarNf.CommandName = "Visualizar";
                 #endregion
                 if (identNFe.NFe.IndStatus != "2" && identNFe.NFe.IndStatus != "3")
                 {
@@ -310,9 +319,6 @@ namespace Nissi.WebPresentation.NFe
                 case "Imprimir":
                     break;
                 //Modulo de Enviar
-                case "Visualizar":
-                    MensagemCliente("Função disponivel em breve!");
-                    break;
             }
 
         }
@@ -349,8 +355,8 @@ namespace Nissi.WebPresentation.NFe
                 ImageButton imgVisualizar = (ImageButton)e.Row.FindControl("imgVisualizar");
                 imgVisualizar.ImageUrl = caminhoAplicacao + @"Imagens\apps.png";
                 imgVisualizar.ToolTip = "Visualizar nota fiscal [" + identProdutoNF.NF.ToString().PadLeft(8, '0') + "]";
-                //imgDuplicata.Attributes.Add("onclick", "ChamaDuplicata(" + identNFe.CodNF + ")");
-                imgVisualizar.CommandArgument = identProdutoNF.NF.ToString();
+                imgVisualizar.Attributes.Add("onclick", "ChamaVisualizarNF(" + identProdutoNF.CodNF + ")");
+                imgVisualizar.CommandArgument = identProdutoNF.CodNF.ToString();
                 imgVisualizar.CommandName = "Visualizar";
                 #endregion
                 #region Botao Status

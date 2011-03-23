@@ -24,7 +24,7 @@
         {
             WaitAsyncPostBack(false);
         }        
-    </script >
+    </script>
     <div style="text-align:center">
     <table style="border-style: solid; border-width: 1px; margin-left: auto; width: 95%; margin-right: auto; border-color:Black;">
         <tr>
@@ -83,13 +83,13 @@
     <div id="divListaResultado" runat="server" style="overflow: auto; display: block; text-align:center; height:400px;">
                     <cc1:RDCGrid id="grdListaResultado" runat="server" autogeneratecolumns="False" 
                         cellpadding="1" cellspacing="3" 
-                        gridlines="None" pagesize="15" 
+                        gridlines="None" pagesize="30" 
                         showpagedetails="True"  AllowPaging="True" 
                         MultiSelection="False" ShowHeaderCheckBoxColumn="False" 
                         ShowOptionColumn="False" 
                         onpageindexchanging="grdListaResultado_PageIndexChanging" 
                         onrowcommand="grdListaResultado_RowCommand" 
-                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento">
+                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento" Width="95%">
                     <Columns>
                         <asp:TemplateField HeaderText="Ações">
                             <itemtemplate>

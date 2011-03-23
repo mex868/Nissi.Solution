@@ -10,67 +10,6 @@ namespace Nissi.Business
 {
     public class Funcionario
     {
-        #region Método de Autenticação de Usuário
-        /// <summary>
-        /// Validar conexão do Usuário
-        /// Objeto/Parâmetros: (login, senha, out FuncionarioVO identFuncionario)
-        /// </summary>
-        /// <param name="login"></param>
-        /// <param name="senha"></param>
-        /// <param name="identFuncionario"></param>
-        /// <returns></returns>
-        public string Autenticar(string login, string senha, out FuncionarioVO identFuncionario)
-        {
-            identFuncionario = new FuncionarioVO();
-            identFuncionario.Login = login;
-
-            //Retornar dados do Usuário
-            identFuncionario = new FuncionarioData().Lista(identFuncionario);
-
-            string mensagem = string.Empty;
-
-            if (identFuncionario != null && identFuncionario.CodFuncionario > 0)
-            {
-                #region Verificar Senha informada
-                byte[] senhaAplicacao = CriptografarSenha(senha);
-
-                for (int i = 0; i < identFuncionario.Senha.Length; i++)
-                {
-                    if (identFuncionario.Senha[i] != senhaAplicacao[i])
-                        mensagem = "A Senha não confere.";
-                }
-                #endregion
-
-                #region Recupera Pefil do usuario
-                if (string.IsNullOrEmpty(mensagem))
-                {
-                    //Retornar lista de Perfis do Usuário
-                    List<PerfilAcessoVO> listaPerfilFuncionario = new FuncionarioData().ListaPerfil(identFuncionario);
-                    identFuncionario.Perfils = listaPerfilFuncionario;
-                }
-                #endregion
-            }
-            else
-                mensagem = "Usuário não encontrado ou sem Senha cadastrada!";
-
-            return mensagem;
-        }
-        #endregion
-
-        #region Método usado para Criprografar a string passada como parametro.
-        /// <summary>
-        /// Método usado para Criprografar a string passada como parametro.
-        /// </summary>
-        /// <returns>
-        /// Retorna a string criptografada em SHA1
-        /// </returns>
-        private byte[] CriptografarSenha(string senha)
-        {
-            SHA1 shaM = new SHA1Managed();
-            return shaM.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(senha));
-        }
-        #endregion
-
         #region Métodos de Listagem
         /// <summary>
         /// Método para executar a proc pr_selecionar_funcionario
@@ -127,7 +66,7 @@ namespace Nissi.Business
         /// </summary>
         public int Incluir(FuncionarioVO identFuncionario, int codUsuarioOperacao)
         {
-           return new FuncionarioData().Incluir(identFuncionario, codUsuarioOperacao);
+            return new FuncionarioData().Incluir(identFuncionario, codUsuarioOperacao);
         }
 
 

@@ -100,6 +100,15 @@ public class BasePage : Page
     {
         ScriptManager.RegisterStartupScript(this, typeof(string), "script", " window.alert('" + Mensagem + "'); ", true);
     }
+
+    /// <summary>
+    /// Executa um alert em javascript
+    /// </summary>
+    /// <returns></returns>
+    public void MensagemCliente(UpdatePanel Controle,string Mensagem)
+    {
+        ScriptManager.RegisterStartupScript(Controle, typeof(UpdatePanel), "script", " window.alert('" + Mensagem + "'); ", true);
+    }
     /// <summary>
     /// Executa um alert em javascript e redireciona para uma pagina
     /// </summary>
@@ -126,6 +135,15 @@ public class BasePage : Page
     public void ExecutarScript(StringBuilder scriptJs)
     {
         ScriptManager.RegisterStartupScript(this, typeof(string), "script", scriptJs.ToString(), true);
+    }
+
+    /// <summary>
+    /// Executa um script
+    /// </summary>
+    /// <returns></returns>
+    public void ExecutarScript(UpdatePanel Controle,StringBuilder scriptJs)
+    {
+        ScriptManager.RegisterStartupScript(Controle, typeof(UpdatePanel), "script", scriptJs.ToString(), true);
     }
     #endregion
 
@@ -181,18 +199,18 @@ public class BasePage : Page
     #endregion
 
     #region Propriedades
-    private FuncionarioVO mUsuarioAtivo;
+    private FuncionarioVO _mUsuarioAtivo;
     public FuncionarioVO UsuarioAtivo
     {
         get
         {
-            mUsuarioAtivo = new FuncionarioVO();
-            mUsuarioAtivo = (FuncionarioVO) RecuperaValorSessao("UsuarioAtivo");
+            _mUsuarioAtivo = new FuncionarioVO();
+            _mUsuarioAtivo = (FuncionarioVO) RecuperaValorSessao("UsuarioAtivo");
 
-            if (mUsuarioAtivo == null)
+            if (_mUsuarioAtivo == null)
                 Response.Redirect("~/login.aspx");
 
-            return mUsuarioAtivo;
+            return _mUsuarioAtivo;
         }
         set
         {
@@ -487,8 +505,23 @@ public class BasePage : Page
         return items.ToArray();
     }
     #endregion
+    #region Método que Carrega os Produto Insumo
+    [System.Web.Services.WebMethod]
+    public static string[] GetProdutoInsumo(string prefixText)
+    {
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        List<ProdutoInsumoVO> lProduto = ProdutoInsumo.ListarPorDescricao(prefixText);
 
-    #region Método que Carrega os Fornecedor pelo Nome Fantasia
+        List<string> items = new List<string>();
+        foreach (ProdutoInsumoVO item in lProduto)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Descricao, item.CodProdutoInsumo.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega os Funcionarios
     [System.Web.Services.WebMethod]
     public static string[] GetFuncionario(string prefixText)
     {
@@ -506,4 +539,118 @@ public class BasePage : Page
         return items.ToArray();
     }
     #endregion
+    #region Método que Carrega a Norma
+    [System.Web.Services.WebMethod]
+    public static string[] GetNorma(string prefixText)
+    {
+        MateriaPrimaVO identMateriaPrimaVo = new MateriaPrimaVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identMateriaPrimaVo.NormaVo.Descricao = prefixText;
+        List<MateriaPrimaVO> lNorma = new Norma().ListarPorNorma(identMateriaPrimaVo.NormaVo.Descricao);
+
+        List<string> items = new List<string>();
+        foreach (MateriaPrimaVO item in lNorma)
+        {
+            string descricao = item.NormaVo.Descricao + "/" + item.NormaVo.Revisao;
+            if (item.ClasseTipoVo != null)
+                descricao += item.ClasseTipoVo.Descricao;
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                descricao, item.CodMateriaPrima.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega a Classe/Tipo
+    [System.Web.Services.WebMethod]
+    public static string[] GetClasseTipo(string prefixText)
+    {
+        MateriaPrimaVO identMateriaPrimaVo = new MateriaPrimaVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identMateriaPrimaVo.ClasseTipoVo.Descricao = prefixText;
+        List<ClasseTipoVO> lstClasseTipo = new ClasseTipo().ListarPorClasseTipo(identMateriaPrimaVo.ClasseTipoVo.Descricao);
+
+        List<string> items = new List<string>();
+        foreach (ClasseTipoVO item in lstClasseTipo)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Descricao, item.CodClasseTipo.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega a Bitola
+    [System.Web.Services.WebMethod]
+    public static string[] GetBitola(string prefixText)
+    {
+        BitolaVO identBitolaVo = new BitolaVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identBitolaVo.Bitola = decimal.Parse(prefixText);
+        List<BitolaVO> lstBitolaVo = new Bitola().ListarPorBitola(identBitolaVo.Bitola);
+
+        List<string> items = new List<string>();
+        foreach (BitolaVO item in lstBitolaVo)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Bitola.ToString(), item.CodBitola.ToString()));
+        }
+        return items.ToArray();
+    }
+
+    #endregion
+    #region Método que Carrega o Prazo de Entrega
+    [System.Web.Services.WebMethod]
+    public string[] GetPrazoEntrega(string prefixText)
+    {
+        PrazoEntregaVO identPrazoEntregaVo = new PrazoEntregaVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identPrazoEntregaVo.Descricao = prefixText;
+        List<PrazoEntregaVO> lstPrazoEntregaVo = new PrazoEntrega().ListarPorDescricao(prefixText);
+
+        List<string> items = new List<string>();
+        foreach (PrazoEntregaVO item in lstPrazoEntregaVo)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Descricao, item.CodPrazoEntrega.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega o Condicoes de Pagamento
+    [System.Web.Services.WebMethod]
+    public string[] GetCondicoesPgto(string prefixText)
+    {
+        FormaPgtoVO identFormaPgtoVo = new FormaPgtoVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identFormaPgtoVo.Descricao = prefixText;
+        List<FormaPgtoVO> lstFormaPgtoVo = new FormaPgto().ListarPorDescricao(prefixText);
+
+        List<string> items = new List<string>();
+        foreach (FormaPgtoVO item in lstFormaPgtoVo)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Descricao, item.CodFormaPgto.ToString()));
+        }
+        return items.ToArray();
+    }
+    #endregion
+    #region Método que Carrega a Email
+    [System.Web.Services.WebMethod]
+    public static string[] GetEmail(string prefixText)
+    {
+        EmailEmitenteVO identEmailVo = new EmailEmitenteVO();
+        //Todo: Depois do tratamento na procedure, remover a linha abaixo
+        identEmailVo.Email = prefixText;
+        List<EmailEmitenteVO> lstEmailVo = EmailEmitente.ListarPorEmailEmitente(identEmailVo.Email);
+
+        List<string> items = new List<string>();
+        foreach (EmailEmitenteVO item in lstEmailVo)
+        {
+            items.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(
+                item.Email, item.CodEmailEmitente.ToString()));
+        }
+        return items.ToArray();
+    }
+
+    #endregion
+
 }

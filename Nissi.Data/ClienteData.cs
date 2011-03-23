@@ -48,7 +48,7 @@ namespace Nissi.DataAccess
                     while (dr.Read())
                     {
                         ClienteVO clienteVO = new ClienteVO();
-                        clienteVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                        clienteVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                         clienteVO.Cep.CodCep = GetReaderValue<string>(dr, "CodCep");
                         clienteVO.Funcionario.CodFuncionario = GetReaderValue<int?>(dr, "CodFuncionario");
                         clienteVO.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
@@ -159,7 +159,33 @@ namespace Nissi.DataAccess
                 CloseCommand();
             }
         }
- 
+
+        public string PegarEmail(int codCliente)
+        {
+            OpenCommand("pr_pegar_email");
+            try
+            {
+                AddInParameter("@CodCliente", DbType.Int32, codCliente);
+                PessoaVO pessoaVo = new PessoaVO();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        pessoaVo.Email = GetReaderValue<string>(dr, "Email");
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return pessoaVo.Email;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
         // ------------------------------------------------------------------------- // 
         #endregion
         #region Métodos de Listagem de Transportadoras
@@ -186,7 +212,7 @@ namespace Nissi.DataAccess
                     {
                         TransportadoraVO transportadoraVO = new TransportadoraVO();
 
-                        transportadoraVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                        transportadoraVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                         transportadoraVO.CodTransportadora = GetReaderValue<int?>(dr, "CodTransportadora");
                         transportadoraVO.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
                         lstTransportadoraVO.Add(transportadoraVO);
@@ -422,6 +448,8 @@ namespace Nissi.DataAccess
 
 
         #endregion
+
+
 
 
 

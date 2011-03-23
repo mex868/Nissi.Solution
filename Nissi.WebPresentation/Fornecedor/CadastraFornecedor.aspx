@@ -4,7 +4,7 @@
 <%@ Register src="../UserControl/Endereco.ascx" tagname="Endereco" tagprefix="uc2" %>
 <%@ Register src="../UserControl/Banco.ascx" tagname="Banco" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
-<link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
+    <link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
 <script type="text/javascript">
     //--------------------------------------------------------------------------------
     //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -36,6 +36,8 @@
         $get('divCNPJ').style.display = 'none';
         $get('divRazao').style.display = 'none';
         $get('divNomeFantasia').style.display = 'none';
+        $get('divBitola').style.display = 'none';
+        $get('divClasseTipo').style.display = 'none';
         switch (tvar) {
             case 1: //Pesquisa por CNPJ
                 $get('divCNPJ').style.display = 'block';
@@ -46,6 +48,12 @@
                 break;
             case 3: //Pesquisa por NOME
                 $get('divNomeFantasia').style.display = 'block';
+                break;
+            case 4: //Pesquisa por Bitola
+                $get('divBitola').style.display = 'block';
+                break;
+            case 5: //Pesquisa por Classe / Tipo
+                $get('divClasseTipo').style.display = 'block';
                 break;
         }
     }
@@ -61,6 +69,12 @@
         if (($get('<%=rbRazaoSocial.ClientID%>').checked) && ($get('<%=txtRazao.ClientID%>').value != '')) {
             return true;
         }
+        if (($get('<%=rbBitola.ClientID%>').checked) && ($get('<%=ddlBitola.ClientID%>').value != '')) {
+            return true;
+        }
+        if (($get('<%=rbClasseTipo.ClientID%>').checked) && ($get('<%=txtNorma.ClientID%>').value != '')) {
+            return true;
+            }
         if (($get('<%=rbNomeFantasia.ClientID%>').checked) && ($get('<%=txtNomeFantasiaPesq.ClientID%>').value != '')) {
             return true;
         }
@@ -70,9 +84,12 @@
                 }
                 else if ($get('<%=rbRazaoSocial.ClientID%>').checked)
                     alert('Informe a Razão Social da Fornecedor.');
-                else {
+                else if ($get('<%=rbNomeFantasia.ClientID%>').checked)
                     alert('Informe o Nome Fantasia da Fornecedor.');
-                }
+                else if ($get('<%=rbBitola.ClientID%>').checked)
+                         alert('Informe a bitola do material.');
+                else if ($get('<%=rbClasseTipo.ClientID%>').checked)
+                         alert('Informe a Classe/Tipo.');
             return false;
        }
    }
@@ -100,7 +117,31 @@
    //--------------------------------------------------------------------------------
    function CarregarValores(source, eventArgs) {
        $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+       $get('<%=txtRazao.ClientID %>').value = eventArgs._item.outerText;
        $get('<%=btnPesquisar.ClientID%>').click();
+   }
+   //--------------------------------------------------------------------------------
+   //Criado por...:Alexandre Maximiano - 04/11/2010
+   //Objetivo.....: Efetua consulta com o retorno do autocomplete
+   //--------------------------------------------------------------------------------
+   function CarregarValoresNorma(source, eventArgs) {
+       $get('<%=hdfCodigo.ClientID%>').value = eventArgs.get_value();
+       $get('<%=txtNorma.ClientID %>').value = eventArgs._item.outerText;
+       $get('<%=btnPesquisar.ClientID%>').click();
+   }
+   function BuscaDados() {
+       $get('<%=btnPesquisar.ClientID%>').click();
+   }
+   //--------------------------------------------------------------------------------
+   //Criado por...: Alexandre Maximiano - 02/11/2009
+   //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+   //--------------------------------------------------------------------------------
+   function KeyDownHandler() {
+       if (event.keyCode == 13) {
+           event.returnValue = false;
+           event.cancel = true;
+           $get('<%=btnPesquisar.ClientID%>').click();
+       }
    }
 </script>
 <table style="margin-left: auto; width: 95%; margin-right: auto;">
@@ -116,29 +157,38 @@
     <div class="fundoTabela" style="width:95%" >
     <table id="tblConsulta" runat="server" style="text-align:left; width:100%">
         <tr>
-            <td style="width: 20%;padding-left:17px"> Opções de Consulta:</td>
-            <td style="width: 20%">
-                <asp:RadioButton ID="rbCNPJ" Checked="true" onclick ="TipoPesquisa(1)"  
-                    GroupName="filtroPesq" runat="server" Text="C.N.P.J" CssClass="noBorder" />
-            </td>
+            <td style="width: 15%;padding-left:17px"> Opções de Consulta:</td>
             <td style="width: 20%">
                 <asp:RadioButton ID="rbRazaoSocial" onclick ="TipoPesquisa(2)" runat="server" 
-                    Text="Razão Social" GroupName="filtroPesq" CssClass="noBorder" />
+                    Text="Razão Social" GroupName="filtroPesq" CssClass="noBorder" 
+                    Checked="True" />
             </td>
             <td style="width: 20%">
                 <asp:RadioButton ID="rbNomeFantasia" onclick ="TipoPesquisa(3)" runat="server" 
                     Text="Nome Fantasia " GroupName="filtroPesq" CssClass="noBorder" />
             </td>
+            <td style="width: 10%">
+                <asp:RadioButton ID="rbBitola" onclick="TipoPesquisa(4)" GroupName="filtroPesq"
+                    runat="server" Text="Bitola" CssClass="noBorder" />
+            </td>
+            <td style="width: 20%">
+                <asp:RadioButton ID="rbClasseTipo" onclick="TipoPesquisa(5)" runat="server" Text="Material / Norma"
+                    GroupName="filtroPesq" CssClass="noBorder" />
+            </td>
+            <td style="width: 20%">
+                <asp:RadioButton ID="rbCNPJ" onclick ="TipoPesquisa(1)"  
+                    GroupName="filtroPesq" runat="server" Text="C.N.P.J" CssClass="noBorder" />
+            </td>
         </tr>
         <tr>
             <td style="width: 20%">&nbsp;</td>
-            <td colspan="3">
-                <div id="divCNPJ"  style="display:block">
-                    <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="146px"></asp:TextBox>
+            <td colspan="5">
+                <div id="divCNPJ"  style="display:none">
+                    <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);KeyDownHandler();" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="146px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o C.N.P.J." runat="server" id="efvCNPJ"></asp:CustomValidator>
                 </div>
-                <div id="divRazao" style="display:none">
-                    <asp:TextBox ID="txtRazao" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                <div id="divRazao" style="display:block">
+                    <asp:TextBox ID="txtRazao" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                     <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtRazao"
                             MinimumPrefixLength="1" ServiceMethod="GetFornecedor" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -146,12 +196,28 @@
                     <asp:CustomValidator Text="*" CssClass="asterisco" ID="cvRazao" ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar a Razão Social." runat="server"></asp:CustomValidator>
                 </div>
                 <div id="divNomeFantasia" style="display:none">
-                    <asp:TextBox ID="txtNomeFantasiaPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                    <asp:TextBox ID="txtNomeFantasiaPesq" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                     <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNomeFantasiaPesq"
                             MinimumPrefixLength="1" ServiceMethod="GetFornecedorFantasia" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
                             </ajaxToolkit:AutoCompleteExtender>
                     <asp:CustomValidator ID="CustomValidator1" ValidationGroup="pesquisar" Text="*" cv="cvNomeFant" CssClass="asterisco" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar o Nome Fantasia." runat="server"></asp:CustomValidator>
+                </div>
+                <div id="divClasseTipo" style="display: none">
+                            <asp:TextBox ID="txtNorma" MaxLength="18" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="150px"></asp:TextBox>
+                            <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco"
+                                ValidationGroup="pesquisar" ErrorMessage="Favor informar a Norma." runat="server"
+                                ID="efvCodigo"></asp:CustomValidator>
+                            <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender3" runat="server" TargetControlID="txtNorma"
+                                MinimumPrefixLength="1" ServiceMethod="GetNorma" CompletionInterval="800" EnableCaching="true"
+                                CompletionSetCount="10" OnClientItemSelected="CarregarValoresNorma" OnClientPopulated="ClientPopulated">
+                            </ajaxToolkit:AutoCompleteExtender>
+                </div>
+                <div id="divBitola" style="display: none">
+                    <asp:DropDownList ID="ddlBitola" MaxLength="10" onChange="BuscaDados();" onkeypress="return OnlyMoney();" runat="server" Height="16px" Width="120px"></asp:DropDownList>
+                    <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco"
+                        ValidationGroup="pesquisar" ErrorMessage="Favor informar o Bitola" runat="server"
+                        ID="CustomValidator2"></asp:CustomValidator>
                 </div>
             </td>
         </tr>
@@ -160,10 +226,11 @@
                 <asp:Button ID="btnVoltar" runat="server" OnClick="btnVoltar_Click" 
                     CssClass="botao" Text="Voltar" Width="100px" UseSubmitBehavior="False" />
             </td>
-            <td colspan="2" style="text-align:right">
+            <td colspan="4" style="text-align:right">
                 <asp:UpdatePanel ID="updBotoes" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
+                        <asp:HiddenField ID="hdfCodigo" runat="server" />
                         <asp:Button ID="btnPesquisar" OnClientClick="return ValidaCampos()" runat="server" ValidationGroup="pesquisar" CssClass="botao"
                             Text="Pesquisar" Width="100px" OnClick="btnPesquisar_Click" />
                             &nbsp;<asp:Button ID="btnIncluir" runat="server" CssClass="botao" Width="100px"
@@ -187,7 +254,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 
@@ -341,7 +408,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-left:17px">Email:</td>
+                                    <td style="padding-left:17px">E-mail:</td>
                                     <td style="padding-left:20px">Site:</td>
                                 </tr>
                                 <tr>

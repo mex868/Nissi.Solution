@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class CEPVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class CEPVO
     {
         #region Campos
         private string _codCep;

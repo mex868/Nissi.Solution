@@ -33,6 +33,10 @@ namespace Nissi.Business
         {
             return new ClienteData().ListaClientePorNomeFantasia(identCliente);
         }
+        public static string PegarEmail(int codCliente)
+        {
+            return new ClienteData().PegarEmail(codCliente);
+        }
         #endregion
 
         #region Métodos de Listagem de Transportadoras

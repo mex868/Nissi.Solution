@@ -48,6 +48,7 @@ public partial class ListaSubMenu : BasePage
             identSubMenu.CodMenu = short.Parse(hdfCodMenu.Value);
             identSubMenu.Text = txtIncluirMenu.Text;
             identSubMenu.Url = txtUrl.Text;
+            identSubMenu.Ordem = short.Parse(txtOrdem.Text);
             identSubMenu.Resolveurl = ckbResolveurl.Checked;
             identSubMenu.Ativo = ckbIncluir.Checked;
             return identSubMenu;
@@ -63,38 +64,44 @@ public partial class ListaSubMenu : BasePage
 
     protected void grdListaResultado_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        SubMenuVO identSubMenu = new SubMenuVO();
-        identSubMenu.CodSubMenu = short.Parse(e.CommandArgument.ToString());
-        identSubMenu.CodMenu = short.Parse(hdfCodMenu.Value);
-        //Módulo de exclusão
-        if (e.CommandName == "Excluir")
+        if (!e.CommandName.Equals("Page"))
         {
-            //Excluir
-            new SubMenu().Excluir(identSubMenu.CodSubMenu, 1);
+            SubMenuVO identSubMenu = new SubMenuVO();
+            string[] codigos = e.CommandArgument.ToString().Split('|');
+            identSubMenu.CodSubMenu = short.Parse(codigos[0]);
+            identSubMenu.CodMenu = short.Parse(hdfCodMenu.Value);
+            //Módulo de exclusão
+            if (e.CommandName == "Excluir")
+            {
+                //Excluir
+                new SubMenu().Excluir(identSubMenu.CodSubMenu, UsuarioAtivo.CodFuncionario.Value);
 
-            //Atualizar Lista
-            preencherGrid(identSubMenu);
-        }
-        else if (e.CommandName == "Editar")  //Módulo de alteração
-        {
-            hdfTipoAcao.Value = "Editar";
-            identSubMenu = new SubMenu().Listar(identSubMenu)[0];
-            mpeInclui.Show();
+                //Atualizar Lista
+                preencherGrid(identSubMenu);
+            }
+            else if (e.CommandName == "Editar") //Módulo de alteração
+            {
+                hdfTipoAcao.Value = "Editar";
+                identSubMenu = new SubMenu().Listar(identSubMenu)[0];
+                mpeInclui.Show();
 
-            //Alimentar campos para edição
-            txtIncluirMenu.Text = identSubMenu.Text;
-            txtUrl.Text = identSubMenu.Url;
-            ckbResolveurl.Checked = identSubMenu.Resolveurl.Value;
-            ckbIncluir.Checked = identSubMenu.Ativo.Value;
-            hdfCodSubMenu.Value = identSubMenu.CodSubMenu.ToString();
-            this.Master.PosicionarFoco(txtIncluirMenu);
-        }
-        else if (e.CommandName == "Roles")  //Módulo de alteração
-        {
-            hdfCodSubMenuRoles.Value = identSubMenu.CodSubMenu.ToString();
-            carregaListaNaoAssociados();
-            carregaListaAssociados();
-            mpeRoles.Show();
+                //Alimentar campos para edição
+                txtIncluirMenu.Text = identSubMenu.Text;
+                txtUrl.Text = identSubMenu.Url;
+                txtOrdem.Text = identSubMenu.Ordem.ToString();
+                ckbResolveurl.Checked = identSubMenu.Resolveurl.Value;
+                ckbIncluir.Checked = identSubMenu.Ativo.Value;
+                hdfCodSubMenu.Value = identSubMenu.CodSubMenu.ToString();
+                this.Master.PosicionarFoco(txtIncluirMenu);
+            }
+            else if (e.CommandName == "Roles") //Módulo de alteração
+            {
+                hdfCodSubMenuRoles.Value = identSubMenu.CodSubMenu.ToString();
+                lblMenu.Text = codigos[1];
+                carregaListaNaoAssociados();
+                carregaListaAssociados();
+                mpeRoles.Show();
+            }
         }
 
     }
@@ -127,16 +134,17 @@ public partial class ListaSubMenu : BasePage
             #region Botão Roles
             ImageButton imgSubMenu = (ImageButton)e.Row.FindControl("imgRoles");
             imgSubMenu.ImageUrl = caminhoAplicacao + @"Imagens\DatabasePermissionsMenu.png";
-            imgSubMenu.CommandArgument = identSubMenu.CodSubMenu.ToString();
+            imgSubMenu.CommandArgument = identSubMenu.CodSubMenu + "|" + identSubMenu.Text.Trim();
             imgSubMenu.CommandName = "Roles";
             imgSubMenu.Style.Add("cursor", "hand");
             imgSubMenu.ToolTip = "Cadastrar Roles para o SubMenu [" + identSubMenu.Text.Trim() + "]";
             #endregion
 
-            e.Row.Cells[1].Text = identSubMenu.Text.ToString();
+            e.Row.Cells[1].Text = identSubMenu.Text;
             e.Row.Cells[2].Text = identSubMenu.Url;
-            e.Row.Cells[3].Text = identSubMenu.Resolveurl == true ? "Sim" : "Não";
-            e.Row.Cells[4].Text = identSubMenu.Ativo == true ? "Sim" : "Não";
+            e.Row.Cells[3].Text = identSubMenu.Ordem.ToString();
+            e.Row.Cells[4].Text = identSubMenu.Resolveurl == true ? "Sim" : "Não";
+            e.Row.Cells[5].Text = identSubMenu.Ativo == true ? "Sim" : "Não";
 
             if (e.Row.RowState == DataControlRowState.Normal)
                 e.Row.CssClass = "FundoLinha1";
@@ -148,8 +156,8 @@ public partial class ListaSubMenu : BasePage
     #region btnIncluir_Click
     protected void btnIncluir_Click(object sender, EventArgs e)
     {
+        txtOrdem.Text = new SubMenu().ListarOrdem(new SubMenuVO(){CodMenu = short.Parse(hdfCodMenu.Value)}).ToString();
         hdfTipoAcao.Value = "Incluir";
-        hdfCodMenu.Value = string.Empty;
         txtIncluirMenu.Text = string.Empty;
         txtUrl.Text = string.Empty;
         ckbResolveurl.Checked = true;
@@ -178,11 +186,11 @@ public partial class ListaSubMenu : BasePage
         if (hdfTipoAcao.Value.Equals("Incluir"))
         {
             //new NissiMenu().Alterar(DadosMenu, UsuarioAtivo.CodFuncionario);
-            new SubMenu().Incluir(DadosSubMenu, 1);
+            new SubMenu().Incluir(DadosSubMenu, UsuarioAtivo.CodFuncionario.Value);
         }
         else
         {
-            new SubMenu().Alterar(DadosSubMenu, 1);
+            new SubMenu().Alterar(DadosSubMenu, UsuarioAtivo.CodFuncionario.Value);
         }
         SubMenuVO identSubMenu = new SubMenuVO();
         identSubMenu.CodMenu = short.Parse(hdfCodMenu.Value);
@@ -294,7 +302,7 @@ public partial class ListaSubMenu : BasePage
             listaAssociar = (List<RolesVO>)RecuperaValorSessao("listaAssociar");
         identRoles.PerfilAcesso.CodPerfilAcesso = short.Parse(item.Value);
         identRoles.CodSubMenu = short.Parse(hdfCodSubMenuRoles.Value);
-        identRoles.UsuarioAlt = 1;
+        identRoles.UsuarioAlt = UsuarioAtivo.CodFuncionario.Value;
         listaAssociar.Add(identRoles);
         listaAssociados = Remove(listaAssociados, identRoles);
         lbxAssociar.Items.Add(item);
@@ -321,7 +329,7 @@ public partial class ListaSubMenu : BasePage
         if (listaAssociar.Count > 0)
             new Roles().Excluir(listaAssociar);
         if (listaAssociados.Count > 0)
-            new Roles().Incluir(listaAssociados, 1);
+            new Roles().Incluir(listaAssociados, UsuarioAtivo.CodFuncionario.Value);
         hdfCodSubMenuRoles.Value = string.Empty;
         mpeRoles.Hide();
     }

@@ -459,6 +459,12 @@ namespace Nissi.WinFormsApplication
                         else
                         {
                             controler.enviarEmailAnexo("smtp.nissimetal.com.br", "mex868@gmail.com;", "Falha de Válidação", new StringBuilder(retorno));
+                            NfeVO identNfe = new NfeVO();
+                            identNfe.CodNumLote = codLote;
+                            identNfe.IndStatus = "0";
+                            identNfe.NumProtocolo = "";
+                            //Grava o status de Autorizado o uso da NF-e
+                            ServiceClient.GravarStatusNFe(identNfe);
                             MessageBox.Show(retorno);
                         }
                     }
@@ -654,21 +660,6 @@ namespace Nissi.WinFormsApplication
 
         private void button4_Click(object sender, EventArgs e)
         {
-            NotaFiscalVO identNotaFiscal = (NotaFiscalVO)dgvNotaFiscal.CurrentRow.DataBoundItem;
-            new NotaFiscalControler().NFeDanfe(parametroNfe.PathPrincipal + @"\nfe\arquivos\procNFe\" +
-            identNotaFiscal.NFe.ChaveNFE + "-procNFe.xml" + "|",
-            parametroNfe.PathPrincipal + @"\nfe\arquivos\pdf\" + identNotaFiscal.NFe.ChaveNFE + ".pdf" + "|",
-            Convert.ToInt32(parametroNfe.Ambiente),
-            2,
-            false,
-            parametroNfe.PathPrincipal + "|",
-            parametroNfe.TotalizarCfop + "|",
-            parametroNfe.DataPacketFormSeg + "|",
-            parametroNfe.TipoDanfe + "|",
-            parametroNfe.DanfeLogo + "|",
-            parametroNfe.DanfeInfo + "|",
-            parametroNfe.DataPacket + "|"
-            );
         }
     }
 }

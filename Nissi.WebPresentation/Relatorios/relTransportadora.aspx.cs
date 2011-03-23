@@ -11,15 +11,15 @@ namespace Nissi.WebPresentation.Relatorios
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string inicio = Request.QueryString["strRazaoIni"].ToString();
-            string fim = Request.QueryString["strRazaoFim"].ToString();
+            string inicio = Request.QueryString["RazaoIni"].ToString();
+            string fim = Request.QueryString["RazaoFim"].ToString();
 
            // string Uf = Request.QueryString["UF"].ToString();
 
             odsTransportadora.SelectMethod = "GetData";
             odsTransportadora.SelectParameters.Clear();
-            odsTransportadora.SelectParameters.Add("RazaoSocialIni", inicio);
-            odsTransportadora.SelectParameters.Add("RazaoSocialFim", fim);
+            odsTransportadora.SelectParameters.Add("CodPessoaIni", inicio);
+            odsTransportadora.SelectParameters.Add("CodPessoaFim", fim);
             odsTransportadora.DataBind();
 
             odsEmitente.SelectMethod = "GetData";

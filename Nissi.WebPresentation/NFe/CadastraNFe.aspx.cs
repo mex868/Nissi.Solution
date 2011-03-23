@@ -209,7 +209,7 @@ public partial class CadastrarNFe : BasePage
             //identNotaFiscal.Observacao2 = txtObservacao.Text;
             identNotaFiscal.indMovimento = false;
             identNotaFiscal.IndVendaBeneficiamento = false;
-            identNotaFiscal.UsuarioInc = 1;
+            identNotaFiscal.UsuarioInc = UsuarioAtivo.CodFuncionario.Value;
             if (identNotaFiscal.Duplicatas.Count > 0)
             {
                 var dup = identNotaFiscal.Duplicatas.SingleOrDefault(d => d.Dias == 0);
@@ -298,14 +298,14 @@ public partial class CadastrarNFe : BasePage
             int codnf = 0;
             if (hdfTipoAcao.Value.Equals("Incluir"))
             {
-              codnf = new NotaFiscal().Incluir(DadosNotaFiscal, 1);
+              codnf = new NotaFiscal().Incluir(DadosNotaFiscal, UsuarioAtivo.CodFuncionario.Value);
               txtNF.Text =
               txtNumeroFatura.Text = new NotaFiscal().ListarNumeroNf(codnf).ToString().PadLeft(8, '0');
               hdfCodNF.Value = codnf.ToString();
             }
             else
             {
-                new NotaFiscal().Alterar(DadosNotaFiscal, 1);
+                new NotaFiscal().Alterar(DadosNotaFiscal, UsuarioAtivo.CodFuncionario.Value);
                 codnf = int.Parse(hdfCodNF.Value);
             }
             if (DadosNotaFiscal.Duplicatas.Count <= 0)
@@ -576,9 +576,10 @@ public partial class CadastrarNFe : BasePage
                 //***********************************************************************************************
                 //altera o ítem da list com itens (Session["lstItemNotaFiscal"]) com os valores do ítem da nf (Session["ItemNF"])
                 //***********************************************************************************************
-                var res = lstitemNotaFiscalVO.Single(t => t.Produto.CodProduto == itemNotaFiscalVO.Produto.CodProduto);
+                var res = lstitemNotaFiscalVO.Single(t => t.Produto.CodProduto == itemNotaFiscalVO.Produto.CodProduto && t.CodItemNotaFiscal == itemNotaFiscalVO.CodItemNotaFiscal);
                 res.Produto.Descricao = itemNotaFiscalVO.Produto.Descricao;
                 res.Produto.Codigo = itemNotaFiscalVO.Produto.Codigo;
+                res.CodItemNotaFiscal = itemNotaFiscalVO.CodItemNotaFiscal;
                 res.Produto.Unidade.CodUnidade = itemNotaFiscalVO.Produto.Unidade.CodUnidade;
                 res.Produto.NCM = itemNotaFiscalVO.Produto.NCM;
 
@@ -727,7 +728,7 @@ public partial class CadastrarNFe : BasePage
             imgEditarFatura.CommandName = "Editar";
             imgEditarFatura.Style.Add("cursor", "hand");
             imgEditarFatura.ToolTip = "Editar dados do Produto ["+identItemNotaFiscal.Produto.Descricao+"]";
-            imgEditarFatura.Attributes.Add("onclick", "javascript:window.showModalDialog('" + HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath + "/NFe/CadastraItemNFe.aspx?CodProduto=" + identItemNotaFiscal.Produto.CodProduto.ToString() + "&AcaoProduto=Editar','','dialogWidth:800px;dialogHeight:600px,scroll:yes,center:yes,status:no')");
+            imgEditarFatura.Attributes.Add("onclick", "javascript:window.showModalDialog('" + HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath + "/NFe/CadastraItemNFe.aspx?CodProduto=" + identItemNotaFiscal.Produto.CodProduto.ToString() + "&CodItemNotaFiscal="+identItemNotaFiscal.CodItemNotaFiscal+"&AcaoProduto=Editar','','dialogWidth:800px;dialogHeight:600px,scroll:yes,center:yes,status:no')");
             #endregion
 
             #region Botão Excluir

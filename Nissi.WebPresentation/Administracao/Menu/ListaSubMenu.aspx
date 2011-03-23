@@ -23,7 +23,7 @@
         {
             WaitAsyncPostBack(false);
         }        
-    </script >
+    </script>
     <div style="text-align:center">
     <table style="border-style: solid; border-width: 1px; margin-left: auto; width: 95%; margin-right: auto; border-color:Black;">
         <tr>
@@ -60,13 +60,14 @@
     <div id="divListaResultado" runat="server" style="overflow: auto; display: block; text-align:center; height:400px;">
                     <cc1:RDCGrid id="grdListaResultado" runat="server" autogeneratecolumns="False" 
                         cellpadding="1" cellspacing="3" 
-                        gridlines="None" pagesize="15" 
+                        gridlines="None" pagesize="30" 
                         showpagedetails="True"  AllowPaging="True" 
                         MultiSelection="False" ShowHeaderCheckBoxColumn="False" 
                         ShowOptionColumn="False" 
                         onpageindexchanging="grdListaResultado_PageIndexChanging" 
                         onrowcommand="grdListaResultado_RowCommand" 
-                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento">
+                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento" 
+                        Width="95%" EnableModelValidation="True">
                     <Columns>
                         <asp:TemplateField HeaderText="Ações">
                             <itemtemplate>
@@ -79,24 +80,27 @@
                                     ImageUrl="~/Imagens/DatabasePermissionsMenu.png" />
                             </itemtemplate>
                         
-                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="30%" />
+                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="10%" />
                             <ItemStyle HorizontalAlign="Left" Width="10%" />
                         
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Descrição" >
-                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" />
+                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="30%" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
                         <asp:BoundField HeaderText="Url" >
-                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" />
+                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="30%" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
+                        <asp:BoundField HeaderText="Ordem">
+                        <HeaderStyle CssClass="headerGrid" Width="10%" />
+                        </asp:BoundField>
                         <asp:BoundField HeaderText="ResolveUrl" >
-                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" />
+                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="10%" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
                         <asp:BoundField HeaderText="Ativo">
-                        <HeaderStyle CssClass="headerGrid" />
+                        <HeaderStyle CssClass="headerGrid" Width="10%" />
                         </asp:BoundField>
                     </Columns>
                 </cc1:RDCGrid>
@@ -161,6 +165,17 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Ordem:
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtOrdem" runat="server">
+                                    </asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
+                                        ControlToValidate="txtOrdem" ErrorMessage="Campo Ordem deve ser preenchido!" 
+                                        ValidationGroup="inserir">*</asp:RequiredFieldValidator>
+                                </td>
+                            <tr>
+                                <td>
                                     Resolveurl:
                                 </td>
                                 <td>
@@ -207,6 +222,10 @@
            <ContentTemplate>
                  <asp:HiddenField ID="hdfCodSubMenuRoles" runat="server" />     
             <table class="fundoTabela">
+            <tr>
+            <td>Menu:</td>
+            <td colspan="2"><b><asp:Label ID="lblMenu" runat="server"></asp:Label></b></td>
+            </tr>
                         <tr>
                             <td  valign="center" width="25%">
                                 Perfis Disponíveis</td>

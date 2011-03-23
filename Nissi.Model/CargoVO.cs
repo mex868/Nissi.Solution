@@ -8,6 +8,8 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela Cargo
     /// </summary>
+    /// 
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class CargoVO
     {
         #region Campos

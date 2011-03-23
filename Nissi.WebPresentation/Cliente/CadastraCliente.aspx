@@ -3,7 +3,7 @@
 <%@ MasterType VirtualPath="~/MasterPage.master" %>
 <%@ Register src="../UserControl/Endereco.ascx" tagname="Endereco" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
-<script type="text/javascript" src="../JScripts/Common.js"></script>
+    <script type="text/javascript" src="../JScripts/Common.js"></script>
         <script type="text/javascript" language="javascript">
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -263,8 +263,20 @@
         //Objetivo.....: Efetua consulta com o retorno do autocomplete
         //--------------------------------------------------------------------------------
         function CarregarValores(source, eventArgs) {
-            $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
-            $get('<%=btnPesquisar.ClientID%>').click();
+            $get('<%=hdfIdRazaoSocial.ClientID %>').value = eventArgs.get_value();
+            $get('<%=txtRazao.ClientID %>').value = eventArgs._item.outerText;
+            $get('<%=btnPesquisar.ClientID %>').click();
+        }
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 02/11/2009
+        //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+        //--------------------------------------------------------------------------------
+        function KeyDownHandler() {
+            if (event.keyCode == 13) {
+                event.returnValue = false;
+                event.cancel = true;
+                $get('<%=btnPesquisar.ClientID%>').click();
+            }
         }
     </script>
     <div style="text-align:center;">
@@ -287,7 +299,7 @@
                             <asp:DropDownList AutoPostBack="true" runat="server" onchange="VerificaTipoPessoa()" 
                                 ID="ddlTipoPessoa" CssClass="formNovo" 
                                 onselectedindexchanged="ddlTipoPessoa_SelectedIndexChanged">
-                                <asp:ListItem Text="Juridíco" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Jurídico" Value="1"></asp:ListItem>
                                 <asp:ListItem Text="Físico" Value="2"></asp:ListItem>
                             </asp:DropDownList>
                             </ContentTemplate>
@@ -318,19 +330,19 @@
                     <td style="width: 20%">&nbsp;</td>
                     <td colspan="4">
                         <div id="divCodigo"  style="display:block">
-                            <asp:TextBox ID="txtCodigoPesq" MaxLength="14" onkeypress="ConverterCaixaAlta()" runat="server" Height="16px" Width="100px"></asp:TextBox>
+                            <asp:TextBox ID="txtCodigoPesq" MaxLength="14" onkeypress="ConverterCaixaAlta();KeyDownHandler();" runat="server" Height="16px" Width="100px"></asp:TextBox>
                             <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o Código" runat="server" id="CustomValidator1"></asp:CustomValidator>
                         </div>
                         <div id="divCNPJ"  style="display:none">
-                            <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="120px"></asp:TextBox>
+                            <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);KeyDownHandler();" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="120px"></asp:TextBox>
                             <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o C.N.P.J." runat="server" id="efvCNPJ"></asp:CustomValidator>
                         </div>
                         <div id="divCPF"  style="display:none">
-                            <asp:TextBox ID="txtCPFPesq" MaxLength="14" onkeypress="return digitos(event, this);" onkeyup="Mascara('CPF',this,event);" runat="server" Height="16px" Width="100px"></asp:TextBox>
+                            <asp:TextBox ID="txtCPFPesq" MaxLength="14" onkeypress="return digitos(event, this);KeyDownHandler();" onkeyup="Mascara('CPF',this,event);" runat="server" Height="16px" Width="100px"></asp:TextBox>
                             <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o CPF" runat="server" id="CustomValidator2"></asp:CustomValidator>
                         </div>
                         <div id="divRazao" style="display:none">
-                            <asp:TextBox ID="txtRazao" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                            <asp:TextBox ID="txtRazao" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtRazao"
                             MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -338,7 +350,7 @@
                             <asp:CustomValidator Text="*" CssClass="asterisco" ID="cvRazao" ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar a Razão Social." runat="server"></asp:CustomValidator>
                         </div>
                         <div id="divNomeFantasia" style="display:none">
-                            <asp:TextBox ID="txtNomeFantasiaPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                            <asp:TextBox ID="txtNomeFantasiaPesq" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNomeFantasiaPesq"
                             MinimumPrefixLength="1" ServiceMethod="GetNamesFantasy" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -379,7 +391,7 @@
                         cellpadding="1" 
                         cellspacing="3" 
                         gridlines="None" 
-                        pagesize="15" 
+                        pagesize="30" 
                         showpagedetails="True" 
                         AllowPaging="True" 
                         MultiSelection="True" 
@@ -427,7 +439,7 @@
                         <table style="width:95%">
                             <tr>
                                 <td>
-                                    <table style="width:95%"  class="fundoTabela">
+                                    <table style="width:92%"  class="fundoTabela">
                                         <!--TÍTULO DA POPUP-->
                                         <tr>
                                             <td class="titulo">

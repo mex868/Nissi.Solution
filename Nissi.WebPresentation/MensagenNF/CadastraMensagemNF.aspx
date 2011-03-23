@@ -35,7 +35,18 @@
         }
         else
             args.IsValid = false;
-        
+
+    }
+    //--------------------------------------------------------------------------------
+    //Criado por...: Alexandre Maximiano - 02/11/2009
+    //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+    //--------------------------------------------------------------------------------
+    function KeyDownHandler() {
+        if (event.keyCode == 13) {
+            event.returnValue = false;
+            event.cancel = true;
+            $get('<%=btnPesquisar.ClientID%>').click();
+        }
     }
 </script>
 <table style="margin-left: auto; width: 95%; margin-right: auto;">
@@ -52,7 +63,7 @@
     <table id="tblConsulta" runat="server" style="text-align:left; width:100%">
         <tr>
             <td style="width: 20%;padding-left:17px" colspan="2">Consulta:<asp:TextBox 
-                    ID="txtCodigoPesq" MaxLength="255" runat="server" Width="423px"></asp:TextBox>
+                    ID="txtCodigoPesq" onkeypress="KeyDownHandler();" MaxLength="255" runat="server" Width="423px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o campo descrição." runat="server" id="efvCNPJ"></asp:CustomValidator>
                 </td>
         </tr>
@@ -87,7 +98,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 

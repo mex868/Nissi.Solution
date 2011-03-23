@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Nissi.Model;
 using Nissi.DataAccess;
+using Nissi.Repositorio;
 
 namespace Nissi.Business
 {
@@ -30,6 +31,20 @@ namespace Nissi.Business
         public List<FornecedorVO> ListaFornecedorNomeFantasia(FornecedorVO identfornecedorVo)
         {
             return new FornecedorData().ListaFornecedorNomeFantasia(identfornecedorVo);
+        }
+        public static string PegarEmail(int codFornecedor)
+        {
+            return new FornecedorData().PegarEmail(codFornecedor);
+        }
+
+        public static List<FornecedorVO> ListarPorBitola(int codBitola)
+        {
+            return new FornecedorRepositorio().ListarPorBitola(codBitola);
+        }
+
+        public static List<FornecedorVO> ListarPorClasseTipo(int codClasseTipo)
+        {
+            return new FornecedorRepositorio().ListarPorClasseTipo(codClasseTipo);
         }
         // ------------------------------------------------------------------------- // 
         #endregion

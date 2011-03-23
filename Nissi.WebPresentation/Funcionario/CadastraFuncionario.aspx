@@ -4,7 +4,7 @@
 <%@ Register src="../UserControl/Endereco.ascx" tagname="Endereco" tagprefix="uc1" %>
 <%@ Register src="../UserControl/Banco.ascx" tagname="Banco" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
-<link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
+    <link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
         <script type="text/javascript" language="javascript">
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -113,6 +113,7 @@
         //--------------------------------------------------------------------------------
         function CarregarValores(source, eventArgs) {
             $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+            $get('<%=txtNome.ClientID %>').value = eventArgs._item.outerText;
             $get('<%=btnPesquisar.ClientID%>').click();
         }
     </script>
@@ -146,7 +147,7 @@
             <td style="width: 25%">&nbsp;</td>
             <td colspan="4">
                 <div id="divCPF"  style="display:block">
-                    <asp:TextBox ID="txtCPFPesq" MaxLength="14" onkeypress="return digitos(event, this);" onkeyup="Mascara('CPF',this,event);" runat="server" Height="16px" Width="100px"></asp:TextBox>
+                    <asp:TextBox ID="txtCPFPesq" MaxLength="14"  onkeypress="return digitos(event, this);" onkeyup="Mascara('CPF',this,event);" runat="server" Height="16px" Width="100px"></asp:TextBox>
                 </div>
                 <div id="divRG" style="display:none">
                     <asp:TextBox ID="txtRGPesq" onkeypress="return digitos(event, this);" runat="server" Height="16px" Width="100px"></asp:TextBox>
@@ -173,7 +174,7 @@
                                 <ContentTemplate>
                                     <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
                                     <asp:Button ID="btnPesquisar" runat="server" CssClass="botao" 
-                                        Text="Pesquisar" Width="100px" ValidationGroup="ValidarCPF" OnClientClick="return ValidaCampos()"  OnClick="btnPesquisar_Click" />
+                                        Text="Pesquisar" Width="100px"  ValidationGroup="ValidarCPF" OnClientClick="return ValidaCampos()"  OnClick="btnPesquisar_Click" />
                                         &nbsp;<asp:Button ID="btnIncluir" runat="server" CssClass="botao" Width="100px"
                                         Text="Incluir Novo" onclick="btnIncluir_Click" />
                                 </ContentTemplate>
@@ -191,25 +192,27 @@
             <div id="divListaResultado" runat="server" style="overflow: auto; display: block; text-align:center; height:400px;">
                  <cc1:RDCGrid id="grdListaResultado" runat="server" autogeneratecolumns="False" 
                     bordercolor="Black" borderwidth="1px" cellpadding="1" cellspacing="3" 
-                    gridlines="None" pagesize="15" 
+                    gridlines="None" pagesize="30" 
                     showpagedetails="True" AllowPaging="True" 
                     MultiSelection="False" ShowHeaderCheckBoxColumn="False" 
                     ShowOptionColumn="False" CssClass="alinhamento" 
                     onpageindexchanging="grdListaResultado_PageIndexChanging" 
                     onrowcommand="grdListaResultado_RowCommand" 
-                    onrowdatabound="grdListaResultado_RowDataBound" 
-                    onselectedindexchanged="grdListaResultado_SelectedIndexChanged" Width="95%">
+                    onrowdatabound="grdListaResultado_RowDataBound" Width="95%" 
+                     EnableModelValidation="True">
                     <Columns>
                         <asp:TemplateField HeaderText="A&ccedil&otildees">
                             <itemtemplate>
                                 <asp:ImageButton  ID="imgEditar" runat="server" ImageUrl="~/Imagens/editar.png" />
+                                <asp:ImageButton ID="imgPerfil" runat="server" 
+                                    ImageUrl="~/Imagens/DatabasePermissionsMenu.png" />
                                 <asp:ImageButton ID="imgReiniciar" runat="server" ImageUrl="~/Imagens/undo.png" />
                              </itemtemplate>
-                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Center" />
-                            <ItemStyle HorizontalAlign="Center" Width="13%"/>
+                            <HeaderStyle CssClass="headerGrid" HorizontalAlign="Left" Width="10%" />
+                            <ItemStyle HorizontalAlign="Left"/>
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Nome">
-                            <HeaderStyle CssClass="headerGrid" />
+                            <HeaderStyle CssClass="headerGrid" Width="40%" />
                             <ItemStyle HorizontalAlign="Left" Width="20%" />
                         </asp:BoundField>
                         <asp:BoundField HeaderText="RG" >
@@ -589,4 +592,85 @@
                  </div>
         <asp:ValidationSummary ID="vlsCargo" runat="server" ShowMessageBox="true" ShowSummary="false" HeaderText="Os seguintes erros foram encontrados:" ValidationGroup="Inserir" /> 
     </asp:Panel>
+    <asp:HiddenField ID="hdfTargetPerfil" runat="server" />  
+    <ajaxToolkit:ModalPopupExtender ID="mpePerfil" runat="server" PopupControlID="pnlIncluirPerfil"
+        TargetControlID="hdfTargetPerfil" BehaviorID="mpePerfilID" BackgroundCssClass="modalBackground"
+        DropShadow="true" /> 
+        <asp:Panel ID="pnlIncluirPerfil" runat="server">
+        <div style="text-align: center; width: 550px; height: auto; padding: 5px 5px 5px 5px; background-color: #ffffff;">
+        <asp:UpdatePanel ID="updPerfil" runat="server" UpdateMode="Conditional">
+           <ContentTemplate>
+                 <asp:HiddenField ID="hdfCodUsuario" runat="server" />     
+            <table class="fundoTabela">
+            <tr>
+            <td>Funcion&aacuterio (Usu&aacuterio):</td>
+            <td colspan="2"><b><asp:Label ID="lblUsuarioPerfil" runat="server"></asp:Label></b></td>
+            </tr>
+                        <tr>
+                            <td  valign="center" width="25%">
+                                Perfis Dispon&iacuteveis</td>
+                            <td style="WIDTH: 10%" valign="center">
+                                <span ID="spanComboGrupo">&nbsp; </span>
+                            </td>
+                            <td valign="center">
+                                Perfis Associados</td>
+                        </tr>
+                        <tr>
+                            <td align="middle" width="25%">
+                                <p align="left">
+                                    <asp:ListBox ID="lbxAssociar" runat="server" CssClass="formulario" 
+                                        Height="134px" SelectionMode="Multiple" Width="224px" ></asp:ListBox>
+                                </p>
+                            </td>
+                            <td align="middle" style="WIDTH: 10%" valign="center">
+                                <div align="center">
+                                    &nbsp;</div>
+                                <div align="center">
+                                    <asp:Button ID="btnAssociar" runat="server" CausesValidation="False" 
+                                        CssClass="botao" Text="&gt;" Width="48px" onclick="btnAssociar_Click" />
+                                    <br />
+                                    <asp:Button ID="btnRetirar" runat="server" CausesValidation="False" 
+                                        CssClass="botao" Text="&lt;" Width="48px" onclick="btnRetirar_Click" />
+                                    <br />
+                                    <asp:Button ID="btnAssociarTodos" runat="server" CausesValidation="False" 
+                                        CssClass="botao"  Text="&gt;&gt;" 
+                                        Width="48px" onclick="btnAssociarTodos_Click" />
+                                    <br />
+                                    <asp:Button ID="btnRetirarTodos" runat="server" CausesValidation="False" 
+                                        CssClass="botao" Text="&lt;&lt;" Width="48px" 
+                                        onclick="btnRetirarTodos_Click" />
+                                </div>
+                            </td>
+                            <td class="associados" style="WIDTH: 366px" valign="center">
+                                <p align="left">
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" 
+                                        ControlToValidate="lbxAssociados" CssClass="asterisco" 
+                                        ErrorMessage="Nenhum perfil foi associado" 
+                                        ValidationGroup="InserirPerfil">*</asp:RequiredFieldValidator>
+                                    <asp:ListBox ID="lbxAssociados" runat="server" CssClass="formulario" 
+                                        Height="134px" SelectionMode="Multiple" Width="224px"></asp:ListBox>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">
+                                <asp:Button ID="btnCancelarPerfil"  Text="Cancelar" runat="server" 
+                                    CssClass="botao" Width="80px" onclick="btnCancelarPerfil_Click" />
+                                 </td>
+                                    <td style="text-align:right" colspan="2">
+                                        <asp:Button ID="btnSalvarPerfil" Text="Salvar" runat="server" CssClass="botao" 
+                                            Width="80px" ValidationGroup="InserirPerfil" onclick="btnSalvarPerfil_Click"/>
+                                    </td>
+                                </tr>
+                    </table>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="grdListaResultado" 
+                            EventName="RowCommand" />
+                    </Triggers>
+                    </asp:UpdatePanel>
+                    </div>
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="true" ShowSummary="false" HeaderText="Os seguintes erros foram encontrados:" ValidationGroup="InserirPerfil" /> 
+        </asp:Panel>
+        <br />    
      </asp:Content>

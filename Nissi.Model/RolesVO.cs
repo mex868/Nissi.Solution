@@ -5,6 +5,7 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela Roles
     /// </summary>
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class RolesVO
     {
         #region Campos

@@ -78,39 +78,65 @@
   <ItemGroup>
     <Compile Include="BairroVO.cs" />
     <Compile Include="BancoVO.cs" />
+    <Compile Include="BitolaVO.cs" />
     <Compile Include="CargoVO.cs" />
     <Compile Include="CEPVO.cs" />
     <Compile Include="CFOPVO.cs" />
     <Compile Include="CidadeVO.cs" />
+    <Compile Include="ClasseTipoVO.cs" />
     <Compile Include="ClassificacaoFiscalVO.cs" />
     <Compile Include="ClienteVO.cs" />
+    <Compile Include="ComparacaoQuimicaVO.cs" />
+    <Compile Include="ComposicaoMateriaPrimaVO.cs" />
+    <Compile Include="EmailEmitenteVO.cs" />
+    <Compile Include="EntradaEstoqueInsumoVO.cs" />
+    <Compile Include="ItemEntradaEstoqueInsumoVO.cs" />
+    <Compile Include="ItemPedidoCompraInsumoVO.cs" />
     <Compile Include="DepartamentoVO.cs" />
     <Compile Include="DuplicataVO.cs" />
     <Compile Include="EmitenteVO.cs" />
+    <Compile Include="EntradaEstoqueVO.cs" />
     <Compile Include="FormaPgtoVO.cs" />
     <Compile Include="FornecedorVO.cs" />
     <Compile Include="ICMSVO.cs" />
+    <Compile Include="ItemEntradaEstoqueVO.cs" />
     <Compile Include="ItemNotaFiscalVO.cs" />
+    <Compile Include="ItemPedidoCompraVO.cs" />
+    <Compile Include="ListItemPedidoCompraVO.cs" />
     <Compile Include="LoteVO.cs" />
+    <Compile Include="MateriaPrimaVO.cs" />
     <Compile Include="MensagemNFVO.cs" />
     <Compile Include="MenuVO.cs" />
     <Compile Include="NfeVO.cs" />
     <Compile Include="NissiBaseVO.cs" />
+    <Compile Include="NormaVO.cs" />
     <Compile Include="NotaFiscalVO.cs" />
     <Compile Include="ParametroVO.cs" />
+    <Compile Include="PedidoCompraInsumoVO.cs" />
+    <Compile Include="PedidoCompraVO.cs" />
+    <Compile Include="PedidoModel.cs" />
     <Compile Include="PerfilAcessoVO.cs" />
     <Compile Include="PessoaVO.cs" />
+    <Compile Include="PrazoEntregaVO.cs" />
+    <Compile Include="ProdutoInsumoVO.cs" />
     <Compile Include="ProdutoNFVO.cs" />
     <Compile Include="ProdutoVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FuncionarioVO.cs" />
+    <Compile Include="ResistenciaTracaoVO.cs" />
     <Compile Include="RolesVO.cs" />
     <Compile Include="SubMenuVO.cs" />
     <Compile Include="TipoFornecimentoVO.cs" />
     <Compile Include="TipoLogradouroVO.cs" />
     <Compile Include="TransportadoraVO.cs" />
+    <Compile Include="TypePedido.cs" />
     <Compile Include="UnidadeFederacaoVO.cs" />
     <Compile Include="UnidadeVO.cs" />
+    <Compile Include="UsuarioVO.cs" />
+    <Compile Include="XmlMenu.cs" />
+    <Compile Include="XmlMenuItem.cs" />
+    <Compile Include="XmlSubMenu.cs" />
+    <Compile Include="XmlSubMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Nissi.Model.cd" />
@@ -147,6 +173,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

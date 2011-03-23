@@ -94,10 +94,10 @@ namespace Nissi.WebPresentation
             if (hdfTipoAcao.Value == "Incluir")
             {
              
-               hdfCodMensagemNF.Value = new MensagemNF().Incluir(DadosMensagemNF,1).ToString();
+               hdfCodMensagemNF.Value = new MensagemNF().Incluir(DadosMensagemNF,UsuarioAtivo.CodFuncionario.Value).ToString();
             }
             else
-            { new MensagemNF().Alterar(DadosMensagemNF,1); }
+            { new MensagemNF().Alterar(DadosMensagemNF,UsuarioAtivo.CodFuncionario.Value); }
 
             Pesquisar();
             mpeTransIncluir.Hide();
@@ -160,7 +160,7 @@ namespace Nissi.WebPresentation
             if (e.CommandName == "Excluir")
             {
                 //Excluir
-                new MensagemNF().Excluir((int)identMensagemNF.CodMensagemNF,1);
+                new MensagemNF().Excluir((int)identMensagemNF.CodMensagemNF,UsuarioAtivo.CodFuncionario.Value);
 
                 //Atualizar Lista
                 Pesquisar();

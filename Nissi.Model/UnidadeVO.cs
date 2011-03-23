@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-   public class UnidadeVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class UnidadeVO
     {
         #region Variaveis
 

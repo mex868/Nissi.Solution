@@ -31,15 +31,6 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.HtmlControls.HtmlTable tblConsulta;
         
         /// <summary>
-        /// upCombo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upCombo;
-        
-        /// <summary>
         /// ddlRelatorio control.
         /// </summary>
         /// <remarks>
@@ -47,15 +38,6 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlRelatorio;
-        
-        /// <summary>
-        /// btnGerar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGerar;
         
         /// <summary>
         /// hdfCFOP control.
@@ -436,6 +418,15 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
         
         /// <summary>
+        /// Td1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Td1;
+        
+        /// <summary>
         /// rbtDescricao control.
         /// </summary>
         /// <remarks>
@@ -488,5 +479,17 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCodigo;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Nissi.WebPresentation.MasterPage Master {
+            get {
+                return ((Nissi.WebPresentation.MasterPage)(base.Master));
+            }
+        }
     }
 }

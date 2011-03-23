@@ -96,11 +96,11 @@ public partial class ListaMenu : BasePage
         if (hdfTipoAcao.Value.Equals("Incluir"))
         {
             //new NissiMenu().Alterar(DadosMenu, UsuarioAtivo.CodFuncionario);
-            new MenuAcesso().Incluir(DadosMenu, 1);
+            new MenuAcesso().Incluir(DadosMenu, UsuarioAtivo.CodFuncionario.Value);
         }
         else
         {
-            new MenuAcesso().Alterar(DadosMenu, 1);
+            new MenuAcesso().Alterar(DadosMenu, UsuarioAtivo.CodFuncionario.Value);
         }
         Pesquisar();
         mpeIncluiMenu.Hide();
@@ -120,7 +120,7 @@ public partial class ListaMenu : BasePage
         if (e.CommandName == "Excluir")
         {
             //Excluir
-            new MenuAcesso().Excluir(identMenu.CodMenu, 1);
+            new MenuAcesso().Excluir(identMenu.CodMenu, UsuarioAtivo.CodFuncionario.Value);
 
             //Atualizar Lista
             Pesquisar();
@@ -186,6 +186,4 @@ public partial class ListaMenu : BasePage
         }
     }
     #endregion
-
-
 }

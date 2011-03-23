@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class UnidadeFederacaoVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class UnidadeFederacaoVO
     {
         #region Campos
         private string _codUF;

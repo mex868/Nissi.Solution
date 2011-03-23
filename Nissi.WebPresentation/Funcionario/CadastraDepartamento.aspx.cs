@@ -89,7 +89,7 @@ using System.Collections.Generic;
             identDepartamento.CodDepartamento = Convert.ToInt16(e.CommandArgument);
             if (e.CommandName == "Excluir")
             {
-                new Departamento().Excluir(Convert.ToInt16(identDepartamento.CodDepartamento),1);
+                new Departamento().Excluir(Convert.ToInt16(identDepartamento.CodDepartamento),UsuarioAtivo.CodFuncionario.Value);
                 Pesquisar();
             }
             else if (e.CommandName == "Editar")
@@ -150,12 +150,12 @@ using System.Collections.Generic;
         {
             if (hdfTipoAcao.Value == "Incluir")
             {
-                new Departamento().Incluir(DadosDepartamento,1);
+                new Departamento().Incluir(DadosDepartamento,UsuarioAtivo.CodFuncionario.Value);
 
             }
             else
             {
-                new Departamento().Alterar(DadosDepartamento,1);
+                new Departamento().Alterar(DadosDepartamento,UsuarioAtivo.CodFuncionario.Value);
             }
 
             if (hdfCadastroPopup.Value != "sim")

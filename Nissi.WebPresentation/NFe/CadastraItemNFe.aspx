@@ -85,6 +85,7 @@
                         <asp:TextBox ID="txtCodigo" runat="server" CssClass="formNovo" MaxLength="50" Width="97px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Código falta ser preenchido."
                             ControlToValidate="txtCodigo" ValidationGroup="ValidaDados">*</asp:RequiredFieldValidator>
+                        <asp:HiddenField ID="hdfCodItemNotaFiscal" runat="server" />
                     </td>
                     <td colspan="3">
                         <asp:TextBox ID="txtDescricao" runat="server" CssClass="DesligarTextBox" MaxLength="50"
@@ -249,7 +250,8 @@
             </table>
             <div style="text-align: center">
                 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
-                    ValidationGroup="ValidaDados" />
+                    ValidationGroup="ValidaDados" 
+                    HeaderText="Os seguintes erros foram encontrados:" />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

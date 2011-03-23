@@ -63,20 +63,6 @@ namespace Nissi.WinFormsApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new NotaFiscalControler().NFeDanfe(parametroNfe.PathPrincipal + @"\nfe\arquivos\procNFe\" +
-             "35100705533093000133550010000000021000000025-procNFe.xml" + "|",
-            parametroNfe.PathPrincipal + @"\nfe\arquivos\" + "35100705533093000133550010000000021000000025-procNFe.pdf" + "|",
-            Convert.ToInt32(parametroNfe.Ambiente),
-            2,
-            false,
-            parametroNfe.PathPrincipal + "|",
-            parametroNfe.TotalizarCfop + "|",
-            parametroNfe.DataPacketFormSeg + "|",
-            parametroNfe.TipoDanfe + "|",
-            parametroNfe.DanfeLogo + "|",
-            parametroNfe.DanfeInfo + "|",
-            parametroNfe.DataPacket + "|"
-            );
         }
 
     }
