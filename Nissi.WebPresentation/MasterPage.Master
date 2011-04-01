@@ -61,7 +61,8 @@
         <asp:ScriptManager ID="scmPrincipal" EnableScriptGlobalization="true" 
                     AllowCustomErrorsRedirect= "false" 
                     EnableScriptLocalization="true" runat="server" 
-                    OnAsyncPostBackError="scmPrincipal_AsyncPostBackError">
+                    OnAsyncPostBackError="scmPrincipal_AsyncPostBackError"
+                    AsyncPostBackTimeout="3600">
             <Scripts>
                 <asp:ScriptReference Path="JScripts/Common.js" ScriptMode="Release" />
                 <asp:ScriptReference Path="JScripts/jquery-1.4.2.min.js" />
@@ -81,7 +82,7 @@
         <asp:HiddenField ID="hndTargetControlAguarde" runat="server" />
         <table border="0" style="width:100%; height:100%;" cellpadding="0" cellspacing="0">
             <tr id="trTopo">
-                <td style="background-color:#CCFF33;height:60px;text-align:left;">
+                <td class="header">
                     <table border="0" style="width:100%;height:100%;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td style="width:15%; text-align:left;" valign="middle">
@@ -94,14 +95,18 @@
                                     Módulo Nota Fiscal
                                 </b>
                             </td>
-                            <td style="width:15%; text-align:center;" valign="middle">
-                                <asp:Label ID="lblUsuario" runat="server">
+                            <td style="color: #FFF; width:15%; text-align:center;" valign="middle">
+                               <b><asp:Label ID="lblUsuario" runat="server">
                                     Usuário Conexão
-                                </asp:Label>
+                                </asp:Label></b>
                                 <br />
-                                <asp:Label ID="lblData" runat="server">
+                                <b><asp:Label ID="lblData" runat="server">
                                     Data
-                                </asp:Label>
+                                </asp:Label></b>
+                                <br />
+                                <b><asp:Label ID="lblVersion" runat="server">
+                                    Versao
+                                </asp:Label></b>
                             </td>
                         </tr>
                     </table>

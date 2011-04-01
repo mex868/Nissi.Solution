@@ -29,7 +29,6 @@
         <SelectParameters>
             <asp:Parameter Name="CodPessoaIni" Type="Int32" />
             <asp:Parameter Name="CodPessoaFim" Type="Int32" />
-            <asp:Parameter Name="UF" Type="String" />
         </SelectParameters>
     </asp:ObjectDataSource>
     <asp:ObjectDataSource ID="odsEmitente" runat="server" 

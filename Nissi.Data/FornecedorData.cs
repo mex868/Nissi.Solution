@@ -48,7 +48,7 @@ namespace Nissi.DataAccess
                     {
                         FornecedorVO fornecedorVO = new FornecedorVO();
 
-                        fornecedorVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                        fornecedorVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                         fornecedorVO.CodFornecedor = GetReaderValue<int?>(dr, "CodFornecedor");
                         fornecedorVO.Cep.CodCep = GetReaderValue<string>(dr, "CodCep");
                         fornecedorVO.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
@@ -154,6 +154,32 @@ namespace Nissi.DataAccess
                     dr.Close();
                 }
                 return lstFornecedorVo;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
+        public string PegarEmail(int codFornecedor)
+        {
+            OpenCommand("pr_pegar_email");
+            try
+            {
+                AddInParameter("@CodCliente", DbType.Int32, codFornecedor);
+                PessoaVO pessoaVo = new PessoaVO();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        pessoaVo.Email = GetReaderValue<string>(dr, "Email");
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return pessoaVo.Email;
             }
             finally
             {
@@ -321,5 +347,6 @@ namespace Nissi.DataAccess
 
 
         #endregion
+
     }
 }

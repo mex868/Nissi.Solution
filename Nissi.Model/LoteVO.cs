@@ -8,7 +8,7 @@ namespace Nissi.Model
 {
     [Serializable()]
     [XmlRoot(ElementName = "Lote")]
-    public class LoteVO : NissiBaseVO
+    public class LoteVO
     {
         #region Campos
             private int? _codNumLote = null;

@@ -22,6 +22,15 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// sm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager sm;
+        
+        /// <summary>
         /// ReportViewer1 control.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,13 @@ namespace Nissi.WebPresentation.Relatorios {
         protected global::Microsoft.Reporting.WebForms.ReportViewer ReportViewer1;
         
         /// <summary>
-        /// ODScliente control.
+        /// ODSCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ODScliente;
+        protected global::System.Web.UI.WebControls.ObjectDataSource ODSCliente;
         
         /// <summary>
         /// ODSemitente control.
@@ -47,14 +56,5 @@ namespace Nissi.WebPresentation.Relatorios {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource ODSemitente;
-        
-        /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
     }
 }

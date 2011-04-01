@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class CidadeVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class CidadeVO
     {
         #region Campos
         private int? _codCidade;

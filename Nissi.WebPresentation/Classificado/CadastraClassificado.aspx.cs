@@ -59,8 +59,8 @@ namespace Nissi.WebPresentation.Classificado
                 identClassificacaoFiscalVO.CodClassificacaoFiscal = hdfCodClassificacaoFiscal.Value != "" ? Convert.ToInt32(hdfCodClassificacaoFiscal.Value.Replace(".", "").Replace("-", "").Replace("/", "")) : int.MinValue;
                 identClassificacaoFiscalVO.Letra =txtLetra.Text ;
                 identClassificacaoFiscalVO.Numero = txtNumero.Text;
-                identClassificacaoFiscalVO.UsuarioAlt = 1;
-                identClassificacaoFiscalVO.UsuarioInc = 1;
+                identClassificacaoFiscalVO.UsuarioAlt = UsuarioAtivo.CodFuncionario;
+                identClassificacaoFiscalVO.UsuarioInc = UsuarioAtivo.CodFuncionario;
                 return identClassificacaoFiscalVO;
             }
         }

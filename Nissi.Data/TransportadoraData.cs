@@ -49,7 +49,7 @@ namespace Nissi.DataAccess
                     {
                         TransportadoraVO transportadoraVO = new TransportadoraVO();
 
-                        transportadoraVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                        transportadoraVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                         transportadoraVO.CodTransportadora = GetReaderValue<int?>(dr, "CodTransportadora");
                         transportadoraVO.Cep.CodCep = GetReaderValue<string>(dr, "CodCep");
                         transportadoraVO.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
@@ -110,7 +110,7 @@ namespace Nissi.DataAccess
                     while (dr.Read())
                     {
                         TransportadoraVO transportadoraVO = new TransportadoraVO();
-                        transportadoraVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                        transportadoraVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                         transportadoraVO.CodTransportadora = GetReaderValue<int?>(dr, "CodTransportadora");
                         transportadoraVO.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
                         lstTransportadoraVO.Add(transportadoraVO);
@@ -194,7 +194,32 @@ namespace Nissi.DataAccess
                 CloseCommand();
             }
         }
-
+        public string PegarEmail(int codTransportadora)
+        {
+            OpenCommand("pr_pegar_email");
+            try
+            {
+                AddInParameter("@CodCliente", DbType.Int32, codTransportadora);
+                PessoaVO pessoaVo = new PessoaVO();
+                IDataReader dr = ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                    {
+                        pessoaVo.Email = GetReaderValue<string>(dr, "Email");
+                    }
+                }
+                finally
+                {
+                    dr.Close();
+                }
+                return pessoaVo.Email;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }
         #endregion
         #region Métodos de Inclusão
         /// <summary>

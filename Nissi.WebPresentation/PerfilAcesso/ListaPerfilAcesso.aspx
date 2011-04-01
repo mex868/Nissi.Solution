@@ -22,8 +22,19 @@
         function EndRequest(sender, args)
         {
             WaitAsyncPostBack(false);
-        }        
-    </script >
+        }
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 02/11/2009
+        //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+        //--------------------------------------------------------------------------------
+        function KeyDownHandler() {
+            if (event.keyCode == 13) {
+                event.returnValue = false;
+                event.cancel = true;
+                $get('<%=btnPesquisar.ClientID%>').click();
+            }
+        }       
+    </script>
 <div style="text-align:center">
         <table border="0" 
             style="border-style: solid; border-width: 1px; margin-left: auto; width: 95%; margin-right: auto">
@@ -43,23 +54,23 @@
             </td>
             <td style="text-align:left; width: 123px;">
                 <asp:RadioButton ID="rbTodos" GroupName="filtroPesq" Text="Todos" 
-                    runat="server" Checked="True" onclick="HabilitaTextBox(true);" 
+                    runat="server" Checked="True" 
                     CssClass="noBorder" />
             </td>
             <td style="text-align:left; width: 136px;">
                 <asp:RadioButton ID="rbNome" GroupName="filtroPesq" Text="Nome" runat="server" 
-                    onclick="HabilitaTextBox(false);" CssClass="noBorder" />                
+                     CssClass="noBorder" />                
             </td>
             <td style="text-align:left">
                 <asp:RadioButton ID="rbDescricao" GroupName="filtroPesq" Text="Descrição" 
-                    runat="server" onclick="HabilitaTextBox(false);" CssClass="noBorder" />
+                    runat="server" CssClass="noBorder" />
             </td>
         </tr>
         <tr>
         <td>
         </td>
         <td colspan="3" style="text-align:left"> 
-        <asp:TextBox ID="txbPesquisa" runat="server" Width="204px"></asp:TextBox>
+        <asp:TextBox ID="txbPesquisa" onkeypress="KeyDownHandler();" runat="server" Width="204px"></asp:TextBox>
         </td>
         </tr>
         <tr>
@@ -92,7 +103,7 @@
                         ShowOptionColumn="False" 
                         onpageindexchanging="grdListaResultado_PageIndexChanging" 
                         onrowcommand="grdListaResultado_RowCommand" 
-                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento">
+                        onrowdatabound="grdListaResultado_RowDataBound" CssClass="alinhamento" Width="95%">
                     <Columns>
                         <asp:TemplateField HeaderText="Ações">
                             <itemtemplate>

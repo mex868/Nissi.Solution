@@ -51,8 +51,6 @@ public partial class CadastraEmitente : BasePage
             updImage.Update();
            
         }
-       
-
     }
 
     private void limparImagem()
@@ -70,7 +68,7 @@ public partial class CadastraEmitente : BasePage
         //btnCarregarImagem.Attributes.Add("onclick", "return ValidaArquivoImagem();");
         if ((upFileUp.PostedFile == null) || (upFileUp.PostedFile.ContentLength == 0)
             || !upFileUp.PostedFile.ContentType.StartsWith("image/"))
-            ExecutarScript(new StringBuilder("alert('Informe um arquivo de imagem válido'); "));
+            ExecutarScript(updBotoes,new StringBuilder("alert('Informe um arquivo de imagem válido'); "));
 
         else
         {
@@ -81,7 +79,7 @@ public partial class CadastraEmitente : BasePage
             // Lê a imagem do arquivo          			 
             Input.Read(ImagemLogo, 0, Convert.ToInt32(Input.Length));
             // Joga no ViewState
-            ViewState[key_Imagem] =(byte[]) ImagemLogo;
+            ViewState[key_Imagem] =  ImagemLogo;
             string sVarCache = "Imagem";
             Cache[sVarCache] = ImagemLogo;
             imgImagem.ImageUrl ="~/GeraImagem.aspx?Variavel_Cache=" + sVarCache; 

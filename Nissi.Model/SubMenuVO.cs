@@ -6,6 +6,7 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela SubMenu
     /// </summary>
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class SubMenuVO
     {
         #region Campos
@@ -52,11 +53,14 @@ namespace Nissi.Model
             set { _resolveurl = value; }
         }
 
+        public short? Ordem { get; set; }
+
         public DateTime? DataCadastro
         {
             get { return _dataCadastro; }
             set { _dataCadastro = value; }
         }
+
 
         public int? UsuarioInc
         {
@@ -75,11 +79,13 @@ namespace Nissi.Model
             get { return _usuarioAlt; }
             set { _usuarioAlt = value; }
         }
+
         public bool? Ativo
         {
             get { return _ativo; }
             set { _ativo = value; }
         }
+
         public List<RolesVO> Roles
         {
             get {

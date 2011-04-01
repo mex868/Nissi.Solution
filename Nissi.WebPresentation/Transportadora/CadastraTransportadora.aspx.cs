@@ -135,9 +135,9 @@ public partial class CadastraTransportadora :BasePage
     {
         if (hdfTipoAcao.Value == "Incluir")
         { 
-           hdfCodTransportadora.Value =  new Transportadora().Incluir(DadosTransportadora, 1).ToString(); }
+           hdfCodTransportadora.Value =  new Transportadora().Incluir(DadosTransportadora, UsuarioAtivo.CodFuncionario.Value).ToString(); }
         else
-        { new Transportadora().Alterar(DadosTransportadora, 1); }
+        { new Transportadora().Alterar(DadosTransportadora, UsuarioAtivo.CodFuncionario.Value); }
 
         if (hdfCadastroPopup.Value != "sim")
         {

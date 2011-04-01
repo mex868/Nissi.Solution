@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    [Serializable]
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class NissiBaseVO
     {
         /// <summary>

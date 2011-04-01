@@ -4,7 +4,7 @@
 <%@ Register src="../UserControl/Endereco.ascx" tagname="Endereco" tagprefix="uc2" %>
 <%@ Register src="../UserControl/Banco.ascx" tagname="Banco" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
-<link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
+    <link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
 <script src="../JScripts/Common.js" type="text/javascript"></script>
 <script type="text/javascript">
     //--------------------------------------------------------------------------------
@@ -61,7 +61,18 @@
             $get('<%=cvValida.ClientID %>').errormessage = "Favor informar a Descrição.";
         }
          args.IsValid = valido;
-    }
+     }
+     //--------------------------------------------------------------------------------
+     //Criado por...: Alexandre Maximiano - 02/11/2009
+     //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+     //--------------------------------------------------------------------------------
+     function KeyDownHandler() {
+             if (event.keyCode == 13) {
+                 event.returnValue = false;
+                 event.cancel = true;
+                 $get('<%=btnPesquisar.ClientID%>').click();          
+            }
+     }
 </script>
 <table style="margin-left: auto; width: 95%; margin-right: auto;">
     <tr>
@@ -93,11 +104,11 @@
             <td style="width: 20%">&nbsp;</td>
             <td colspan="3">
                 <div id="divCodigo"  style="display:block">
-                    <asp:TextBox ID="txtCodigoPesq" MaxLength="4" onkeypress="OnlyNumbers()" runat="server" Height="16px" Width="146px"></asp:TextBox>
+                    <asp:TextBox ID="txtCodigoPesq" MaxLength="4" onkeypress="OnlyNumbers();KeyDownHandler();" runat="server" Height="16px" Width="146px"></asp:TextBox>
                     
                 </div>
                 <div id="divDesc" style="display:none">
-                    <asp:TextBox ID="txtDescPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                    <asp:TextBox ID="txtDescPesq" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                     <asp:CustomValidator Display="None" Text="*" CssClass="asterisco" ID="cvValida" ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar a Descrição." runat="server"></asp:CustomValidator>
                 </div>
             </td>
@@ -133,7 +144,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 

@@ -31,6 +31,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,26 +69,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco.cs" />
+    <Compile Include="Bitola.cs" />
     <Compile Include="Cargo.cs" />
     <Compile Include="CEP.cs" />
     <Compile Include="CFOP.cs" />
     <Compile Include="Cidade.cs" />
+    <Compile Include="ClasseTipo.cs" />
     <Compile Include="ClassificacaoFiscal.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="ComposicaoMateriaPrima.cs" />
     <Compile Include="Departamento.cs" />
+    <Compile Include="EmailEmitente.cs" />
     <Compile Include="Emitente.cs" />
+    <Compile Include="EntradaEstoque.cs" />
     <Compile Include="Fonetica.cs" />
     <Compile Include="FormaPgto.cs" />
     <Compile Include="Fornecedor.cs" />
     <Compile Include="Funcionario.cs" />
+    <Compile Include="MateriaPrima.cs" />
     <Compile Include="MensagemNF.cs" />
     <Compile Include="MenuAcesso.cs" />
     <Compile Include="Nfe.cs" />
     <Compile Include="NissiBaseBusiness.cs" />
+    <Compile Include="Norma.cs" />
     <Compile Include="NotaFiscal.cs" />
     <Compile Include="Parametro.cs" />
+    <Compile Include="PedidoCompra.cs" />
     <Compile Include="PerfilAcesso.cs" />
+    <Compile Include="PrazoEntrega.cs" />
     <Compile Include="Produto.cs" />
+    <Compile Include="ProdutoInsumo.cs" />
     <Compile Include="ProdutoNF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles.cs" />
@@ -97,6 +108,7 @@
     <Compile Include="Transportadora.cs" />
     <Compile Include="Unidade.cs" />
     <Compile Include="UnidadeFederacao.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nissi.Data\Nissi.DataAccess.csproj">
@@ -106,6 +118,10 @@
     <ProjectReference Include="..\Nissi.Model\Nissi.Model.csproj">
       <Project>{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}</Project>
       <Name>Nissi.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repositorio\Nissi.Repositorio.csproj">
+      <Project>{01D409EB-AD89-49B6-B107-869EC57ED7E8}</Project>
+      <Name>Nissi.Repositorio</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

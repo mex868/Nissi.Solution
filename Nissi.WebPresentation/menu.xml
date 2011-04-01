@@ -44,6 +44,11 @@
         <resolveurl>true</resolveurl>
       </menuItem>
       <menuItem>
+        <text>Produto Insumo</text>
+        <url>Produto/CadastraProdutoInsumo.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
         <text>Unidade</text>
         <url>Produto/CadastraUnidade.aspx</url>
         <resolveurl>true</resolveurl>
@@ -68,6 +73,56 @@
         <url>Parametro/NFEParametros.aspx</url>
         <resolveurl>true</resolveurl>
       </menuItem>
+      <menuItem>
+        <text>Forma de Pagamento</text>
+        <url>FormaPgto/CadastraFormaPgto.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
+        <text>Prazo de Entrega</text>
+        <url>PrazoEntrega/CadastraPrazoEntrega.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+    </subMenu>
+  </menuItem>
+  <menuItem>
+    <text>Compras</text>
+    <subMenu>
+      <menuItem>
+        <text>Bitola</text>
+        <url>MateriaPrima/CadastraBitola.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
+        <text>Norma</text>
+        <url>MateriaPrima/CadastraNorma.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
+        <text>Classe Tipo</text>
+        <url>MateriaPrima/CadastraClasseTipo.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
+        <text>Matéria Prima</text>
+        <url>MateriaPrima/CadastraMateriaPrima.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+      <menuItem>
+        <text>Pedido Compra</text>
+        <url>PedidoCompra/ListaPedidoCompra.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
+    </subMenu>
+  </menuItem>
+  <menuItem>
+    <text>Produção</text>
+    <subMenu>
+      <menuItem>
+        <text>Entrada Estoque</text>
+        <url>EntradaEstoque/ListaEntradaEstoque.aspx</url>
+        <resolveurl>true</resolveurl>
+      </menuItem>
     </subMenu>
   </menuItem>
   <menuItem>
@@ -79,7 +134,7 @@
         <resolveurl>true</resolveurl>
       </menuItem>
     </subMenu>
-  </menuItem>
+  </menuItem> 
   <menuItem>
     <text>Emissão</text>
     <subMenu>

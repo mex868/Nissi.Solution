@@ -60,6 +60,7 @@ public partial class CadastraFuncionario : BasePage
                 identFuncionario.Cargo.CodCargo = short.Parse(ddlCargo.SelectedValue);
                 identFuncionario.Login = txtLogin.Text;
                 identFuncionario.Ativo = chkAtivo.Checked ? true : false;
+                identFuncionario.AcessaSistema = chkAcessa.Checked ? true : false;
                 identFuncionario.Banco = ucBanco.DadosBanco;
             return identFuncionario;
         }
@@ -234,9 +235,9 @@ public partial class CadastraFuncionario : BasePage
     protected void btnSalvar_Click(object sender, EventArgs e)
     {
         if (hdfTipoAcao.Value.Equals("Incluir"))
-            hdfCodFuncionario.Value = new Funcionario().Incluir(DadosFuncionario, 1).ToString();
+            hdfCodFuncionario.Value = new Funcionario().Incluir(DadosFuncionario, UsuarioAtivo.CodFuncionario.Value).ToString();
         else
-            new Funcionario().Alterar(DadosFuncionario, 1);
+            new Funcionario().Alterar(DadosFuncionario, UsuarioAtivo.CodFuncionario.Value);
         Pesquisar();
         limparCampos();
         hdfTipoAcao.Value = string.Empty;
@@ -282,7 +283,7 @@ public partial class CadastraFuncionario : BasePage
     {
         if (hdfTipoAcaoDepartamento.Value.Equals("Incluir"))
         {
-            int codDepartamento = new Departamento().Incluir(DadosDepartamento, 1);
+            int codDepartamento = new Departamento().Incluir(DadosDepartamento, UsuarioAtivo.CodFuncionario.Value);
             preencherDepartamento(codDepartamento);
         }
         mpeIncluiDepartamento.Hide();
@@ -337,7 +338,7 @@ public partial class CadastraFuncionario : BasePage
     {
         if (hdfTipoAcaoCargo.Value.Equals("Incluir"))
         {
-            short codCargo = new Cargo().Incluir(DadosCargo, 1);
+            short codCargo = new Cargo().Incluir(DadosCargo, UsuarioAtivo.CodFuncionario.Value);
             preencherCargo(codCargo);
         }
         mpeIncluirCargo.Hide();
@@ -351,7 +352,8 @@ public partial class CadastraFuncionario : BasePage
     }    
     #endregion
     #endregion
-
+    private List<PerfilAcessoVO> _listaAssociados;
+    private List<PerfilAcessoVO> _listaAssociar;
     #region Métodos do Grid
     protected void grdListaResultado_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
@@ -359,33 +361,51 @@ public partial class CadastraFuncionario : BasePage
     }
     protected void grdListaResultado_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        FuncionarioVO identFuncionario = new FuncionarioVO();
-        identFuncionario.CodFuncionario = int.Parse(e.CommandArgument.ToString());
-
-        //Módulo de exclusão
-        if (e.CommandName == "Excluir")
+        if (!e.CommandName.Equals("Page"))
         {
-            //Excluir
-            new Funcionario().Excluir(identFuncionario.CodFuncionario,"C");
+            FuncionarioVO identFuncionario = new FuncionarioVO();
+            string[] codigos = e.CommandArgument.ToString().Split('|');
+            identFuncionario.CodFuncionario = int.Parse(codigos[0]);
 
-            //Atualizar Lista
-            Pesquisar();
-        }
-        else if (e.CommandName == "Editar")  //Módulo de alteração
-        {
-            hdfTipoAcao.Value = "Editar";
-            identFuncionario = new Funcionario().Listar(identFuncionario)[0];
-            mpeIncluir.Show();
+            //Módulo de exclusão
+            if (e.CommandName == "Excluir")
+            {
+                //Excluir
+                new Funcionario().Excluir(identFuncionario.CodFuncionario, "C");
 
-            //Alimentar campos para edição
-            carregaDados(identFuncionario); 
-        }
-        else if (e.CommandName == "Reiniciar")
-        {
-            FuncionarioVO identFunc = new FuncionarioVO();
-            identFuncionario.CodFuncionario =Convert.ToInt32(e.CommandArgument);
-            new Funcionario().ReiniciarSenha(identFuncionario);
-            MensagemCliente("Senha reiniiada com sucesso.");
+                //Atualizar Lista
+                Pesquisar();
+            }
+            else if (e.CommandName == "Editar") //Módulo de alteração
+            {
+                hdfTipoAcao.Value = "Editar";
+                identFuncionario = new Funcionario().Listar(identFuncionario)[0];
+                mpeIncluir.Show();
+
+                //Alimentar campos para edição
+                carregaDados(identFuncionario);
+            }
+            else if (e.CommandName == "Perfil")
+            {
+                hdfCodUsuario.Value = identFuncionario.CodFuncionario.ToString();
+                lblUsuarioPerfil.Text = codigos[1];
+                carregaListaNaoAssociados();
+                carregaListaAssociados();
+                if (lbxAssociar.Items.Count > 0)
+                    lbxAssociar.SelectedIndex = 0;
+                if (lbxAssociados.Items.Count > 0)
+                    lbxAssociados.SelectedIndex = 0;
+                ArmazenaValorSessao("listaAssociados", _listaAssociados);
+                ArmazenaValorSessao("listaAssociar", _listaAssociar);
+                mpePerfil.Show();
+            }
+            else if (e.CommandName == "Reiniciar")
+            {
+                FuncionarioVO identFunc = new FuncionarioVO();
+                identFuncionario.CodFuncionario = Convert.ToInt32(e.CommandArgument);
+                new Funcionario().ReiniciarSenha(identFuncionario);
+                MensagemCliente("Senha reiniciada com sucesso.");
+            }
         }
     }
     protected void grdListaResultado_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -397,12 +417,19 @@ public partial class CadastraFuncionario : BasePage
             #region Botão Editar
             ImageButton imgEditar = (ImageButton)e.Row.FindControl("imgEditar");
             imgEditar.ImageUrl = caminhoAplicacao + @"Imagens\editar.png";
-            imgEditar.CommandArgument =  identFuncionario.CodFuncionario.ToString();
+            imgEditar.CommandArgument = identFuncionario.CodFuncionario + "|" + identFuncionario.Apelido;
             imgEditar.CommandName = "Editar";
             imgEditar.Style.Add("cursor", "hand");
             imgEditar.ToolTip = "Editar dados do Funcionário [" + identFuncionario.Nome.Trim() + "]";
             #endregion
-
+            #region Botão Perfil
+            ImageButton imgPerfil = (ImageButton)e.Row.FindControl("imgPerfil");
+            imgPerfil.ImageUrl = caminhoAplicacao + @"Imagens\DatabasePermissionsMenu.png";
+            imgPerfil.CommandArgument = identFuncionario.CodFuncionario+"|"+identFuncionario.Apelido;
+            imgPerfil.CommandName = "Perfil";
+            imgPerfil.Style.Add("cursor", "hand");
+            imgPerfil.ToolTip = "Perfil do Funcionário [" + identFuncionario.Nome.Trim() + "]";
+            #endregion
             #region Botão Reiniciar Senha
             ImageButton imgReiniciar = (ImageButton)e.Row.FindControl("imgReiniciar");
             imgReiniciar.CommandArgument = identFuncionario.CodFuncionario.ToString();
@@ -425,11 +452,152 @@ public partial class CadastraFuncionario : BasePage
         }
     }
 
-    protected void grdListaResultado_SelectedIndexChanged(object sender, EventArgs e)
-    {
 
+
+    private void carregaListaNaoAssociados()
+    {
+        lbxAssociar.DataSource = Usuario.ListarPerfilNaoAssociado(int.Parse(hdfCodUsuario.Value));
+        lbxAssociar.DataTextField = "NomPerfilAcesso";
+        lbxAssociar.DataValueField = "CodPerfilAcesso";
+        lbxAssociar.DataBind();
+    }
+    private void carregaListaAssociados()
+    {
+        lbxAssociados.DataSource = Usuario.ListarPerfilAssociado(int.Parse(hdfCodUsuario.Value));
+        lbxAssociados.DataTextField = "NomPerfilAcesso";
+        lbxAssociados.DataValueField = "CodPerfilAcesso";
+        lbxAssociados.DataBind();
+    }
+
+
+    protected void btnAssociar_Click(object sender, EventArgs e)
+    {
+        ListItem item = lbxAssociar.SelectedItem;
+        if (item != null)
+        {
+            adicionaLista(item);
+        }
+        Master.PosicionarFoco(lbxAssociar);
+    }
+
+    protected void btnRetirar_Click(object sender, EventArgs e)
+    {
+        ListItem item = lbxAssociados.SelectedItem;
+        if (item != null)
+        {
+            removeLista(item);
+        }
+        if (lbxAssociados.Items.Count > 0)
+        {
+            Master.PosicionarFoco(lbxAssociados);
+            lbxAssociados.SelectedIndex = 0;
+        }
+        else
+        {            
+            Master.PosicionarFoco(lbxAssociar);
+        }
+    }
+
+    protected void btnAssociarTodos_Click(object sender, EventArgs e)
+    {
+        foreach (ListItem item in lbxAssociar.Items)
+        {
+            adicionaLista(item);
+        }
+        lbxAssociar.Items.Clear();
+        _listaAssociar.Clear();
+        Master.PosicionarFoco(lbxAssociados);
+    }
+
+    protected void btnRetirarTodos_Click(object sender, EventArgs e)
+    {
+        foreach (ListItem item in lbxAssociados.Items)
+        {
+            removeLista(item);
+        }
+        lbxAssociados.Items.Clear();
+        _listaAssociados.Clear();
+        Master.PosicionarFoco(lbxAssociar);
+    }
+
+    #region adicionaLista
+    private void adicionaLista(ListItem item)
+    {
+        PerfilAcessoVO identUsuario = new PerfilAcessoVO();
+        if (RecuperaValorSessao("listaAssociados") == null)
+            _listaAssociados = new List<PerfilAcessoVO>();
+        else
+            _listaAssociados = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociados");
+        if (RecuperaValorSessao("listaAssociar") == null)
+            _listaAssociar = new List<PerfilAcessoVO>();
+        else
+            _listaAssociar = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociar");
+        identUsuario.CodPerfilAcesso = short.Parse(item.Value);
+        _listaAssociados.Add(identUsuario);
+        _listaAssociar = Remove(_listaAssociar, identUsuario);
+        lbxAssociados.Items.Add(item);
+        lbxAssociar.Items.Remove(item);
+        ArmazenaValorSessao("listaAssociados", _listaAssociados);
+        ArmazenaValorSessao("listaAssociar", _listaAssociar);
     }
     #endregion
+
+    #region removeLista
+    private void removeLista(ListItem item)
+    {
+        PerfilAcessoVO identAcessoVO = new PerfilAcessoVO();
+        if (RecuperaValorSessao("listaAssociados") == null)
+            _listaAssociados = new List<PerfilAcessoVO>();
+        else
+            _listaAssociados = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociados");
+        if (RecuperaValorSessao("listaAssociar") == null)
+            _listaAssociar = new List<PerfilAcessoVO>();
+        else
+            _listaAssociar = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociar");
+        identAcessoVO.CodPerfilAcesso = short.Parse(item.Value);
+        identAcessoVO.UsuarioAlt = UsuarioAtivo.CodFuncionario.Value;
+        _listaAssociar.Add(identAcessoVO);
+        _listaAssociados = Remove(_listaAssociados, identAcessoVO);
+        lbxAssociar.Items.Add(item);
+        lbxAssociados.Items.Remove(item);
+        ArmazenaValorSessao("listaAssociados", _listaAssociados);
+        ArmazenaValorSessao("listaAssociar", _listaAssociar);
+    }
+    #endregion
+
+    private List<PerfilAcessoVO> Remove(List<PerfilAcessoVO> listaPerfilAcessoVO, PerfilAcessoVO identPefilAcessoVO)
+    {
+        List<PerfilAcessoVO> novalista = new List<PerfilAcessoVO>();
+        foreach (PerfilAcessoVO identPerfilAcessoTemp in listaPerfilAcessoVO)
+        {
+            if (identPefilAcessoVO.CodPerfilAcesso != identPerfilAcessoTemp.CodPerfilAcesso)
+                novalista.Add(identPerfilAcessoTemp);
+        }
+        return novalista;
+    }
+    #endregion
+
+    protected void btnSalvarPerfil_Click(object sender, EventArgs e)
+    {
+        _listaAssociados = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociados");
+        _listaAssociar = (List<PerfilAcessoVO>)RecuperaValorSessao("listaAssociar");
+        if (_listaAssociar != null && _listaAssociar.Count > 0)
+            Usuario.Excluir(int.Parse(hdfCodUsuario.Value), _listaAssociar);
+        if (_listaAssociados != null && _listaAssociados.Count > 0)
+            Usuario.Incluir(int.Parse(hdfCodUsuario.Value), _listaAssociados, UsuarioAtivo.CodFuncionario.Value);
+        hdfCodUsuario.Value = string.Empty;
+        DestroiValorSessao("listaAssociados");
+        DestroiValorSessao("listaAssociar");
+        mpePerfil.Hide();
+    }
+
+    protected void btnCancelarPerfil_Click(object sender, EventArgs e)
+    {
+        hdfCodUsuario.Value = string.Empty;
+        DestroiValorSessao("listaAssociados");
+        DestroiValorSessao("listaAssociar");
+        mpePerfil.Hide();
+    }
 
 }
 

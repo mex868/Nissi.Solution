@@ -8,7 +8,8 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela CFOP
     /// </summary>
-    public class CFOPVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class CFOPVO
     {
         #region Campos
         private int? _codCFOP = null;

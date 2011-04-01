@@ -8,7 +8,8 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela MensagemNF
     /// </summary>
-    public class MensagemNFVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class MensagemNFVO
     {
         #region Campos
         private int? _codMensagemNF = null;

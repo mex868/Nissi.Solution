@@ -31,7 +31,7 @@ namespace Nissi.WinFormsApplication
             emit = new string[17];
             dest = new string[20];
             prod = new string[Convert.ToInt32(identNotaFiscal.Itens.Count), 60];
-            total = new string[14];
+            total = new string[16];
             transp = new string[15];
             cobr = new string[6];
             infAdic = new string[2]; 

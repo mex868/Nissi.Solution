@@ -42,6 +42,7 @@ namespace Nissi.DataAccess
                         subMenuVO.DataAlteracao = GetReaderValue<DateTime>(dr, "DataAlteracao");
                         subMenuVO.UsuarioAlt = GetReaderValue<int>(dr, "UsuarioAlt");
                         subMenuVO.Ativo = GetReaderValue<bool>(dr, "Ativo");
+                        subMenuVO.Ordem = GetReaderValue<short?>(dr, "Ordem");
 
                         lstSubMenuVO.Add(subMenuVO);
                     }
@@ -58,7 +59,23 @@ namespace Nissi.DataAccess
                 CloseCommand();
             }
         }
-       
+
+        public int ListarOrdem(SubMenuVO identSuMenu)
+        {
+            OpenCommand("pr_selecionar_submenuordem");
+            try
+            {
+                // Parâmetros de entrada
+                AddInParameter("@CodMenu", DbType.Int16, identSuMenu.CodMenu);
+
+                var ordem = ExecuteScalar<int>();
+                return ordem;
+            }
+            finally
+            {
+                CloseCommand();
+            }
+        }      
         #endregion
 
         // ------------------------------------------------------------------------- // 
@@ -80,6 +97,7 @@ namespace Nissi.DataAccess
                 AddInParameter("@resolveurl", DbType.Boolean, subMenuVO.Resolveurl);
                 AddInParameter("@UsuarioInc", DbType.Int32, codUsuarioOperacao);
                 AddInParameter("@Ativo", DbType.Boolean, subMenuVO.Ativo);
+                AddInParameter("@Ordem", DbType.Int16, subMenuVO.Ordem);
 
                 ExecuteNonQuery();
             }
@@ -107,6 +125,7 @@ namespace Nissi.DataAccess
                 AddInParameter("@resolveurl", DbType.Boolean, subMenuVO.Resolveurl);
                 AddInParameter("@UsuarioAlt", DbType.Int32, codUsuarioOperacao);
                 AddInParameter("@Ativo", DbType.Boolean, subMenuVO.Ativo);
+                AddInParameter("@Ordem", DbType.Int16, subMenuVO.Ordem);
 
                 ExecuteNonQuery();
             }
@@ -130,7 +149,7 @@ namespace Nissi.DataAccess
             {
                 // Parâmetros de entrada
                 AddInParameter("@CodSubMenu", DbType.Int16, codSubMenu);
-                AddInParameter("@CodUsuarioOperacao", DbType.Int32, codUsuarioOperacao);
+                //AddInParameter("@CodUsuarioOperacao", DbType.Int32, codUsuarioOperacao);
 
                 ExecuteNonQuery();
             }
@@ -140,7 +159,7 @@ namespace Nissi.DataAccess
             }
         }
         #endregion
-
+      
         // ------------------------------------------------------------------------- // 
 
     }

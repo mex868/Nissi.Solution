@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Nissi.Model
 {
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class FornecedorVO : PessoaVO
     {
         #region Campos

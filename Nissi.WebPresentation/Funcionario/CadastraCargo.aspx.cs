@@ -100,7 +100,7 @@ using System.Collections.Generic;
             identCargo.CodCargo = Convert.ToInt16(e.CommandArgument);
             if (e.CommandName == "Excluir")
             {
-                new Cargo().Excluir(Convert.ToInt16(identCargo.CodCargo),1);
+                new Cargo().Excluir(Convert.ToInt16(identCargo.CodCargo),UsuarioAtivo.CodFuncionario.Value);
                 Pesquisar();
             }
             else if (e.CommandName == "Editar")
@@ -161,12 +161,12 @@ using System.Collections.Generic;
         {
             if (hdfTipoAcao.Value == "Incluir")
             {
-                new Cargo().Incluir(DadosCargo,1);
+                new Cargo().Incluir(DadosCargo,UsuarioAtivo.CodFuncionario.Value);
 
             }
             else
             {
-                new Cargo().Alterar(DadosCargo,1);
+                new Cargo().Alterar(DadosCargo,UsuarioAtivo.CodFuncionario.Value);
             }
 
             if (hdfCadastroPopup.Value != "sim")

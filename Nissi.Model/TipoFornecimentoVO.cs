@@ -5,6 +5,7 @@ namespace Nissi.Model
 /// <summary>
 /// Summary description for Class1
 /// </summary>
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class TipoFornecimentoVO
     {
         #region Campos

@@ -8,7 +8,9 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela ClassificacaoFiscal
     /// </summary>
-    public class ClassificacaoFiscalVO
+    /// 
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class ClassificacaoFiscalVO: NissiBaseVO
     {
         #region Campos
         private int? _codClassificacaoFiscal = null;

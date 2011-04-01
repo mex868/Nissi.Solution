@@ -26,12 +26,14 @@ namespace Nissi.Util
         /// <param name="strDataTextField">campo do List que será o DataTextField da DropDownList</param>
         public static void CarregarDDL(ref DropDownList ddl, Array lista, string strDataValueField, string strDataTextField)
         {
-            ddl.DataSource = lista;
-            ddl.DataValueField = strDataValueField;
-            ddl.DataTextField = strDataTextField;
-            ddl.DataBind();
-
-            ddl.Items.Insert(0, new ListItem("(Selecione)", string.Empty));
+           if (lista.Length > 0)
+           {
+               ddl.DataSource = lista;
+               ddl.DataValueField = strDataValueField;
+               ddl.DataTextField = strDataTextField;
+               ddl.DataBind();
+               ddl.Items.Insert(0, new ListItem("(Selecione)", string.Empty));
+           }
         }
 
     }

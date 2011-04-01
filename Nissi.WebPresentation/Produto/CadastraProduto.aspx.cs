@@ -124,6 +124,7 @@ using System.Linq;
             else
             {
                 grdListaResultado.Visible = false;
+                MensagemCliente("Não existem registros para o filtro informado.");
             }
             LimparCampos();
 
@@ -224,7 +225,7 @@ using System.Linq;
             else if (e.CommandName == "Editar")
             {
                 hdfTipoAcao.Value = "Editar";
-                DadosProduto = new Produto().Listar(identProduto)[0];
+                DadosProduto = new Produto().Listar(identProduto).FirstOrDefault();
                 mpeIncluirProduto.Show();
             }
             //else if (e.CommandName == "IncluirItem")
@@ -244,7 +245,8 @@ using System.Linq;
                 
                 e.Row.Cells[2].Text = tempProduto.Descricao;
                 e.Row.Cells[3].Text = tempProduto.Unidade.Descricao;
-
+                Random random = new Random();
+                int num = random.Next(1000);
                 #region Botão Editar
                 ImageButton imgEditar = (ImageButton)e.Row.FindControl("imgEditar");
                 imgEditar.ImageUrl = caminhoAplicacao + @"Imagens\editar.png";
@@ -268,8 +270,8 @@ using System.Linq;
                 {
                     //verificar se na Session["lstItemNotaFiscal"] já existe o produto desta linha,
                     //se existir, não será incluído novamente, portanto, não exibirá o botão Incluir Ítem
-                    if (!ProdutoJaIncluido(tempProduto.CodProduto))
-                    {
+                    //if (!ProdutoJaIncluido(tempProduto.CodProduto))
+                    //{
                         ImageButton imgIncluirItem = (ImageButton)e.Row.FindControl("imgIncluirItem");
                         imgIncluirItem.Visible = true;
                         imgIncluirItem.ImageUrl = caminhoAplicacao + @"Imagens\IncluirItem.png";
@@ -277,8 +279,8 @@ using System.Linq;
                         imgIncluirItem.CommandName = "IncluirItem";
                         imgIncluirItem.Style.Add("cursor", "hand");
                         imgIncluirItem.ToolTip = "Incluir Item [" + tempProduto.Descricao.Trim() + "] na Nota Fiscal";
-                        imgIncluirItem.Attributes.Add("onclick", "window.name='Produto';window.open('" + HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath + "/NFe/CadastraItemNFe.aspx?CodProduto=" + tempProduto.CodProduto.ToString() + "','Produto');");
-                    }
+                        imgIncluirItem.Attributes.Add("onclick", "window.name='Produto';window.open('" + HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath + "/NFe/CadastraItemNFe.aspx?CodProduto=" + tempProduto.CodProduto.ToString() + "&CodItemNotaFiscal="+num+"','Produto');");
+                    //}
                 }
                 #endregion
                 if (e.Row.RowState == DataControlRowState.Normal)

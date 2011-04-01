@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Nissi.Business;
+using BN = Nissi.Business;
 using Nissi.Model;
 
 namespace Nissi.WebPresentation
@@ -33,7 +33,7 @@ namespace Nissi.WebPresentation
                     EmitenteVO tempEmitente = new EmitenteVO();
                     EmitenteVO identEmitente = new EmitenteVO();
                     identEmitente.CodEmitente = Convert.ToInt32(Session["CodEmitente"]);
-                    tempEmitente = new Emitente().Listar(identEmitente)[0];
+                    tempEmitente = new BN.Emitente().Listar(identEmitente)[0];
 
                     imagem = (byte[])tempEmitente.Image;
                 }

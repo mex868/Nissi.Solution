@@ -28,28 +28,66 @@ namespace Nissi.WebPresentation
 
             if (!Page.IsPostBack)
             {
+                Master.PosicionarFoco(tbxNomeUsuario);
+
+                if (Session["xmlMenu"] != null)
+                    Session.Remove("xmlMenu");
+
+                if (Session["userTemp"] != null)
+                    Session.Remove("userTemp");
+
                 if (Request.QueryString["EfetuarLogoff"] != null)
                 {
-                    ExecutarScript(new StringBuilder("window.close()"));
+                    Response.Cookies.Remove(UsuarioAtivo.CodFuncionario.ToString());
+                    UsuarioAtivo = null;
                 }
-
-
-                // this.Master.PosicionarFoco(tbxNomeUsuario);
-
-                //if (Request.QueryString["EfetuarLogoff"] != null)
-                //{
-                  //  Response.Cookies.Remove(UsuarioAtivo.CodFuncionario.ToString());
-                   // UsuarioAtivo = null;
-                //}
             }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            FuncionarioVO identUsuario = new FuncionarioVO();
+            AutenticarUsuario();
+        }
 
-            string loginUsuario = tbxNomeUsuario.Text;
-            string modoDesenvolvedor = string.Empty;
+        protected void btnGrava_Click(object sender, EventArgs e)
+        {
+            Gravar();
+        }
+
+        private void Gravar()
+        {
+            var identUsuario = (UsuarioVO)RecuperaValorSessao("userTemp");
+
+            if (identUsuario != null)
+            {
+                    //Alterando a senha
+                    identUsuario.Funcionario.Senha = Usuario.CriptografarSenha(tbxNovaSenha.Text);
+                    Usuario.AlterarSenha(identUsuario);
+
+                    //Destruindo a sessão
+                    DestroiValorSessao("userTemp");
+
+                    mpeNovaSenha.Hide();
+
+                    //Preencher campos de Login
+                    tbxNomeUsuario.Text = identUsuario.Funcionario.Login;
+                    hdnNovaSenha.Value = tbxNovaSenha.Text;
+                    
+                    //Retornar a tela anterior e exibe combo de Departamento
+                    this.AutenticarUsuario();
+                    //btnLogin_Click(sender, e);
+            }
+            else
+                MensagemCliente("Erro ao recuperar dados do Usuário. Clique em [Voltar] e tente novamente!");
+ 
+        }
+
+        private void AutenticarUsuario()
+        {
+            UsuarioVO identUsuario;
+
+            var loginUsuario = tbxNomeUsuario.Text;
+            var modoDesenvolvedor = string.Empty;
 
             #region Validar Acesso 'Modo Desenvolvedor'
             if ((tbxNomeUsuario.Text.Length > 2) &&
@@ -61,49 +99,61 @@ namespace Nissi.WebPresentation
             else
                 modoDesenvolvedor = "no";
             #endregion
-
+            //Caso seja primeiro acesso, retorno a senha informada na ModalPopup
+            if (!string.IsNullOrEmpty(hdnNovaSenha.Value))
+                tbxSenha.Text = hdnNovaSenha.Value;
             //Autenticar conexão de Usuário no Banco
-            string mensagem = new Funcionario().Autenticar(loginUsuario, tbxSenha.Text, out identUsuario);
+            var mensagem = Usuario.Autenticar(loginUsuario, tbxSenha.Text, out identUsuario);
+            if (mensagem == "primeiroacesso")
+            {
+                ArmazenaValorSessao("userTemp", identUsuario);
+                //Montar tela para informe de Nova Senha
+                mpeNovaSenha.Show();
 
-            //Falha ao autenticar
-            if (!string.IsNullOrEmpty(mensagem))
-                MensagemCliente(mensagem);
+                //Foco no campo Nova Senha
+                Master.PosicionarFoco(tbxNovaSenha);
+            }
             else
             {
-                #region Registrar usuário na aplicação
-                //Registrar login no Asp.Net
-                FormsAuthenticationTicket ticket = new
-                        FormsAuthenticationTicket(
-                        1,
-                        identUsuario.CodFuncionario.ToString(),
-                        DateTime.Now,
-                        DateTime.Now.AddMinutes(int.Parse(_timeOut)),
-                        false,
-                        identUsuario.Login);
-
-                string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-                //Salvar cookie do Usuário
-                HttpCookie ticketCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                Response.Cookies.Add(ticketCookie);
-
-                //Armazenar Usuário na Sessão
-                UsuarioAtivo = identUsuario;
-
-                //Validar Acesso 'Modo Desenvolvedor'
-                if (modoDesenvolvedor.Equals("yes"))
-                {
-                    UsuarioAtivo.ModoDesenvolvedor = true;
-                    Response.Redirect("Default.aspx");
-                }
+                //Falha ao autenticar
+                if (!string.IsNullOrEmpty(mensagem))
+                    MensagemCliente(mensagem);
                 else
                 {
-                    UsuarioAtivo.ModoDesenvolvedor = false;
-                   // ScriptManager.RegisterStartupScript(this, this.GetType(), "tamanhoTela", "CommonAbrirTelaCheia(null, null, 'Default.aspx');", true);
-                }
-                #endregion
-            }
+                    #region Registrar usuário na aplicação
+                    //Registrar login no Asp.Net
+                    var ticket = new
+                            FormsAuthenticationTicket(
+                            1,
+                            identUsuario.Funcionario.CodFuncionario.ToString(),
+                            DateTime.Now,
+                            DateTime.Now.AddMinutes(int.Parse(_timeOut)),
+                            false,
+                            identUsuario.Funcionario.Login);
 
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Salvar cookie do Usuário
+                    var ticketCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(ticketCookie);
+
+                    //Armazenar Usuário na Sessão
+                    UsuarioAtivo = identUsuario.Funcionario;
+
+                    //Validar Acesso 'Modo Desenvolvedor'
+                    if (modoDesenvolvedor.Equals("yes"))
+                    {
+                        UsuarioAtivo.ModoDesenvolvedor = true;
+                        Response.Redirect("Default.aspx");
+                    }
+                    else
+                    {
+                        UsuarioAtivo.ModoDesenvolvedor = false;
+                        Response.Redirect("Default.aspx");
+                    }
+                    #endregion
+                }
+            }
         }
     }
 }

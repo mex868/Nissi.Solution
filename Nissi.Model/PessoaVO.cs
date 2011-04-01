@@ -8,11 +8,11 @@ namespace Nissi.Model
     /// <summary>
 	/// Essa classe representa os campos da tabela Pessoa
 	/// </summary>
-    [Serializable] //deve ser serializavel para armazenar em viewstate
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
 	public class PessoaVO
 	{	
 		#region Campos
-		private int? _codPessoa = null;
+		private int _codPessoa = 0;
         private string _codRef = string.Empty;
 		private string _razaoSocial = String.Empty;
 		private string _nomeFantasia = String.Empty;
@@ -40,7 +40,7 @@ namespace Nissi.Model
         private string _enderecoCobranca = string.Empty;
 		#endregion	
 		#region Propriedades
-		public int? CodPessoa
+		public int CodPessoa
 		{
 			get {return _codPessoa;}
 			set {_codPessoa = value;}
