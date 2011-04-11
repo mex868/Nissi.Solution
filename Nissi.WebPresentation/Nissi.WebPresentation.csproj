@@ -808,11 +808,8 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-<<<<<<< HEAD
           <DevelopmentServerPort>39443</DevelopmentServerPort>
-=======
           <DevelopmentServerPort>55828</DevelopmentServerPort>
->>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Nissi.WebPresentation</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
