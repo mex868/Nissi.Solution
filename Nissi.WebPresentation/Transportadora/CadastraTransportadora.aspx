@@ -117,6 +117,17 @@
        $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
        $get('<%=btnPesquisar.ClientID%>').click();
    }
+   //--------------------------------------------------------------------------------
+   //Criado por...: Alexandre Maximiano - 02/11/2009
+   //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+   //--------------------------------------------------------------------------------
+   function KeyDownHandler() {
+       if (event.keyCode == 13) {
+           event.returnValue = false;
+           event.cancel = true;
+           $get('<%=btnPesquisar.ClientID%>').click();
+       }
+   }
 </script>
 <table style="margin-left: auto; width: 95%; margin-right: auto;">
     <tr>
@@ -146,11 +157,11 @@
             <td style="width: 20%">&nbsp;</td>
             <td colspan="3">
                 <div id="divCNPJ"  style="display:block">
-                    <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="150px"></asp:TextBox>
+                    <asp:TextBox ID="txtCNPJPesq" MaxLength="18" onkeypress="return digitos(event, this);KeyDownHandler();" onkeyup="Mascara('CNPJ',this,event);" runat="server" Height="16px" Width="150px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o C.N.P.J." runat="server" id="efvCNPJ"></asp:CustomValidator>
                 </div>
                 <div id="divRazao" style="display:none">
-                    <asp:TextBox ID="txtRazao" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                    <asp:TextBox ID="txtRazao" runat="server" onkeypress="KeyDownHandler();" Height="16px" Width="600px"></asp:TextBox>
                             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtRazao"
                             MinimumPrefixLength="1" ServiceMethod="GetTransportadora" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -158,7 +169,7 @@
                     <asp:CustomValidator Text="*" CssClass="asterisco" ID="cvRazao" ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos"  ErrorMessage="Favor informar a Razão Social." runat="server"></asp:CustomValidator>
                 </div>
                 <div id="divNomeFantasia" style="display:none">
-                    <asp:TextBox ID="txtNomeFantasiaPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                    <asp:TextBox ID="txtNomeFantasiaPesq" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNomeFantasiaPesq"
                             MinimumPrefixLength="1" ServiceMethod="GetTransortadoraFantasia" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -199,7 +210,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 

@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class TipoLogradouroVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class TipoLogradouroVO
     {
         #region Campos
         private int? _codNomTipoLog;

@@ -103,7 +103,7 @@ public partial class ListaPerfilAcesso : BasePage
         if (e.CommandName == "Excluir")
         {
             //Excluir
-            new PerfilAcesso().Excluir(identPerfilAcesso.CodPerfilAcesso, 1);
+            new PerfilAcesso().Excluir(identPerfilAcesso.CodPerfilAcesso, UsuarioAtivo.CodFuncionario.Value);
 
             //Atualizar Lista
             Pesquisar();
@@ -176,11 +176,11 @@ public partial class ListaPerfilAcesso : BasePage
         if (hdfTipoAcao.Value.Equals("Incluir"))
         {
             //new NissiMenu().Alterar(DadosMenu, UsuarioAtivo.CodFuncionario);
-            new PerfilAcesso().Incluir(DadosPerfilAcesso, 1);
+            new PerfilAcesso().Incluir(DadosPerfilAcesso, UsuarioAtivo.CodFuncionario.Value);
         }
         else
         {
-            new PerfilAcesso().Alterar(DadosPerfilAcesso, 1);
+            new PerfilAcesso().Alterar(DadosPerfilAcesso, UsuarioAtivo.CodFuncionario.Value);
         }
         Pesquisar();
         mpeInclui.Hide();

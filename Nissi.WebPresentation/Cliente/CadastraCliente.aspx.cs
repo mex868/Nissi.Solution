@@ -202,10 +202,10 @@ public partial class CadastraCliente : BasePage
         string xmlLista = new Transportadora().GerarXmlListaTransportadora(hdnListaTransportadora.Value.Split('|'));
         if (hdfTipoAcao.Value == "Incluir") 
         {
-            hdfCodCliente.Value = new Cliente().Incluir(DadosCliente,xmlLista,1).ToString();
+            hdfCodCliente.Value = new Cliente().Incluir(DadosCliente,xmlLista,UsuarioAtivo.CodFuncionario.Value).ToString();
         }
         else
-        { new Cliente().Alterar(DadosCliente, xmlLista, 1); }
+        { new Cliente().Alterar(DadosCliente, xmlLista, UsuarioAtivo.CodFuncionario.Value); }
 
         Pesquisar();
         hdfCodCliente.Value = string.Empty;

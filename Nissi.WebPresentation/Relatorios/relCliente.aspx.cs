@@ -22,14 +22,14 @@ namespace Nissi.WebPresentation.Relatorios
             ODSemitente.SelectParameters.Add("CodEmitente", "");
             ODSemitente.DataBind();
 
-            ODScliente.SelectMethod = "GetData";
-            ODScliente.SelectParameters.Clear();
-            ODScliente.SelectParameters.Add("CodPessoaIni", codIni);
-            ODScliente.SelectParameters.Add("CodPessoaFim", codFim);
-            ODScliente.SelectParameters.Add("RazaoSocialIni", nomIni);
-            ODScliente.SelectParameters.Add("RazaoSocialFim", nomFim);
-            ODScliente.SelectParameters.Add("UF", uf);
-            ODScliente.DataBind();
+            ODSCliente.SelectMethod = "GetData";
+            ODSCliente.SelectParameters.Clear();
+            ODSCliente.SelectParameters.Add("CodPessoaIni", codIni);
+            ODSCliente.SelectParameters.Add("CodPessoaFim", codFim);
+            ODSCliente.SelectParameters.Add("CodRefIni", nomIni);
+            ODSCliente.SelectParameters.Add("CodRefFim", nomFim);
+            ODSCliente.SelectParameters.Add("UF", uf);
+            ODSCliente.DataBind();
             ReportViewer1.DataBind();
         }
     }

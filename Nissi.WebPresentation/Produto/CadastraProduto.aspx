@@ -116,7 +116,19 @@
    //--------------------------------------------------------------------------------
    function CarregarValores(source, eventArgs) {
        $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+       $get('<%=txtDescricaoPesq.ClientID %>').value = eventArgs._item.outerText;
        $get('<%=btnPesquisar.ClientID%>').click();
+   }
+   //--------------------------------------------------------------------------------
+   //Criado por...: Alexandre Maximiano - 02/11/2009
+   //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+   //--------------------------------------------------------------------------------
+   function KeyDownHandler() {
+       if (event.keyCode == 13) {
+           event.returnValue = false;
+           event.cancel = true;
+           $get('<%=btnPesquisar.ClientID%>').click();
+       }
    }
 </script>
 <table style="margin-left: auto; width: 95%; margin-right: auto;">
@@ -146,11 +158,11 @@
             <td style="width: 20%">&nbsp;</td>
             <td colspan="2" style="height:36px">
                 <div id="divCodigo"  style="display:block">
-                    <asp:TextBox ID="txtCodigoPesq" MaxLength="18" runat="server" Height="16px" Width="150px"></asp:TextBox>
+                    <asp:TextBox ID="txtCodigoPesq" MaxLength="18" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="150px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco" ValidationGroup="pesquisar" ErrorMessage="Favor informar o Código." runat="server" id="efvCodigo"></asp:CustomValidator>
                 </div>
                 <div id="divDescricao" style="display:none">
-                    <asp:TextBox ID="txtDescricaoPesq" runat="server" Height="16px" Width="600px"></asp:TextBox>
+                    <asp:TextBox ID="txtDescricaoPesq" onkeypress="KeyDownHandler();" runat="server" Height="16px" Width="600px"></asp:TextBox>
                             <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtDescricaoPesq"
                             MinimumPrefixLength="1" ServiceMethod="GetProduto" CompletionInterval="800" EnableCaching="true"
                             CompletionSetCount="10" OnClientItemSelected="CarregarValores" OnClientPopulated="ClientPopulated">
@@ -191,7 +203,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 
@@ -320,7 +332,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 

@@ -8,7 +8,9 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela Departamento
     /// </summary>
-    public class DepartamentoVO: NissiBaseVO
+    /// 
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class DepartamentoVO
     {
         #region Campos
         private short? _codDepartamento = null;

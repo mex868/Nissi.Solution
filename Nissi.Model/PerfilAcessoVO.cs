@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class PerfilAcessoVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class PerfilAcessoVO
     {
         #region Campo
         private short? _codPerfilAcesso;

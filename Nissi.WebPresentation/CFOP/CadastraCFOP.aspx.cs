@@ -49,8 +49,8 @@ namespace Nissi.WebPresentation
                 identCFOPVO.CodCFOP = hdfCodCFOP.Value != "" ? Convert.ToInt32(hdfCodCFOP.Value.Replace(".", "").Replace("-", "").Replace("/", "")) : int.MinValue;
                 identCFOPVO.CFOP =txtCodigo.Text ;
                 identCFOPVO.NaturezaOperacao = txtDescricao.Text;
-                identCFOPVO.UsuarioAlt = 1;
-                identCFOPVO.UsuarioInc = 1;
+                identCFOPVO.UsuarioAlt = UsuarioAtivo.CodFuncionario.Value;
+                identCFOPVO.UsuarioInc = UsuarioAtivo.CodFuncionario.Value;
                 return identCFOPVO;
             }
         }
@@ -96,7 +96,7 @@ namespace Nissi.WebPresentation
             if (hdfTipoAcao.Value == "Incluir")
             {
                 
-               hdfCodCFOP.Value = new CFOP().Incluir(DadosCFOP,1).ToString();
+               hdfCodCFOP.Value = new CFOP().Incluir(DadosCFOP,UsuarioAtivo.CodFuncionario.Value).ToString();
             }
             else
             { new CFOP().Alterar(DadosCFOP); }

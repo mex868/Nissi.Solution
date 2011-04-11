@@ -16,6 +16,8 @@ using Nissi.Model;
 using Nissi.Business;
 using System.Globalization;
 using System.Collections.Generic;
+using Nissi.Util;
+
 #endregion
 
 public partial class CadastraFornecedor : BasePage
@@ -27,6 +29,7 @@ public partial class CadastraFornecedor : BasePage
         {
             LimparCampos();
             CarregaComboTipoFornecimento();
+            CarregarCombos();
         }
     }
     #endregion
@@ -128,10 +131,10 @@ public partial class CadastraFornecedor : BasePage
         if (hdfTipoAcao.Value == "Incluir")
         {
             /*hdfCodFornecedor.Value =*/
-            new Fornecedor().Incluir(DadosFornecedor, 1);
+            new Fornecedor().Incluir(DadosFornecedor, UsuarioAtivo.CodFuncionario.Value);
         }
         else
-        { new Fornecedor().Alterar(DadosFornecedor, 1); }
+        { new Fornecedor().Alterar(DadosFornecedor, UsuarioAtivo.CodFuncionario.Value); }
 
         Pesquisar();
         LimparCampos();
@@ -171,6 +174,7 @@ public partial class CadastraFornecedor : BasePage
     private void Pesquisar()
     {
         FornecedorVO identFornecedor = new FornecedorVO();
+        List<FornecedorVO> lFornecedor = new List<FornecedorVO>();
         if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
         {
             identFornecedor.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
@@ -187,8 +191,21 @@ public partial class CadastraFornecedor : BasePage
 
             if (rbRazaoSocial.Checked)
                 identFornecedor.RazaoSocial = txtRazao.Text;
+
+            if (rbBitola.Checked && !string.IsNullOrEmpty(ddlBitola.SelectedValue))
+            {
+                int codBitola = int.Parse(ddlBitola.SelectedValue);
+                lFornecedor = Fornecedor.ListarPorBitola(codBitola);
+            }
+
+            if (rbClasseTipo.Checked && !string.IsNullOrEmpty(hdfCodigo.Value))
+            {
+                int codClasseTipo = int.Parse(hdfCodigo.Value);
+                lFornecedor = Fornecedor.ListarPorClasseTipo(codClasseTipo);
+            }
         }
-        List<FornecedorVO> lFornecedor = new Fornecedor().Listar(identFornecedor);
+        if (rbRazaoSocial.Checked || rbNomeFantasia.Checked || rbCNPJ.Checked)    
+            lFornecedor = new Fornecedor().Listar(identFornecedor);
 
         if (lFornecedor.Count > 0)
         {
@@ -293,5 +310,9 @@ public partial class CadastraFornecedor : BasePage
     }
 
     #endregion
+    private void CarregarCombos()
+    {
+        Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
+    } 
 }
 

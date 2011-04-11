@@ -35,6 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +57,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\AjaxControlToolkitBinary\pt\AjaxControlToolkit.resources.dll</HintPath>
     </Reference>
+    <Reference Include="Ext.Net, Version=1.0.3960.37522, Culture=neutral, PublicKeyToken=2e12ce3d0176cd87, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="RDC.Tools, Version=1.0.3352.27624, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,6 +77,8 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -87,7 +94,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\css\south-street\images\ui-anim_basic_16x16.gif" />
@@ -121,29 +127,91 @@
     <Content Include="App_Themes\Theme1\Model1.css" />
     <Content Include="CFOP\CadastraCFOP.aspx" />
     <Content Include="Classificado\CadastraClassificado.aspx" />
+    <Content Include="Emitente\CadastraEmailEmitente.aspx" />
+    <Content Include="Emitente\EnviarEmailEmitente.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="Imagens\ajax-loader.gif" />
-    <Content Include="Imagens\btn-SolicitacaoDocumentos.gif" />
-    <Content Include="Imagens\Calendar_scheduleHS.png" />
-    <Content Include="Imagens\cinza.jpg" />
-    <Content Include="Imagens\editar.png" />
-    <Content Include="Imagens\exclusao_Canc.png" />
-    <Content Include="Imagens\Fundo.png" />
-    <Content Include="Imagens\layout.png" />
-    <Content Include="Imagens\menufundo.jpg" />
-    <Content Include="Imagens\NissiLogo.png" />
-    <Content Include="Imagens\transparent_pixel.gif" />
-    <Content Include="Imagens\undo.png" />
+    <Content Include="EntradaEstoque\CadastraEntradaEstoque.aspx" />
+    <Content Include="EntradaEstoque\ListaEntradaEstoque.aspx" />
+    <Content Include="FormaPgto\CadastraFormaPgto.aspx" />
+    <Content Include="EntradaEstoque\GerarPDF.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Imagens\ajax-loader.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\btn-SolicitacaoDocumentos.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\Calendar_scheduleHS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\cinza.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\collapse_blue.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\editar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\exclusao_Canc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\expand_blue.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\Fundo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\fundo_barras_sem_borda_maior.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\image004.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\layout.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\logo_novo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\menufundo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\NissiLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\titulofundo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\transparent_pixel.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\undo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="JScripts\Common.js" />
+    <Content Include="JScripts\entrada-estoque.js" />
     <Content Include="JScripts\jquery-1.4.2.min.js" />
     <Content Include="JScripts\jquery-ui-1.8.2.custom.min.js" />
     <Content Include="JScripts\jquery.ui.datepicker-pt-BR.js" />
+    <Content Include="JScripts\pedido-compra.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MateriaPrima\CadastraBitola.aspx" />
+    <Content Include="MateriaPrima\CadastraMateriaPrima.aspx" />
+    <Content Include="MateriaPrima\CadastraClasseTipo.aspx" />
+    <Content Include="MateriaPrima\CadastraNorma.aspx" />
     <Content Include="MensagenNF\CadastraMensagemNF.aspx" />
+    <Content Include="NFe\VisualizarNFe.aspx" />
     <Content Include="Parametro\NFEParametros.aspx" />
+    <Content Include="PedidoCompra\CadastraPedidoCompra.aspx" />
+    <Content Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx" />
+    <Content Include="PedidoCompra\ListaPedidoCompra.aspx" />
+    <Content Include="PrazoEntrega\CadastraPrazoEntrega.aspx" />
+    <Content Include="Produto\CadastraProdutoInsumo.aspx" />
     <Content Include="Produto\ListaProduto.aspx" />
     <Content Include="Relatorios\EmitirRelatorios.aspx" />
     <Content Include="Relatorios\NotaFiscal\RelNotaFiscalPrincipal.aspx" />
+    <Content Include="Relatorios\PedidoCompra.aspx" />
     <Content Include="Relatorios\relCliente.aspx" />
     <Content Include="Relatorios\RelDuplicata.aspx" />
     <Content Include="Relatorios\relFornecedor.aspx" />
@@ -152,7 +220,9 @@
     <Content Include="Relatorios\relTransportadora.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="WebService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administracao\Menu\ListaMenu.aspx.cs">
@@ -175,6 +245,9 @@
     <Compile Include="App_Code\CascadingWS.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="App_Code\WebService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CFOP\CadastraCFOP.aspx.cs">
       <DependentUpon>CadastraCFOP.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,6 +262,24 @@
     <Compile Include="Classificado\CadastraClassificado.aspx.designer.cs">
       <DependentUpon>CadastraClassificado.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Emitente\CadastraEmailEmitente.aspx.cs">
+      <DependentUpon>CadastraEmailEmitente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Emitente\CadastraEmailEmitente.aspx.designer.cs">
+      <DependentUpon>CadastraEmailEmitente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Emitente\EnviarEmailEmitente.aspx.cs">
+      <DependentUpon>EnviarEmailEmitente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Emitente\EnviarEmailEmitente.aspx.designer.cs">
+      <DependentUpon>EnviarEmailEmitente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet.cs">
+      <DependentUpon>DataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -200,6 +291,27 @@
     </Compile>
     <Compile Include="Emitente\CadastraEmitente.aspx.designer.cs">
       <DependentUpon>CadastraEmitente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EntradaEstoque\CadastraEntradaEstoque.aspx.cs">
+      <DependentUpon>CadastraEntradaEstoque.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EntradaEstoque\CadastraEntradaEstoque.aspx.designer.cs">
+      <DependentUpon>CadastraEntradaEstoque.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EntradaEstoque\ListaEntradaEstoque.aspx.cs">
+      <DependentUpon>ListaEntradaEstoque.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EntradaEstoque\ListaEntradaEstoque.aspx.designer.cs">
+      <DependentUpon>ListaEntradaEstoque.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormaPgto\CadastraFormaPgto.aspx.cs">
+      <DependentUpon>CadastraFormaPgto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormaPgto\CadastraFormaPgto.aspx.designer.cs">
+      <DependentUpon>CadastraFormaPgto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Funcionario\CadastraCargo.aspx.cs">
       <DependentUpon>CadastraCargo.aspx</DependentUpon>
@@ -221,6 +333,44 @@
     </Compile>
     <Compile Include="GeraImagem.aspx.designer.cs">
       <DependentUpon>GeraImagem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EntradaEstoque\GerarPDF.aspx.cs">
+      <DependentUpon>GerarPDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EntradaEstoque\GerarPDF.aspx.designer.cs">
+      <DependentUpon>GerarPDF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraBitola.aspx.cs">
+      <DependentUpon>CadastraBitola.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraBitola.aspx.designer.cs">
+      <DependentUpon>CadastraBitola.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraMateriaPrima.aspx.cs">
+      <DependentUpon>CadastraMateriaPrima.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraMateriaPrima.aspx.designer.cs">
+      <DependentUpon>CadastraMateriaPrima.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraClasseTipo.aspx.cs">
+      <DependentUpon>CadastraClasseTipo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraClasseTipo.aspx.designer.cs">
+      <DependentUpon>CadastraClasseTipo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraNorma.aspx.cs">
+      <DependentUpon>CadastraNorma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MateriaPrima\CadastraNorma.aspx.designer.cs">
+      <DependentUpon>CadastraNorma.aspx</DependentUpon>
     </Compile>
     <Compile Include="MensagenNF\CadastraMensagemNF.aspx.cs">
       <DependentUpon>CadastraMensagemNF.aspx</DependentUpon>
@@ -259,6 +409,13 @@
     <Compile Include="NFe\ListaNFe.aspx.designer.cs">
       <DependentUpon>ListaNFe.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NFe\VisualizarNFe.aspx.cs">
+      <DependentUpon>VisualizarNFe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NFe\VisualizarNFe.aspx.designer.cs">
+      <DependentUpon>VisualizarNFe.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Parametro\NFEParametros.aspx.cs">
       <DependentUpon>NFEParametros.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -266,9 +423,37 @@
     <Compile Include="Parametro\NFEParametros.aspx.designer.cs">
       <DependentUpon>NFEParametros.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PedidoCompra\CadastraPedidoCompra.aspx.cs">
+      <DependentUpon>CadastraPedidoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PedidoCompra\CadastraPedidoCompra.aspx.designer.cs">
+      <DependentUpon>CadastraPedidoCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx.cs">
+      <DependentUpon>CadastraPedidoCompraInsumo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx.designer.cs">
+      <DependentUpon>CadastraPedidoCompraInsumo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PedidoCompra\ListaPedidoCompra.aspx.cs">
+      <DependentUpon>ListaPedidoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PedidoCompra\ListaPedidoCompra.aspx.designer.cs">
+      <DependentUpon>ListaPedidoCompra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PerfilAcesso\CadastraPerfilAcesso.aspx.cs">
       <DependentUpon>CadastraPerfilAcesso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrazoEntrega\CadastraPrazoEntrega.aspx.cs">
+      <DependentUpon>CadastraPrazoEntrega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrazoEntrega\CadastraPrazoEntrega.aspx.designer.cs">
+      <DependentUpon>CadastraPrazoEntrega.aspx</DependentUpon>
     </Compile>
     <Compile Include="Produto\CadastraProduto.aspx.cs">
       <DependentUpon>CadastraProduto.aspx</DependentUpon>
@@ -333,27 +518,19 @@
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
-    <Compile Include="MateriaPrima\ListaMateriaPrima.aspx.cs">
-      <DependentUpon>ListaMateriaPrima.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MateriaPrima\ListaMateriaPrima.aspx.designer.cs">
-      <DependentUpon>ListaMateriaPrima.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PerfilAcesso\AssociaFuncionalidadePerfilAcesso.aspx.cs">
-      <DependentUpon>AssociaFuncionalidadePerfilAcesso.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PerfilAcesso\AssociaUsuarioPerfilAcesso.aspx.cs">
-      <DependentUpon>AssociaUsuarioPerfilAcesso.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="PerfilAcesso\ListaPerfilAcesso.aspx.cs">
       <DependentUpon>ListaPerfilAcesso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PerfilAcesso\ListaPerfilAcesso.aspx.designer.cs">
       <DependentUpon>ListaPerfilAcesso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Produto\CadastraProdutoInsumo.aspx.cs">
+      <DependentUpon>CadastraProdutoInsumo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Produto\CadastraProdutoInsumo.aspx.designer.cs">
+      <DependentUpon>CadastraProdutoInsumo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Produto\ListaProduto.aspx.cs">
       <DependentUpon>ListaProduto.aspx</DependentUpon>
@@ -381,6 +558,13 @@
     </Compile>
     <Compile Include="Relatorios\NotaFiscal\RelNotaFiscalPrincipal.aspx.designer.cs">
       <DependentUpon>RelNotaFiscalPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\PedidoCompra.aspx.cs">
+      <DependentUpon>PedidoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Relatorios\PedidoCompra.aspx.designer.cs">
+      <DependentUpon>PedidoCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\relCliente.aspx.cs">
       <DependentUpon>relCliente.aspx</DependentUpon>
@@ -458,13 +642,27 @@
     <Content Include="Funcionario\CadastraCargo.aspx" />
     <Content Include="Funcionario\CadastraDepartamento.aspx" />
     <Content Include="GeraImagem.aspx" />
-    <Content Include="Imagens\Enviar.png" />
-    <Content Include="Imagens\excluir.png" />
-    <Content Include="Imagens\IncluirItem.png" />
-    <Content Include="Imagens\NFeFail.png" />
-    <Content Include="Imagens\NFeOk.png" />
-    <Content Include="Imagens\Imprimir.png" />
-    <Content Include="Imagens\NissiLogo.jpg" />
+    <Content Include="Imagens\Enviar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\excluir.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\IncluirItem.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\NFeFail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\NFeOk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\Imprimir.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\NissiLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="NFe\CadastraItemNFe.aspx" />
     <Content Include="NFe\CadastraNFe.aspx" />
     <Content Include="NFe\ListaNFe.aspx" />
@@ -476,17 +674,22 @@
     <Content Include="Cliente\CadastraCliente.aspx" />
     <Content Include="Fornecedor\CadastraFornecedor.aspx" />
     <Content Include="Funcionario\CadastraFuncionario.aspx" />
-    <Content Include="Imagens\AdpDiagramRelationships.png" />
-    <Content Include="Imagens\apps.png" />
-    <Content Include="Imagens\DatabasePermissionsMenu.png" />
-    <Content Include="Imagens\Incluir.png" />
+    <Content Include="Imagens\AdpDiagramRelationships.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\apps.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\DatabasePermissionsMenu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Imagens\Incluir.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MasterPage.Master" />
-    <Content Include="MateriaPrima\ListaMateriaPrima.aspx" />
     <Content Include="menu.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PerfilAcesso\AssociaFuncionalidadePerfilAcesso.aspx" />
-    <Content Include="PerfilAcesso\AssociaUsuarioPerfilAcesso.aspx" />
     <Content Include="PerfilAcesso\ListaPerfilAcesso.aspx" />
     <Content Include="Transportadora\CadastraTransportadora.aspx" />
     <Content Include="UserControl\Banco.ascx" />
@@ -568,6 +771,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Relatorios\NotaFiscal\RelPrincipal.rdlc" />
+    <EmbeddedResource Include="Relatorios\PedidoCompra.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\relClientes.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -600,15 +806,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2210</DevelopmentServerPort>
+          <DevelopmentServerPort>39443</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Nissi.WebPresentation</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://localhost/Nissi.WebPresentation</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

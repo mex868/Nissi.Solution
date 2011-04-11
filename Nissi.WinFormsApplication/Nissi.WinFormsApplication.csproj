@@ -154,6 +154,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\nfec#-vr.6.01\nfe-source\nfedll\nfec\nfec.csproj">
+      <Project>{51FF88F7-ADE2-4842-BF57-ED1D80A54CC8}</Project>
+      <Name>nfec</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nissi.Business\Nissi.Business.csproj">
       <Project>{53B43FD9-8814-418C-AC11-9BECBAF1DA4B}</Project>
       <Name>Nissi.Business</Name>

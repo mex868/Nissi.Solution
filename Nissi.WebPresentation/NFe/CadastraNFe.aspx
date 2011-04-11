@@ -6,9 +6,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
-            $(".dataEmissao").datepicker({ changeMonth: true, changeYear: true });
-            $(".dataSaida").datepicker({ changeMonth: true, changeYear: true });
-        });        //--------------------------------------------------------------------------------
+            loadDate = function () {
+                $(".dataEmissao").datepicker({ changeMonth: true, changeYear: true });
+                $(".dataSaida").datepicker({ changeMonth: true, changeYear: true });
+            }
+            loadDate();
+        });
+      //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
         //Objetivo.....: Cabeçalho padrão da página
         //--------------------------------------------------------------------------------
@@ -25,9 +29,11 @@
         }
         function EndRequest(sender, args) {
             WaitAsyncPostBack(false);
+            loadDate();
         }
         function CarregarValores(source, eventArgs) {
             $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+            $get('<%=txtRazaoSocial.ClientID %>').value = eventArgs._item.outerText;
             $get('<%=btnCarregarValores.ClientID%>').click();
         }
         function CarregarValoresCFOP() {
@@ -55,6 +61,7 @@
             if ($get("<%=txtNumeroFatura.ClientID %>").value == "00000000" || $get("<%=txtNumeroFatura.ClientID %>").value == "")
                 args.IsValid = false;
         }
+
     </script>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="updDados">
         <contenttemplate>
@@ -248,7 +255,8 @@
     <tr>
         <td colspan="5" style="padding-left: 20px">
             <ajaxToolkit:TabContainer ID="TabContainer1" CssClass="TabPanelImportar" runat="server"
-                ActiveTabIndex="0" Height="400px" Style="margin-bottom: 30px" Width="932px" AutoPostBack="true"
+                ActiveTabIndex="0" Height="510px" Style="margin-bottom: 30px" 
+                Width="932px" AutoPostBack="true"
                 OnActiveTabChanged="TabContainer1_ActiveTabChanged">
                 <ajaxToolkit:TabPanel ID="tpProduto" runat="server" HeaderText="Dados do Produto">
                     <HeaderTemplate>
@@ -483,7 +491,7 @@
                                     Selecione:
                                 </td>
                                 <td colspan="5">
-                                    <asp:DropDownList ID="ddlTransportadora" runat="server" Width="400px" OnSelectedIndexChanged="ddlTransportadora_SelectedIndexChanged"
+                                    <asp:DropDownList ID="ddlTransportadora" runat="server" Width="95%" OnSelectedIndexChanged="ddlTransportadora_SelectedIndexChanged"
                                         AutoPostBack="True">
                                     </asp:DropDownList>
                                 </td>

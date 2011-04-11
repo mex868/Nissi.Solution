@@ -39,7 +39,7 @@ namespace Nissi.DataAccess
                         identFuncionarioTemp.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
                         identFuncionarioTemp.Login = GetReaderValue<string>(dr, "Login");
                         identFuncionarioTemp.Senha = GetReaderValue<byte[]>(dr, "Senha");
-
+                        identFuncionarioTemp.Apelido = GetReaderValue<string>(dr, "Apelido");
                     }
                 }
                 finally
@@ -92,7 +92,7 @@ namespace Nissi.DataAccess
                     FuncionarioVO funcionarioVO = new FuncionarioVO();
 
                     funcionarioVO.CodFuncionario = GetReaderValue<int>(dr, "CodFuncionario");
-                    funcionarioVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                    funcionarioVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                     funcionarioVO.Cargo.CodCargo = GetReaderValue<short?>(dr, "CodCargo");
                     funcionarioVO.Cargo.Nome = GetReaderValue<string>(dr, "Cargo");
                     funcionarioVO.Departamento.CodDepartamento = GetReaderValue<short?>(dr, "CodDepartamento");
@@ -149,7 +149,7 @@ namespace Nissi.DataAccess
     }
     public List<PerfilAcessoVO> ListaPerfil(FuncionarioVO identFuncionario)
     {
-        OpenCommand("pr_selecionar_perfil_Funcionario");
+        OpenCommand("pr_selecionar_perfil_funcionario");
 
         try
         {
@@ -352,7 +352,7 @@ namespace Nissi.DataAccess
 /// <param name="identFunc"></param>
     public void ReiniciarSenha(FuncionarioVO identFunc)
     {
-        OpenCommand(" pr_reiniciarsenha_funcionario");
+        OpenCommand("pr_reiniciarsenha_funcionario");
         try
         {
             AddInParameter("@CodFuncionario", DbType.Int32, identFunc.CodFuncionario);
@@ -403,7 +403,7 @@ namespace Nissi.DataAccess
                 {
                     FuncionarioVO funcionarioVO = new FuncionarioVO();
                     funcionarioVO.CodFuncionario = GetReaderValue<int>(dr, "CodFuncionario");
-                    funcionarioVO.CodPessoa = GetReaderValue<int?>(dr, "CodPessoa");
+                    funcionarioVO.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                     funcionarioVO.Nome = GetReaderValue<string>(dr, "RazaoSocial");
                     lstFuncionarioVO.Add(funcionarioVO);
                 }
@@ -423,11 +423,11 @@ namespace Nissi.DataAccess
 
     public List<FuncionarioVO> ListaFuncionarioPorNome(FuncionarioVO identFuncionarioVo)
     {
-        OpenCommand("pr_selecionar_cliente");
+        OpenCommand("pr_selecionar_funcionario");
         try
         {
             if (!string.IsNullOrEmpty(identFuncionarioVo.RazaoSocial))
-                AddInParameter("@RazaoSocial", DbType.String, identFuncionarioVo.RazaoSocial);
+                AddInParameter("@Nome", DbType.String, identFuncionarioVo.Nome);
             List<FuncionarioVO> lstFuncionarioVo = new List<FuncionarioVO>();
             IDataReader dr = ExecuteReader();
             try
@@ -435,8 +435,9 @@ namespace Nissi.DataAccess
                 while (dr.Read())
                 {
                     FuncionarioVO FuncionarioVo = new FuncionarioVO();
+                    FuncionarioVo.CodPessoa = GetReaderValue<int>(dr, "CodPessoa");
                     FuncionarioVo.CodFuncionario = GetReaderValue<int>(dr, "CodFuncionario");
-                    FuncionarioVo.RazaoSocial = GetReaderValue<string>(dr, "RazaoSocial");
+                    FuncionarioVo.Nome = GetReaderValue<string>(dr, "RazaoSocial");
                     lstFuncionarioVo.Add(FuncionarioVo);
                 }
             }

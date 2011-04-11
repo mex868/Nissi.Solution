@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    public class BancoVO : NissiBaseVO
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
+    public class BancoVO
     {
         #region Campos
         private int? _codBanco;

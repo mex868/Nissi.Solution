@@ -25,7 +25,8 @@ namespace Nissi.DataAccess
                 AddInParameter("@RazaoSocial", DbType.String, identNotaFiscal.Cliente.RazaoSocial);
                 if (!string.IsNullOrEmpty(identNotaFiscal.Cliente.CodRef))
                     AddInParameter("@CodRef", DbType.String, identNotaFiscal.Cliente.CodRef);
-                AddInParameter("@CodCliente", DbType.Int32, identNotaFiscal.Cliente.CodPessoa);
+                if (identNotaFiscal.Cliente.CodPessoa != 0)
+                    AddInParameter("@CodCliente", DbType.Int32, identNotaFiscal.Cliente.CodPessoa);
 
                 List<NotaFiscalVO> lstNotaFiscalVO = new List<NotaFiscalVO>();
 
@@ -84,7 +85,7 @@ namespace Nissi.DataAccess
                         notaFiscalVO.CodNF = GetReaderValue<int?>(dr, "CodNF");
                         notaFiscalVO.NF = GetReaderValue<int?>(dr, "NF");
                         notaFiscalVO.Emitente.CodEmitente = GetReaderValue<int?>(dr, "CodEmitente");
-                        notaFiscalVO.Cliente.CodPessoa = GetReaderValue<int?>(dr, "CodCliente");
+                        notaFiscalVO.Cliente.CodPessoa = GetReaderValue<int>(dr, "CodCliente");
                         notaFiscalVO.Funcionario.CodFuncionario = GetReaderValue<int?>(dr, "CodVendedor");
                         notaFiscalVO.CodBanco = GetReaderValue<int?>(dr, "CodBanco");
                         notaFiscalVO.Transportadora.CodTransportadora = GetReaderValue<int?>(dr, "CodTransportadora");

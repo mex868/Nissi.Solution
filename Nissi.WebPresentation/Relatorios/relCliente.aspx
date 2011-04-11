@@ -12,24 +12,27 @@
     <form id="form1" runat="server">
     <div>
     
+    <div>
+          <asp:ScriptManager runat="server" ID="sm"></asp:ScriptManager>
+    </div>
+    
         <rsweb:ReportViewer ID="ReportViewer1" Width="100%" Height="100%" runat="server" Font-Names="Verdana" 
             Font-Size="8pt" InteractiveDeviceInfos="(Collection)" 
             WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt">
             <LocalReport ReportPath="Relatorios\relClientes.rdlc">
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="ODSemitente" Name="DataSetEmitente" />
-                    <rsweb:ReportDataSource DataSourceId="ODScliente" Name="DataSet2" />
+                    <rsweb:ReportDataSource DataSourceId="ODSCliente" Name="DataSetCliente" />
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>
-        <asp:ObjectDataSource ID="ODScliente" runat="server" 
+        <asp:ObjectDataSource ID="ODSCliente" runat="server" 
             OldValuesParameterFormatString="original_{0}" SelectMethod="GetData" 
+            
             TypeName="Nissi.WebPresentation.DataSetTableAdapters.pr_relatorio_clienteTableAdapter">
             <SelectParameters>
                 <asp:Parameter Name="CodPessoaIni" Type="Int32" />
                 <asp:Parameter Name="CodPessoaFim" Type="Int32" />
-                <asp:Parameter Name="RazaoSocialIni" Type="String" />
-                <asp:Parameter Name="RazaoSocialFim" Type="String" />
                 <asp:Parameter Name="UF" Type="String" />
             </SelectParameters>
         </asp:ObjectDataSource>
@@ -40,8 +43,6 @@
                 <asp:Parameter Name="CodEmitente" Type="Int32" />
             </SelectParameters>
         </asp:ObjectDataSource>
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
     
     </div>
     </form>

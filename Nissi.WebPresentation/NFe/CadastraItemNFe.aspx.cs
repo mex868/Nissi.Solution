@@ -18,7 +18,7 @@ public partial class CadastraItemNFe : BasePage
             txtDescricao.Text = value.Produto.Descricao;
             ddlUnidade.SelectedValue = value.Produto.Unidade.CodUnidade.ToString();
             ddlClassificacaoFiscal.SelectedValue = value.Produto.NCM;
-
+            hdfCodItemNotaFiscal.Value = value.CodItemNotaFiscal.ToString();
             txtCodigo.Text = value.Codigo; //Código do produto
             ddlUnidade.SelectedValue = value.Unidade; //Unidade de medida
             txtQuantidade.Text = value.Qtd.ToString(); //Quantidade
@@ -32,7 +32,7 @@ public partial class CadastraItemNFe : BasePage
             txtValorIPI.Text = value.CalcIPI.ToString(); //Valor do IPI
             txtSituacaoTributaria.Text = value.Icms.CodTipoTributacao; //Situação Tributária
             tbxCodPedido.Text = value.CodPedidoCliente;
-            tbxOP.Text = value.OP;
+            tbxOP.Text = value.OP.ToString();
       
             if (value.CalcICMSSobIpi == true) //Calcular ICMS Sob IPI
                 ckbCalcSobIpi.Checked = true;
@@ -53,7 +53,8 @@ public partial class CadastraItemNFe : BasePage
             identItemNotaFiscalVO.Produto.Codigo = txtCodigo.Text;
             if (Request.QueryString["CodProduto"] != null)
                 identItemNotaFiscalVO.Produto.CodProduto = Convert.ToInt32(Request.QueryString["CodProduto"]);
-
+            if (Request.QueryString["CodItemNotaFiscal"] != null)
+                identItemNotaFiscalVO.CodItemNotaFiscal = Convert.ToInt32(Request.QueryString["CodItemNotaFiscal"]);
             //setar valores do icms
             ICMSVO[] lstICMS = (ICMSVO[])ViewState["lstICMS"];
             List<ICMSVO> newlstICMS = new List<ICMSVO>(lstICMS);
@@ -124,12 +125,17 @@ public partial class CadastraItemNFe : BasePage
                     (Session["lstItemNotaFiscal"] != null))
                 {
                     ItemNotaFiscalVO[] lstItemNotaFiscal = (ItemNotaFiscalVO[])Session["lstItemNotaFiscal"];
-                    var Nota = lstItemNotaFiscal.Single(t => t.Produto.CodProduto == Convert.ToInt32(Request.QueryString["CodProduto"]));
+                    var Nota = lstItemNotaFiscal.Single(t => t.Produto.CodProduto == Convert.ToInt32(Request.QueryString["CodProduto"]) && t.CodItemNotaFiscal == Convert.ToInt32(Request.QueryString["CodItemNotaFiscal"]));
                     DadosItemNotaFiscalVO = Nota;
                 }
                 else
                 {
+                    Random random = new Random();
+                    int num = random.Next(1000);
+
                     ProdutoVO identProduto = new ProdutoVO();
+                    hdfCodItemNotaFiscal.Value = num.ToString();
+                    tbxOP.Text = hdfCodItemNotaFiscal.Value;
                     identProduto.CodProduto = Convert.ToInt32(Request.QueryString["CodProduto"]);
                     DadosProdutoVO = new Produto().Listar(identProduto)[0];
                 }

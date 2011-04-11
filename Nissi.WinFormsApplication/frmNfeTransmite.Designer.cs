@@ -49,7 +49,6 @@
             this.rbNaoEnviada = new System.Windows.Forms.RadioButton();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnDistribuicao = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.gpNotasFiscais.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNotaFiscal)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -279,22 +278,11 @@
             this.btnDistribuicao.UseVisualStyleBackColor = true;
             this.btnDistribuicao.Click += new System.EventHandler(this.btnDistribuicao_Click);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(746, 358);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // frmNfeTransmite
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(937, 393);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.btnDistribuicao);
             this.Controls.Add(this.btnEnviarEmail);
             this.Controls.Add(this.groupBox1);
@@ -344,6 +332,5 @@
         private System.Windows.Forms.CheckBox ckbData;
         private System.Windows.Forms.Button btnEnviarEmail;
         private System.Windows.Forms.Button btnDistribuicao;
-        private System.Windows.Forms.Button button4;
     }
 }

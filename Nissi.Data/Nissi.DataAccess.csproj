@@ -97,6 +97,7 @@
     <Compile Include="ParametroData.cs" />
     <Compile Include="PerfilAcessoData.cs" />
     <Compile Include="ProdutoData.cs" />
+    <Compile Include="ProdutoInsumoData.cs" />
     <Compile Include="ProdutoNFData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleData.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="TransportadoraData.cs" />
     <Compile Include="UnidadeData.cs" />
     <Compile Include="UnidadeFederacaoData.cs" />
+    <Compile Include="UsuarioData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nissi.Model\Nissi.Model.csproj">

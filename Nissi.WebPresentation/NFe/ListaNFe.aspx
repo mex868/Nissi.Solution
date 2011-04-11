@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
     CodeBehind="ListaNFe.aspx.cs" Inherits="Nissi.WebPresentation.NFe.ListaNFe" %>
-
 <%@ Register Assembly="RDC.Tools" Namespace="RDC.Tools" TagPrefix="cc1" %>
 <%@ MasterType VirtualPath="~/MasterPage.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
@@ -146,6 +145,15 @@
         //Criado por...: Alexandre Maximiano - 12/09/2010
         //Objetivo.....: Limpa Campo Codigo/Descricao
         //--------------------------------------------------------------------------------
+        function ChamaVisualizarNF(tvar) {
+            var w = window.screen.width;
+            window.open("VisualizarNFe.aspx?CodNF=" + tvar + "", "_blank", "top=0,left=0,width="+w+",height=600,scrollbars=yes,resizable=no,toolbar=no");
+        }
+
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 12/09/2010
+        //Objetivo.....: Limpa Campo Codigo/Descricao
+        //--------------------------------------------------------------------------------
         function Limpar() {
             $get("<%=txtCodigoDescricao.ClientID %>").value = '';
             $get("<%=tbxDataIni.ClientID %>").value = '';
@@ -157,7 +165,19 @@
         //--------------------------------------------------------------------------------
         function CarregarValores(source, eventArgs) {
             $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
+            $get('<%=txtRazaoSocial.ClientID %>').value = eventArgs._item.outerText;
             $get('<%=btnPesquisar.ClientID%>').click();
+        }
+        //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 02/11/2009
+        //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
+        //--------------------------------------------------------------------------------
+        function KeyDownHandler() {
+            if (event.keyCode == 13) {
+                event.returnValue = false;
+                event.cancel = true;
+                $get('<%=btnPesquisar.ClientID%>').click();
+            }
         }
     </script>
     <table style="margin-left: auto; width: 95%; margin-right: auto;">
@@ -203,21 +223,21 @@
             </td>
             <td colspan="4">
                 <div id="divNF" style="display: block">
-                    <asp:TextBox ID="txtNF" MaxLength="14" onkeypress="return digitos(event, this);"
+                    <asp:TextBox ID="txtNF" MaxLength="14" onkeypress="return digitos(event, this);KeyDownHandler();"
                         runat="server" Height="16px" Width="96px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco"
                         ValidationGroup="pesquisar" ErrorMessage="Favor informar o C�digo" runat="server"
                         ID="CustomValidator1"></asp:CustomValidator>
                 </div>
                 <div id="divDataEmissao" style="display: none">
-                    <asp:TextBox ID="txtDataEmissao" MaxLength="10" onkeypress="return digitos(event, this);"
+                    <asp:TextBox ID="txtDataEmissao" MaxLength="10" onkeypress="return digitos(event, this);KeyDownHandler();"
                         onkeyup="Mascara('DATA',this,event);" runat="server" Height="16px" Width="120px"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco"
                         ValidationGroup="pesquisar" ErrorMessage="Favor informar o C.N.P.J." runat="server"
                         ID="efvCNPJ"></asp:CustomValidator>
                 </div>
                 <div id="divRazaoSocial" style="display: none">
-                    <asp:TextBox ID="txtRazaoSocial" MaxLength="50" onkeypress="ConverterCaixaAlta()"
+                    <asp:TextBox ID="txtRazaoSocial" MaxLength="50" onkeypress="ConverterCaixaAlta();KeyDownHandler();"
                         runat="server" Height="16px" Width="300px"></asp:TextBox>
                     <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtRazaoSocial"
                             MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800" EnableCaching="true"
@@ -243,13 +263,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:TextBox ID="txtCodigoDescricao" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtCodigoDescricao" onkeypress="KeyDownHandler();" runat="server"></asp:TextBox>
                                 <asp:CustomValidator ID="cvValidaTexto" runat="server" Text="*" ErrorMessage="Código Inválido"
                                     ValidationGroup="pesquisar" ClientValidationFunction="ValidaCampos" CssClass="asterisco"></asp:CustomValidator>
                             </td>
                             <td class="tituloCampo" style="height: 23px">
                                 <b>De:</b>
-                                <asp:TextBox ID="tbxDataIni" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
+                                <asp:TextBox ID="tbxDataIni" onkeypress="formatar(this, '##/##/####');OnlyNumbers();KeyDownHandler();"
                                     MaxLength="10" runat="server" CssClass="formNovo" Width="75px"></asp:TextBox>
                                 <img alt="" id="imgDataIni" align="absmiddle" style="cursor: pointer;" src="../Imagens/Calendar_scheduleHS.png" />
                                 <asp:RegularExpressionValidator ControlToValidate="tbxDataIni" Text="*" CssClass="asterisco"
@@ -259,7 +279,7 @@
                                     runat="server" TargetControlID="tbxDataIni" Animated="true">
                                 </ajaxToolkit:CalendarExtender>
                                 &nbsp; &nbsp; <b>Até:</b>
-                                <asp:TextBox ID="tbxDataFim" runat="server" onkeypress="formatar(this, '##/##/####');OnlyNumbers()"
+                                <asp:TextBox ID="tbxDataFim" runat="server" onkeypress="formatar(this, '##/##/####');OnlyNumbers();KeyDownHandler();"
                                     MaxLength="10" CssClass="formNovo" TabIndex="12" Width="75px"></asp:TextBox>
                                 <img alt="" align="absmiddle" id="imgDataFim" style="cursor: pointer" src="../Imagens/Calendar_scheduleHS.png" />
                                 <asp:RegularExpressionValidator ControlToValidate="tbxDataFim" Text="*" CssClass="asterisco"
@@ -276,7 +296,7 @@
                     </table>
                 </div>
                 <div id="divCodigoCliente" style="display: none">
-                    <asp:TextBox ID="txtCodigoCliente" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtCodigoCliente" onkeypress="KeyDownHandler();" runat="server"></asp:TextBox>
                     <asp:CustomValidator ClientValidationFunction="ValidaCampos" Text="*" CssClass="asterisco"
                         ValidationGroup="pesquisar" ErrorMessage="Favor informar o Código do Cliente"
                         runat="server" ID="CustomValidator3"></asp:CustomValidator>
@@ -306,7 +326,7 @@
         <ContentTemplate>
             <div id="divListaNF" style="display: block">
                 <cc1:RDCGrid ID="grdListaResultado" runat="server" AutoGenerateColumns="False" BorderColor="Black"
-                    BorderWidth="1px" CellPadding="1" CellSpacing="3" GridLines="None" PageSize="15"
+                    BorderWidth="1px" CellPadding="1" CellSpacing="3" GridLines="None" PageSize="30"
                     ShowPageDetails="True" AllowPaging="True" MultiSelection="True" ShowHeaderCheckBoxColumn="False"
                     ShowOptionColumn="False" CssClass="alinhamento" OnPageIndexChanging="grdListaResultado_PageIndexChanging"
                     OnRowCommand="grdListaResultado_RowCommand" OnRowDataBound="grdListaResultado_RowDataBound"
@@ -319,6 +339,9 @@
                                     Style="margin-right: 0px" />
                                 <asp:ImageButton Style="cursor: pointer" ID="imgDuplicata" Width="15px" Height="15px"
                                     runat="server" ImageUrl="~/Imagens/btn-SolicitacaoDocumentos.gif" />
+                                <asp:ImageButton ID="imgVisualizarNF" runat="server" Height="15px" 
+                                    ImageUrl="~/Imagens/btn-SolicitacaoDocumentos.gif" Style="cursor: pointer" 
+                                    Width="15px" />
                             </ItemTemplate>
                             <HeaderStyle CssClass="headerGrid" Width="5%" />
                             <ItemStyle HorizontalAlign="center" Wrap="false" />

@@ -15,14 +15,22 @@ namespace Nissi.Business
         /// Objeto/Parâmetros: (codFormaPgto)
         /// Se for passado null no valores ele lista todos os dados
         /// </summary> 
-        public List<FormaPgtoVO> Listar(int? codFormaPgto)
+        public List<FormaPgtoVO> Listar()
+        {
+            return new FormaPgtoData().Listar(null);
+        }
+
+        public List<FormaPgtoVO> ListarPorCodigo(int? codFormaPgto)
         {
             return new FormaPgtoData().Listar(codFormaPgto);
         }
 
-
         // ------------------------------------------------------------------------- // 
-
+        
+        public List<FormaPgtoVO> ListarPorDescricao(string descricao)
+        {
+            return new FormaPgtoData().ListarPorDescricao(descricao);
+        }
 
         #endregion
         #region Métodos de Inclusão

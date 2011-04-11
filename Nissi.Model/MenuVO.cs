@@ -6,6 +6,7 @@ namespace Nissi.Model
     /// <summary>
     /// Essa classe representa os campos da tabela Menu
     /// </summary>
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class MenuVO
     {
         #region Campos

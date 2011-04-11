@@ -94,7 +94,7 @@
         <rd:TableAdapterName>pr_selecionar_emitenteTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
-    <DataSet Name="DataSet2">
+    <DataSet Name="DataSetCliente">
       <Fields>
         <Field Name="CodPessoa">
           <DataField>CodPessoa</DataField>
@@ -131,7 +131,7 @@
       </Query>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Macware_Projeto\Nissi\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Projeto\Nissi.Solution\Nissi.WebPresentation\DataSet.xsd</rd:SchemaPath>
         <rd:TableName>pr_relatorio_cliente</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -563,7 +563,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSet2</DataSetName>
+        <DataSetName>DataSetCliente</DataSetName>
         <Top>0.10583cm</Top>
         <Left>0.45681cm</Left>
         <Height>1.30584cm</Height>

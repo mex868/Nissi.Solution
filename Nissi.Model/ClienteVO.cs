@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Nissi.Model
 {
-    [Serializable] //deve ser serializavel para armazenar em viewstate
+    [Serializable()] //deve ser serializavel para armazenar em viewstate
     public class ClienteVO : PessoaVO
     {
         #region Campos
@@ -15,12 +15,7 @@ namespace Nissi.Model
         #region Propriedades
         public FuncionarioVO Funcionario
         {
-            get
-            {
-                if (_funcionario == null)
-                    _funcionario = new FuncionarioVO();
-                return _funcionario; 
-            }
+            get { return _funcionario ?? (_funcionario = new FuncionarioVO()); }
             set { _funcionario = value; }
         }
         public List<TransportadoraVO> Transportadoras

@@ -39,15 +39,6 @@ public partial class CadastraFornecedor {
     protected global::System.Web.UI.HtmlControls.HtmlTable tblConsulta;
     
     /// <summary>
-    /// rbCNPJ control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.RadioButton rbCNPJ;
-    
-    /// <summary>
     /// rbRazaoSocial control.
     /// </summary>
     /// <remarks>
@@ -64,6 +55,33 @@ public partial class CadastraFornecedor {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.RadioButton rbNomeFantasia;
+    
+    /// <summary>
+    /// rbBitola control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.RadioButton rbBitola;
+    
+    /// <summary>
+    /// rbClasseTipo control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.RadioButton rbClasseTipo;
+    
+    /// <summary>
+    /// rbCNPJ control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.RadioButton rbCNPJ;
     
     /// <summary>
     /// txtCNPJPesq control.
@@ -138,6 +156,51 @@ public partial class CadastraFornecedor {
     protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
     
     /// <summary>
+    /// txtNorma control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.TextBox txtNorma;
+    
+    /// <summary>
+    /// efvCodigo control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.CustomValidator efvCodigo;
+    
+    /// <summary>
+    /// AutoCompleteExtender3 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender3;
+    
+    /// <summary>
+    /// ddlBitola control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.DropDownList ddlBitola;
+    
+    /// <summary>
+    /// CustomValidator2 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.CustomValidator CustomValidator2;
+    
+    /// <summary>
     /// btnVoltar control.
     /// </summary>
     /// <remarks>
@@ -163,6 +226,15 @@ public partial class CadastraFornecedor {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocial;
+    
+    /// <summary>
+    /// hdfCodigo control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField hdfCodigo;
     
     /// <summary>
     /// btnPesquisar control.

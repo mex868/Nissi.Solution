@@ -25,6 +25,7 @@ namespace Nissi.WebPresentation
 
             if (!Page.IsPostBack)
             {
+                Session.Timeout = 300;                
                 MapearAplicacaoUsuario();
             }
         }
@@ -44,17 +45,29 @@ namespace Nissi.WebPresentation
         private void MapearAplicacaoUsuario()
         {
             //Instância do Usuário conectado
-            //FuncionarioVO mUsuarioAtivo = new FuncionarioVO();
-            //mUsuarioAtivo = (FuncionarioVO)Session["UsuarioAtivo"];
+            var mUsuarioAtivo = (FuncionarioVO)Session["UsuarioAtivo"];
 
             //Caso encontre o Usuário conectado
-            //if (mUsuarioAtivo != null)
-            //{
-                //BasePage basePage = new BasePage();
-               // lblUsuario.Text = mUsuarioAtivo.Login;
-
-                //Carregar Menu conforme Perfil de Acesso
-                menuPrincipal.DataSource = Server.MapPath("~/menu.xml");
+            if (mUsuarioAtivo != null)
+            {
+                var basePage = new BasePage();
+                lblUsuario.Text = mUsuarioAtivo.Apelido;
+                lblData.Text = DateTime.Now.ToString();
+                lblVersion.Text = VersionInfo;
+                string xmlMenu = string.Empty;
+                if (Session["xmlMenu"] != null)
+                    xmlMenu = (string)Session["xmlMenu"];
+                else
+                {
+                    if (mUsuarioAtivo.CodFuncionario != null)
+                        xmlMenu = Business.Usuario.ListarMenuUsuario(mUsuarioAtivo.CodFuncionario.Value);
+                    //Armazenar XML do Menu na Sessão
+                    Session.Add("xmlMenu", xmlMenu);
+                }
+                var xmldoc = new XmlDocument();
+                xmldoc.LoadXml(xmlMenu);
+                //Carregar Menu conforme Perfil de Acesso);
+                menuPrincipal.DataSource = xmldoc;
                 menuPrincipal.Layout = skmMenu.MenuLayout.Horizontal;
                 menuPrincipal.DefaultCssClass = "Menu";
                 menuPrincipal.SubMenuCssClass = "Menu";
@@ -77,10 +90,16 @@ namespace Nissi.WebPresentation
                     }
                 }
                 */
-                menuPrincipal.zIndex = 1000;
+                menuPrincipal.zIndex = 9999;
                 menuPrincipal.DataBind();
-            //}
+            }
         }
+        protected string VersionInfo{
+            get{
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+               }
+        }
+
 
         public void PosicionarFoco(Control controle)
         {

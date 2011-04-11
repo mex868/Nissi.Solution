@@ -4,7 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="cphPrincipal" runat="server">
     <link href="../App_Themes/Theme1/Model1.css" type="text/css"  rel="Stylesheet" />
 <script type="text/javascript">
-<script type="text/javascript">
     //--------------------------------------------------------------------------------
     //Criado por...: Alexandre Maximiano - 02/11/2009
     //Objetivo.....: Cabeçalho padrão da página
@@ -72,7 +71,7 @@
                                 cellpadding="1" 
                                 cellspacing="3" 
                                 gridlines="None" 
-                                pagesize="15" 
+                                pagesize="30" 
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 
