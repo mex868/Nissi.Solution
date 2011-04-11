@@ -26,8 +26,13 @@ namespace Nissi.Repositorio.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+<<<<<<< HEAD
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MAX-PC\\SQLEXPRESS;Initial Catalog=NISSI;User ID=amaximiano;Password=D" +
             "rica250479")]
+=======
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=nissi-server\\sqlexpress;Initial Catalog=NISSI;User ID=sa;Password=Nis" +
+            "si@2009")]
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         public string NissiDataBase {
             get {
                 return ((string)(this["NissiDataBase"]));

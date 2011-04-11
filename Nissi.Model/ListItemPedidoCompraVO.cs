@@ -9,10 +9,14 @@ namespace Nissi.Model
     {
         public int OrdemCompra { get; set; }
         public int CodPessoa { get; set; }
+<<<<<<< HEAD
         public int CodMateriaPrima { get; set; }
         public int? CodBitola { get; set; }
         public int Tipo { get; set; }
         public int? Lote { get; set; }
+=======
+        public int Tipo { get; set; }
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         public DateTime DataEmissao { get; set; }
         public string Fornecedor { get; set; }
         public decimal Bitola { get; set; }
@@ -24,7 +28,10 @@ namespace Nissi.Model
         public DateTime? DataPrevista { get; set; }
         public DateTime? DataEntrega { get; set; }
         public decimal? QtdeEntregue { get; set; }
+<<<<<<< HEAD
         public string NotaFiscal { get; set; }
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         public decimal Saldo { get
         {
             decimal saldo = 0;
@@ -42,6 +49,9 @@ namespace Nissi.Model
             }
         }
         public string Descricao { get { return MateriaPrimaVo.Descricao; } }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
     }
 }

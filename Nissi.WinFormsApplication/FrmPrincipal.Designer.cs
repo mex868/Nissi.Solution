@@ -69,7 +69,11 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+<<<<<<< HEAD
             this.Text = "NF-e Nacional - v 20110401";
+=======
+            this.Text = "NF-e Nacional - v 20101206";
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -34,6 +34,7 @@ namespace Nissi.Util
                ddl.DataBind();
                ddl.Items.Insert(0, new ListItem("(Selecione)", string.Empty));
            }
+<<<<<<< HEAD
         }
 
         /// <summary>
@@ -55,6 +56,8 @@ namespace Nissi.Util
                 store.DataBind();
                 ddl.Items.Insert(0, new Ext.Net.ListItem("(Selecione)"));
             }
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         }
 
     }

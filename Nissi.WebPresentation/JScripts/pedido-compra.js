@@ -44,6 +44,7 @@
 
         });
     }
+<<<<<<< HEAD
     getSituacao = function (nota) {
         var retorno = "";
         if (nota >= 8 && nota <= 10) retorno = "Material aprovado";
@@ -56,6 +57,8 @@
         $(".situacao").val(retorno);
     }
 
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
     showItensInsumo = function () {
         $("#cadastraritensInsumo").animate({
             height: "toggle",
@@ -64,5 +67,9 @@
 
         });
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
 });
 

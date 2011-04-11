@@ -193,10 +193,17 @@
         function CarregarValores(source, eventArgs) {
             $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
             $get('<%=txtRazaoSocial.ClientID %>').value = eventArgs._item.outerText;
+<<<<<<< HEAD
             $get('<%=btnPesquisarExt.ClientID%>').click();
         }
         function BuscaDados() {
             $get('<%=btnPesquisarExt.ClientID%>').click();
+=======
+            $get('<%=btnPesquisar.ClientID%>').click();
+        }
+        function BuscaDados() {
+            $get('<%=btnPesquisar.ClientID%>').click();
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         }
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -206,6 +213,7 @@
             if (event.keyCode == 13) {
                 event.returnValue = false;
                 event.cancel = true;
+<<<<<<< HEAD
                 $get('<%=btnPesquisarExt.ClientID%>').click();
             }
         }
@@ -281,6 +289,12 @@
             $get("<%=txtNota.ClientID%>").value = "";
             $get("<%=lkbArquivoPdf.ClientID%>").Text = "(Nenhum arquivo carregado)";
         }
+=======
+                $get('<%=btnPesquisar.ClientID%>').click();
+            }
+        }
+
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         var template = '<span style="color:{0};">{1}</span>';
         
         var Ipi = function (value) {
@@ -314,17 +328,23 @@ function (btn) {
             if (command == "Enviar") {
                 EnviarPedidoCompra(record.data.OrdemCompra, record.data.CodPessoa);
             }
+<<<<<<< HEAD
             if (command == "Estoque") {
                 NovaEntradaEstoque(record.data.OrdemCompra, record.data.CodPessoa, record.data.Fornecedor, record.data.Bitola, record.data.Descricao, record.data.Qtde, record.data.CodMateriaPrima, record.data.CodBitola)
             }
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         }
         var beforedelete = function (ar) {
             var args = arguments;
 
         }
     </script>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
     <table style="margin-left: auto; width: 95%; margin-right: auto;">
         <tr>
             <td style="width: 21px; text-align: left">
@@ -505,7 +525,10 @@ function (btn) {
                                             <ext:RecordField Name="OrdemCompra" />
                                             <ext:RecordField Name="CodPessoa" />
                                             <ext:RecordField Name="Tipo" />
+<<<<<<< HEAD
                                             <ext:RecordField Name="Lote" />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                             <ext:RecordField Name="DataEmissao" Type="Date"/>
                                             <ext:RecordField Name="Fornecedor" />
                                             <ext:RecordField Name="Bitola" />
@@ -515,14 +538,20 @@ function (btn) {
                                             <ext:RecordField Name="Unidade" />
                                             <ext:RecordField Name="Qtde" />
                                             <ext:RecordField Name="DataPrevista" Type="Date" />
+<<<<<<< HEAD
                                             <ext:RecordField Name="DataEntrega" Type="Date" />
                                             <ext:RecordField Name="NotaFiscal" />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                             <ext:RecordField Name="QtdeEntregue" />
                                             <ext:RecordField Name="Saldo" />
                                             <ext:RecordField Name="Situacao" />
                                             <ext:RecordField Name="DiaEmAtraso" />
+<<<<<<< HEAD
                                             <ext:RecordField Name="CodMateriaPrima" />
                                             <ext:RecordField Name="CodBitola" />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                         </Fields>
                                     </ext:JsonReader>
                                 </Reader>
@@ -538,8 +567,11 @@ function (btn) {
                     <ext:Button ID="btnVoltarExt" runat="server" CtCls="botao"  Width="100px" Text="Voltar" OnDirectClick="btnVoltar_Click" Split="False" />
                     <ext:Button ID="btnPesquisarExt" runat="server" CtCls="botao" Width="100px" Text="Pesquisar" OnDirectClick="btnPesquisar_Click" />
                     <ext:Button ID="btnIncluirExt" runat="server" CtCls="botao" Width="100px" Text="Incluir" OnDirectClick="btnIncluir_Click" />
+<<<<<<< HEAD
                     <ext:Button ID="btnNovoItem" runat="server" Text="Novo" CtCls="botao" 
                         Width="80px" OnClientClick="ctl00_cphPrincipal_Window1.show();return false;"  />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                 </Items>
             </ext:Toolbar>
         </TopBar>        
@@ -552,7 +584,11 @@ function (btn) {
                             AutoExpandColumn="OrdemCompra" 
                             Collapsible="true" 
                             EnableColumnMove="true"
+<<<<<<< HEAD
                             Height="320" ColumnLines="True" CtCls="GridLayout">
+=======
+                            Height="350" ColumnLines="True" CtCls="GridLayout">
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                            <ColumnModel ID="ColumnModel1" runat="server">
 		                    <Columns>
                                 <ext:CommandColumn Width="115" Header="Ações">
@@ -572,6 +608,7 @@ function (btn) {
                                         <ext:GridCommand Icon="EmailGo" CommandName="Enviar">
                                             <ToolTip Text="Enviar  Pedido de Compra por E-mail" />
                                         </ext:GridCommand>
+<<<<<<< HEAD
                                         <ext:GridCommand Icon="New" CommandName="Estoque">
                                             <ToolTip Text="Entrada de Estoque" />
                                         </ext:GridCommand>
@@ -579,26 +616,43 @@ function (btn) {
                                 </ext:CommandColumn>
                                 <ext:Column ColumnId="OrdemCompra" Align="Right"  Header="Ordem de Compra" Width="160" DataIndex="OrdemCompra" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Lote" Align="Right"  Header="Lote" Width="160" DataIndex="Lote" Css="font-family : Arial; 	font-size : 16px;" />
+=======
+                                    </Commands>
+                                </ext:CommandColumn>
+                                <ext:Column ColumnId="OrdemCompra" Align="Right"  Header="Ordem de Compra" Width="160" DataIndex="OrdemCompra" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                 <ext:Column ColumnId="CodPessoa" Align="Right"  Header="CodPessoa" Width="160" DataIndex="CodPessoa" Hidden="true" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Tipo" Align="Right"  Header="Tipo" Width="160" DataIndex="Tipo" Hidden="true" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:DateColumn ColumnId="DataEmissao" Format="dd/MM/yyyy" Header="Emissão"  Width="90" DataIndex="DataEmissao" Hidden="False" Css="font-family : Arial; 	font-size : 16px;"/>
                                 <ext:Column ColumnId="Fornecedor" Header="Fornecedor"  Width="276" DataIndex="Fornecedor" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+<<<<<<< HEAD
                                 <ext:Column ColumnId="Qtde" Align="Right"  Header="Qtde"  Width="60" DataIndex="Qtde" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="QtdeEntregue" Align="Right" Header="Qtde Entregue"  Width="72" DataIndex="QtdeEntregue" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Unidade" Align="Right"  Header="Unidade"  Width="60" DataIndex="Unidade" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                 <ext:Column ColumnId="Bitola" Header="Bitola" Align="Right"   Width="65" DataIndex="Bitola" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                <ext:Column ColumnId="Descricao" Header="Material/Produto"   Width="208" DataIndex="Descricao" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Preco" Header="Preço" Align="Right"   Width="68" DataIndex="Preco" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Ipi" Header="Ipi" Align="Right"   Width="45" DataIndex="Ipi" Hidden="False" Css="font-family : Arial; 	font-size : 16px;">
                                 <Renderer Fn="Ipi" />
                                 </ext:Column>
+<<<<<<< HEAD
                                 <ext:DateColumn ColumnId="DataPrevista" Format="dd/MM/yyyy" Header="Entrega Prevista"  Width="98" DataIndex="DataPrevista" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+=======
+                                <ext:Column ColumnId="Qtde" Align="Right"  Header="Qtde"  Width="60" DataIndex="Qtde" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+                                <ext:Column ColumnId="Unidade" Align="Right"  Header="Unidade"  Width="60" DataIndex="Unidade" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+                                <ext:DateColumn ColumnId="DataPrevista" Format="dd/MM/yyyy" Header="Entrega Prevista"  Width="98" DataIndex="DataPrevista" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+                                <ext:Column ColumnId="QtdeEntregue" Align="Right" Header="Qtde Entregue"  Width="72" DataIndex="QtdeEntregue" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
+                                <ext:Column ColumnId="Saldo" Align="Right" Header="Saldo" Width="70" DataIndex="Saldo" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" RightCommandAlign="True" />
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                                 <ext:Column ColumnId="Situacao" Header="Situação"  Width="78" DataIndex="Situacao" Hidden="False" Css="font-family : Arial; 	font-size : 16px;">
                                 <Renderer fn="situacao"/>
                                 </ext:Column>
                                 <ext:Column ColumnId="DiaEmAtraso" Header="Dias de Atraso" Align="Right"  Width="70" DataIndex="DiaEmAtraso" Hidden="False" Css="font-family : Arial; 	font-size : 16px;">
                                 <Renderer Fn="diasAtraso" />
                                 </ext:Column>
+<<<<<<< HEAD
                                 <ext:DateColumn ColumnId="DataEntrega" Format="dd/MM/yyyy" Header="Ent. Real"  Width="98" DataIndex="DataEntrega" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="NotaFiscal"  Header="N.F."  Width="98" DataIndex="NotaFiscal" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Saldo" Align="Right" Header="Saldo" Width="70" DataIndex="Saldo" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" RightCommandAlign="True" />
@@ -608,6 +662,12 @@ function (btn) {
                             <Listeners>
                                 <Command Handler="rowcommand(command, record);" />
                                 <CellClick Fn="cellClick" />
+=======
+                            </Columns>
+                            </ColumnModel>
+                            <Listeners>
+                                <Command Handler="rowcommand(command, record);" />
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
                             </Listeners> 
                             </ext:GridPanel>
                             </Items>
@@ -617,12 +677,16 @@ function (btn) {
             <asp:HiddenField ID="hdfValor" runat="server" />
             <asp:HiddenField ID="hdfOpcao" runat="server" />
             <br />
+<<<<<<< HEAD
             <br />
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnPesquisar" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
+<<<<<<< HEAD
         <ext:Window 
             ID="Window1" 
             runat="server" 
@@ -1044,3 +1108,6 @@ function (btn) {
             </Content>
         </ext:Window>
  </asp:Content>
+=======
+</asp:Content>
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e

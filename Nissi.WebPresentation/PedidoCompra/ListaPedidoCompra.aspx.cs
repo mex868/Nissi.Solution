@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+<<<<<<< HEAD
 using System.IO;
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -54,6 +57,7 @@ namespace Nissi.WebPresentation.PedidoCompra
                 CarregarCombos();
                 Master.PosicionarFoco(txtPedidoCompra);
             }
+<<<<<<< HEAD
             this.pnl2.CustomConfig.Add(new Ext.Net.ConfigItem("submitUrl", this.ResolveUrl("~/WebService.asmx/UploadFileAjax"), Ext.Net.ParameterMode.Value));
         }
 
@@ -231,6 +235,9 @@ namespace Nissi.WebPresentation.PedidoCompra
             if (sm != null) sm.BackColor = Color.Red;
         }
 
+=======
+        }
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         private void EscolherOpcao(string opcao)
         {
             string tvar = string.Empty;
@@ -488,12 +495,16 @@ namespace Nissi.WebPresentation.PedidoCompra
         {
             Geral.CarregarDDL(ref ddlClasseTipo, new ClasseTipo().Listar().ToArray(), "CodClasseTipo", "Descricao");
             Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
+<<<<<<< HEAD
             Geral.CarregarSelectBox(ref ddlUnidade, new Unidade().Listar(new UnidadeVO()).ToArray(),"CodUnidade","TipoUnidade");
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         }
 
         protected void StoreListaResultado_RefreshData(object sender, Ext.Net.StoreRefreshDataEventArgs e)
         {
             Pesquisar();
+<<<<<<< HEAD
         }
 
         protected void btnIncluirItem_Click(object sender, EventArgs e)
@@ -1518,5 +1529,8 @@ namespace Nissi.WebPresentation.PedidoCompra
         {
             ShowFormInfo(pnl2);
         }
+=======
+        }        
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
     }
 }

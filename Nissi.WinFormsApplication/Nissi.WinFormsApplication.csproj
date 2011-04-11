@@ -166,10 +166,6 @@
       <Project>{075736A2-1C20-4710-8034-D446D19FAE2F}</Project>
       <Name>Nissi.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nissi.Model\Nissi.Model.csproj">
-      <Project>{14A3EBFF-8C71-41FA-B0A9-69CA50A724DC}</Project>
-      <Name>Nissi.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Nissi.Util\Nissi.Util.csproj">
       <Project>{EDAEF629-CEC4-4EC4-A1FA-3D37E487C5A7}</Project>
       <Name>Nissi.Util</Name>

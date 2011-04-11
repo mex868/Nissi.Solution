@@ -57,7 +57,10 @@
             }
             window.showModalDialog('<%=caminhoAplicacao%>' + "Produto/CadastraProduto.aspx?acao=IncluirItem&codigo=" + codigoFornecedor, "", "dialogHeight=600px;dialogWidth=900px;status=no,toolbar=no,menubar=no,location=no;unadorned=no;help=no; resizable: No; status: No;");
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         function SetZIndex(control, args) {
 
             // Set auto complete extender control's z-index to a high value 

@@ -292,6 +292,7 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::Ext.Net.Button btnIncluirExt;
         
         /// <summary>
+<<<<<<< HEAD
         /// btnNovoItem control.
         /// </summary>
         /// <remarks>
@@ -301,6 +302,8 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::Ext.Net.Button btnNovoItem;
         
         /// <summary>
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         /// grdListaResultado1 control.
         /// </summary>
         /// <remarks>
@@ -337,6 +340,7 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::System.Web.UI.WebControls.HiddenField hdfOpcao;
         
         /// <summary>
+<<<<<<< HEAD
         /// Window1 control.
         /// </summary>
         /// <remarks>
@@ -949,6 +953,8 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::Ext.Net.Button btnIncluirItem;
         
         /// <summary>
+=======
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
         /// Master property.
         /// </summary>
         /// <remarks>

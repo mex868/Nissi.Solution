@@ -74,7 +74,11 @@ input[type=text],input[type=password], select {
 .x-toolbar
 {
 	TEXT-ALIGN: left;
+<<<<<<< HEAD
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF); 
+=======
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF);    
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
 }
 
 .botao
@@ -172,10 +176,14 @@ iframe.skm
     font-family : Arial; 
 	font-size : 18px;
 }
+<<<<<<< HEAD
 .dirty-row
 {
     background: red;
 }
+=======
+
+>>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
 .alinhamento
 {
 	border: 1px solid #000000;
