@@ -8,6 +8,7 @@
     <title>[Nissi] Módulo de Nota Fiscal</title>
         <link href="App_Themes/Theme1/Model1.css" rel="stylesheet" type="text/css" />
         <link href="App_Themes/css/south-street/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />
+
         <script language="javascript" type="text/javascript">
 
         //--------------------------------------------------------------------------------
@@ -68,6 +69,7 @@
                 <asp:ScriptReference Path="JScripts/jquery-1.4.2.min.js" />
                 <asp:ScriptReference Path="JScripts/jquery-ui-1.8.2.custom.min.js" />
                 <asp:ScriptReference Path="JScripts/jquery.ui.datepicker-pt-BR.js" />
+                <asp:ScriptReference Path="JScripts/ajaxupload.js" />
             </Scripts>
         </asp:ScriptManager>
         <ajaxtoolkit:modalpopupextender ID="mpeAguarde" PopupControlID="PNL" 

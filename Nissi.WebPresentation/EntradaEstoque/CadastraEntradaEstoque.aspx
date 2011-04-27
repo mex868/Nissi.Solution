@@ -27,6 +27,7 @@
             loadDate();
             loadTabs();
             hiddenItens();
+            uploadFileAjax();
         }
 
         function CarregarValores(source, eventArgs) {
@@ -57,6 +58,7 @@
             }
             window.showModalDialog('<%=caminhoAplicacao%>' + "Produto/CadastraProduto.aspx?acao=IncluirItem&codigo=" + codigoFornecedor, "", "dialogHeight=600px;dialogWidth=900px;status=no,toolbar=no,menubar=no,location=no;unadorned=no;help=no; resizable: No; status: No;");
         }
+
         function SetZIndex(control, args) {
 
             // Set auto complete extender control's z-index to a high value 
@@ -67,14 +69,6 @@
 
         }
 
-        function ValidaArquivoImagem(source, args) {
-            if ($get('<%=upFileUp.ClientID %>').value == '') {
-                alert('Informe um arquivo de imagem válido');
-                return false;
-            }
-            else
-                return true;
-        }
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
         //Objetivo.....: Acionar botão acessar quando pressionada a tecla ENTER
@@ -99,12 +93,12 @@
                         <asp:Image ID="ImgCadastro" runat="server" ImageUrl="~/Imagens/layout.png" />
                     </td>
                     <td style="width: 95%; text-align: left" class="titulo">
-                        Cadastro de Entrada de Estoque</td>
+                        Cadastro de Entrada de Mão de Obra</td>
                 </tr>
             </table>
             <table class="fundoTabela" style="text-align: left; width: 75%">
                 <tr>
-                    <td style="padding-left: 20px; width: 656px">
+                    <td style="padding-left: 20px; width: 656px; display:none">
                         Nº Pedido de Compra
                     </td>
                     <td style="padding-left: 20px; width: 591px; display:none">
@@ -121,7 +115,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="display:none">
                         <asp:HiddenField ID="hdfPedidoCompra" runat="server" />
                         <asp:TextBox ID="txtPedidoCompra" runat="server" onkeypress="KeyDownHandler();return digitos(event, this);" Width="60px"></asp:TextBox>
                         <asp:Button ID="btnCarregaValoresPedidoCompra" runat="server" Width="75px" 
@@ -216,7 +210,7 @@
                         <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
                         <asp:TextBox ID="txtRazaoSocial" runat="server" Width="350px"></asp:TextBox>
                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtRazaoSocial"
-                            MinimumPrefixLength="1" ServiceMethod="GetFornecedor" CompletionInterval="800"
+                            MinimumPrefixLength="1" ServiceMethod="GetNames" CompletionInterval="800"
                             EnableCaching="true" CompletionSetCount="10" OnClientItemSelected="CarregarValores"
                             OnClientPopulated="ClientPopulated">
                         </ajaxToolkit:AutoCompleteExtender>
@@ -325,7 +319,7 @@
                     <div id="tabs">
                         <ul>
                         <li><a href="#div-content-material">Dados do Material</a></li>
-                        <li><a href="#div-content-produto">Dados do Produto</a></li>
+                        <!--<li><a href="#div-content-produto">Dados do Produto</a></li>-->
                         </ul>
                                 <div id="div-content-material" style="Height:450px; Width:932px">
                                     <table style="height: 300; width: 920px">
@@ -395,7 +389,6 @@
                                                         </cc1:RDCGrid>
                                                     </ContentTemplate>
                                                     <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btnIncluirItem" EventName="Click" />
                                                         <asp:AsyncPostBackTrigger ControlID="grdProduto" EventName="RowCommand" />
                                                     </Triggers>
                                                 </asp:UpdatePanel>
@@ -413,7 +406,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                    <div id="div-content-produto" style="Height:450px; Width:932px;">
+                    <div id="div-content-produto" style="Height:450px; Width:932px; display:none">
                                     <table style="height: 300; width: 920px">
                                         <tr>
                                             <td>
@@ -597,6 +590,7 @@
             ValidationGroup="ValidaDados" 
             HeaderText="Os seguintes erros foram encontrados:"></asp:ValidationSummary>
     </div>
+<div>
     <asp:HiddenField ID="hdfTargetIncluirItem" runat="server" Value="Incluir" />
     <ajaxToolkit:ModalPopupExtender ID="mpeIncluirItem" runat="server" PopupControlID="pnlIncluirItem"
         TargetControlID="hdfTargetIncluirItem" BehaviorID="mpeIncluirItemID" BackgroundCssClass="modalBackground"
@@ -634,7 +628,7 @@
                                 Entrega
                             </td>
                             <td style="padding-left: 20px;" colspan="2">
-                                Norma
+                                Materia/Produto
                                 <asp:HiddenField ID="hdfCodMateriaPrima" runat="server" />
                             </td>
                             <td style="padding-left: 20px;" colspan="2">
@@ -650,10 +644,11 @@
                                 <asp:TextBox ID="txtData" runat="server" CssClass="DesligarTextBox"></asp:TextBox>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtNorma" runat="server" Width="200px" Visible="False"></asp:TextBox>
+                                <asp:DropDownList ID="ddlProduto" runat="server"></asp:DropDownList>
+                                <asp:TextBox ID="txtNorma" runat="server" Width="10px" Visible="False"></asp:TextBox>
                                 <asp:DropDownList ID="ddlMateriaPrima" runat="server" 
                                     onselectedindexchanged="ddlMateriaPrima_SelectedIndexChanged" 
-                                    AutoPostBack="True">
+                                    AutoPostBack="True" Visible="false">
                                 </asp:DropDownList>
                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" TargetControlID="txtNorma"
                                 MinimumPrefixLength="1" ServiceMethod="GetNorma" CompletionInterval="800" 
@@ -661,12 +656,12 @@
                                         DelimiterCharacters="" Enabled="True" ServicePath="" OnClientShown="SetZIndex">
                                 </ajaxToolkit:AutoCompleteExtender>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
-                                        ControlToValidate="txtNorma" 
+                                        ControlToValidate="ddlProduto" 
                                         ErrorMessage="Matéria Prima falta ser preenchido." 
                                         ValidationGroup="ValidaDadosItens">*</asp:RequiredFieldValidator>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtBitola" runat="server" Visible="False" Width="16px"></asp:TextBox>
+                                <asp:TextBox ID="txtBitola" runat="server" Visible="False" Width="10px"></asp:TextBox>
                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender3" runat="server" TargetControlID="txtBitola"
                                 MinimumPrefixLength="1" ServiceMethod="GetBitola" CompletionInterval="800" 
                                         OnClientItemSelected="CarregarValoresBitola" OnClientPopulated="ClientPopulated" 
@@ -735,6 +730,9 @@
                             <td>
                                 <asp:DropDownList ID="ddlUnidade" runat="server">
                                 </asp:DropDownList>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" 
+                                ControlToValidate="ddlUnidade" ErrorMessage="Unidade falta ser preenchido." 
+                                ValidationGroup="ValidaDadosItens">*</asp:RequiredFieldValidator>
                             </td>
                         <td>
                             <asp:TextBox ID="txtIPI" runat="server" onkeypress="OnlyMoney();" Width="50px"></asp:TextBox>
@@ -953,23 +951,14 @@
                                         <td style="padding-left:20px; width: 279px;"><b>Certificado Scanneado</b></td>
                                     </tr>
                                     <tr>
-		                                <td valign="middle" style="width: 279px">
-		                                    <asp:FileUpload   Width="300px"  runat="server" ID="upFileUp" />
-		                                </td>
-		                                <td>
-                                                <asp:LinkButton ID="lkbArquivoPdf" runat="server" 
-                                                    onclick="lkbArquivoPdf_Click"> (Nenhuma arquivo carregada)</asp:LinkButton>
-                                            </td>
+                                     <td colspan="3">
+                                        <div id="uploadStatus" style="color: red;"></div>
+                                        <input type="button" id="uploadFile" style="width:90px" value="Upload File" class="botao"/>
+                                        <div id="fileList"></div>
+                                     </td>
                                      </tr>
                                      <tr>
-                                            <td colspan="2">
-                                                        <asp:LinkButton ID="btnCarregarCertificado" runat="server" 
-                                                            CssClass="hiperlink" onclick="btnCarregarImagem_Click">Carregar Certificado</asp:LinkButton>
-                                                        <asp:LinkButton ID="btnLimparImagem" runat="server" CausesValidation="False" 
-                                                        CssClass="hiperlink" style="padding-bottom:2px" Width="120px" 
-                                                            onclick="btnLimparImagem_Click">Limpar Arquivo</asp:LinkButton>
-
-                                            </td>                                       
+                                     <td colspan="4">&nbsp;</td>
                                      </tr>
                                 </table>
                         </td>
@@ -989,9 +978,7 @@
                     EventName="Click" />
                 <asp:AsyncPostBackTrigger ControlID="grdProduto" 
                     EventName="RowCommand" />
-                <asp:PostBackTrigger ControlID="lkbArquivoPdf" />
-                <asp:PostBackTrigger ControlID="btnCarregarCertificado" />
-                <asp:AsyncPostBackTrigger ControlID="btnIncluirItem" EventName="Click" />
+                <asp:PostBackTrigger ControlID="btnIncluirItem"/>
                 <asp:AsyncPostBackTrigger ControlID="btnCancelarItem" EventName="Click" />
                 <asp:AsyncPostBackTrigger ControlID="ddlMateriaPrima" 
                     EventName="SelectedIndexChanged" />
@@ -1015,5 +1002,6 @@
             </Triggers>
         </asp:UpdatePanel>
     </asp:Panel>
+</div>
     <br />
 </asp:Content>

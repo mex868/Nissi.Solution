@@ -6,6 +6,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BS = Nissi.Business;
+
 
 namespace Nissi.WebPresentation.EntradaEstoque
 {
@@ -21,26 +23,20 @@ namespace Nissi.WebPresentation.EntradaEstoque
             try
             {
                 string sVarCache = Request["Variavel_Cache"];
-                if ((sVarCache != "") && (Cache[sVarCache] != null))
-                {
-                    pdfByte = (byte[])Cache[sVarCache];
-                }
-                else
-                {
-                    pdfByte = (byte[])ViewState[sVarCache];
-                }                                 
-                Response.ContentType = "application/pdf";             
-                Response.AddHeader("content-disposition", "attachment;filename=labtest.pdf");             
-                Response.Buffer = true;             
-                Response.Clear();
-                Response.OutputStream.Write(pdfByte, 0, pdfByte.Length);             
-                Response.OutputStream.Flush();             
+                int lote = int.Parse(Request["lote"]);
+                pdfByte = new BS.EntradaEstoque().GetCertificado(lote);
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=certificado.pdf");
+                Response.AddHeader("Content-Length", pdfByte.Length.ToString());
+                Response.OutputStream.Write(pdfByte, 0, pdfByte.Length);
+                Response.OutputStream.Flush();
                 Response.End();
             }
             catch (Exception ex)
             {
                 //Blocks.ExceptionManager.Publish(Ex);
             }
+
         }
     }
 }

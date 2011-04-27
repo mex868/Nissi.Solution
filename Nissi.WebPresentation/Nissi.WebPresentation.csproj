@@ -132,6 +132,8 @@
     <Content Include="Default.aspx" />
     <Content Include="EntradaEstoque\CadastraEntradaEstoque.aspx" />
     <Content Include="EntradaEstoque\ListaEntradaEstoque.aspx" />
+    <Content Include="FichaTecnica\CadastraCaracteristica.aspx" />
+    <Content Include="FichaTecnica\CadastraProcesso.aspx" />
     <Content Include="FormaPgto\CadastraFormaPgto.aspx" />
     <Content Include="EntradaEstoque\GerarPDF.aspx" />
     <Content Include="Global.asax" />
@@ -189,11 +191,13 @@
     <Content Include="Imagens\undo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="JScripts\ajaxupload.js" />
     <Content Include="JScripts\Common.js" />
     <Content Include="JScripts\entrada-estoque.js" />
     <Content Include="JScripts\jquery-1.4.2.min.js" />
     <Content Include="JScripts\jquery-ui-1.8.2.custom.min.js" />
     <Content Include="JScripts\jquery.ui.datepicker-pt-BR.js" />
+    <Content Include="JScripts\pedido-compra-consulta.js" />
     <Content Include="JScripts\pedido-compra.js" />
     <Content Include="Login.aspx" />
     <Content Include="MateriaPrima\CadastraBitola.aspx" />
@@ -204,7 +208,7 @@
     <Content Include="NFe\VisualizarNFe.aspx" />
     <Content Include="Parametro\NFEParametros.aspx" />
     <Content Include="PedidoCompra\CadastraPedidoCompra.aspx" />
-    <Content Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx" />
+    <Content Include="PedidoCompra\GerarPDF.aspx" />
     <Content Include="PedidoCompra\ListaPedidoCompra.aspx" />
     <Content Include="PrazoEntrega\CadastraPrazoEntrega.aspx" />
     <Content Include="Produto\CadastraProdutoInsumo.aspx" />
@@ -222,6 +226,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="WebService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administracao\Menu\ListaMenu.aspx.cs">
@@ -242,6 +247,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_Code\CascadingWS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="App_Code\NissiSession.cs" />
+    <Compile Include="App_Code\WebService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CFOP\CadastraCFOP.aspx.cs">
@@ -295,6 +304,7 @@
     <Compile Include="EntradaEstoque\CadastraEntradaEstoque.aspx.designer.cs">
       <DependentUpon>CadastraEntradaEstoque.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EntradaEstoque\FileUploadHandler.cs" />
     <Compile Include="EntradaEstoque\ListaEntradaEstoque.aspx.cs">
       <DependentUpon>ListaEntradaEstoque.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -302,6 +312,21 @@
     <Compile Include="EntradaEstoque\ListaEntradaEstoque.aspx.designer.cs">
       <DependentUpon>ListaEntradaEstoque.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FichaTecnica\CadastraCaracteristica.aspx.cs">
+      <DependentUpon>CadastraCaracteristica.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FichaTecnica\CadastraCaracteristica.aspx.designer.cs">
+      <DependentUpon>CadastraCaracteristica.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FichaTecnica\CadastraProcesso.aspx.cs">
+      <DependentUpon>CadastraProcesso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FichaTecnica\CadastraProcesso.aspx.designer.cs">
+      <DependentUpon>CadastraProcesso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PedidoCompra\FileUploadHandler.cs" />
     <Compile Include="FormaPgto\CadastraFormaPgto.aspx.cs">
       <DependentUpon>CadastraFormaPgto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -426,12 +451,12 @@
     <Compile Include="PedidoCompra\CadastraPedidoCompra.aspx.designer.cs">
       <DependentUpon>CadastraPedidoCompra.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx.cs">
-      <DependentUpon>CadastraPedidoCompraInsumo.aspx</DependentUpon>
+    <Compile Include="PedidoCompra\GerarPDF.aspx.cs">
+      <DependentUpon>GerarPDF.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PedidoCompra\CadastraPedidoCompraInsumo.aspx.designer.cs">
-      <DependentUpon>CadastraPedidoCompraInsumo.aspx</DependentUpon>
+    <Compile Include="PedidoCompra\GerarPDF.aspx.designer.cs">
+      <DependentUpon>GerarPDF.aspx</DependentUpon>
     </Compile>
     <Compile Include="PedidoCompra\ListaPedidoCompra.aspx.cs">
       <DependentUpon>ListaPedidoCompra.aspx</DependentUpon>
@@ -804,7 +829,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>55828</DevelopmentServerPort>
+          <DevelopmentServerPort>42543</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/Nissi.WebPresentation</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

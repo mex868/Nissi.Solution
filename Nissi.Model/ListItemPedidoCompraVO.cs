@@ -8,8 +8,13 @@ namespace Nissi.Model
     public class ListItemPedidoCompraVO
     {
         public int OrdemCompra { get; set; }
+        public int CodItemPedidoCompra { get; set; }
         public int CodPessoa { get; set; }
+        public int CodMateriaPrima { get; set; }
+        public int? CodBitola { get; set; }
+        public int? CodUnidade { get; set; }
         public int Tipo { get; set; }
+        public int? Lote { get; set; }
         public DateTime DataEmissao { get; set; }
         public string Fornecedor { get; set; }
         public decimal Bitola { get; set; }
@@ -21,14 +26,19 @@ namespace Nissi.Model
         public DateTime? DataPrevista { get; set; }
         public DateTime? DataEntrega { get; set; }
         public decimal? QtdeEntregue { get; set; }
+        public string NotaFiscal { get; set; }
+        public short? IdStatus { get; set; }
+
+        public string CalcColuna { get; set; }
         public decimal Saldo { get
         {
             decimal saldo = 0;
-            if (QtdeEntregue != null) saldo = (Qtde - QtdeEntregue.Value)*-1;
+            if (IdStatus == 0  && QtdeEntregue != null)
+                saldo = (Qtde - QtdeEntregue.Value)*-1;
             return saldo;
         }
         }
-        public string Situacao { get { return DataEntrega == null && DataPrevista < DateTime.Now.Date ? "Atrasado" : QtdeEntregue == null ? "Aberto" : QtdeEntregue < Qtde ? "Parcial" : DataPrevista < DataEntrega ? "Entregue em Atraso" : DataPrevista == DataEntrega ? "Entregue" : "Aberto"; } }
+        public string Situacao { get { return IdStatus == 1? "Finalizado": IdStatus == 2? "Cancelado": DataEntrega == null && DataPrevista < DateTime.Now.Date ? "Atrasado" : QtdeEntregue == null ? "Aberto" : QtdeEntregue < Qtde ? "Parcial" : DataPrevista < DataEntrega ? "Entregue em Atraso" : DataPrevista == DataEntrega ? "Entregue" : "Aberto"; } }
         public int DiaEmAtraso { get
             {
                 int dia = 0;
@@ -38,5 +48,6 @@ namespace Nissi.Model
             }
         }
         public string Descricao { get { return MateriaPrimaVo.Descricao; } }
+
     }
 }

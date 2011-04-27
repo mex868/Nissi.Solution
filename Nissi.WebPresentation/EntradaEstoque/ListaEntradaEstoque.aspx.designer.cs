@@ -220,6 +220,24 @@ namespace Nissi.WebPresentation.EntradaEstoque {
         protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocial;
         
         /// <summary>
+        /// hdfLote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfLote;
+        
+        /// <summary>
+        /// lkbArquivoPdf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lkbArquivoPdf;
+        
+        /// <summary>
         /// btnPesquisar control.
         /// </summary>
         /// <remarks>

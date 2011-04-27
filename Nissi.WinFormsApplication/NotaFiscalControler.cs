@@ -31,7 +31,7 @@ namespace Nissi.WinFormsApplication
             emit = new string[17];
             dest = new string[20];
             prod = new string[Convert.ToInt32(identNotaFiscal.Itens.Count), 60];
-            total = new string[14];
+            total = new string[16];
             transp = new string[15];
             cobr = new string[6];
             infAdic = new string[2]; 
@@ -50,7 +50,15 @@ namespace Nissi.WinFormsApplication
                 ide[5] = identNotaFiscal.Serie; //<serie>
                 ide[6] = identNotaFiscal.NF.ToString();//<nNF>
                 ide[7] = DateTime.Today.ToString("yyyy-MM-dd");         	 //<dEmi>
-                ide[8] = DateTime.Today.ToString("yyyy-MM-dd");          //<dSaiEnt>
+                if (identNotaFiscal.DataEntradaSaida != null)
+                {
+                    ide[8] = identNotaFiscal.DataEntradaSaida.Value.ToString("yyyy-MM-dd");          //<dSaiEnt>
+                }
+                else
+                {
+                    ide[8] = string.Empty;
+
+                }
                 ide[9] = identNotaFiscal.IndEntradaSaida == false ? "0" : "1";																		 //<tpNF>
                 ide[10] = identNotaFiscal.Emitente.Cep.Cidade.CodIBGE;//txtCodMun.Text;//<cMunFG>
                 ide[11] = identNotaFiscal.NFe.IndTipoEmissao;//<tpEmis> - Verificar no sistema se for erro de rede

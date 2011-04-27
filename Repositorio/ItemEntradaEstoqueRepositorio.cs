@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Nissi.Model;
 
 namespace Nissi.Repositorio
 {
@@ -20,7 +21,7 @@ namespace Nissi.Repositorio
                 CodEntradaEstoque = codEntradaEstoque,
                 CodBitola = i.BitolaVo.CodBitola,
                 CodMateriaPrima = i.MateriaPrimaVo.CodMateriaPrima,
-                Lote = i.Lote,
+                Lote = (i.Lote != 0 ? i.Lote : _repositorioDataContext.ItemEntradaEstoques.Max(e => e.Lote)+1),
                 Certificado = i.Certificado,
                 Corrida = i.Corrida,
                 QtdPedidoCompra = i.QtdPedidoCompra,
@@ -54,6 +55,8 @@ namespace Nissi.Repositorio
             {
                 if (itemEntradaEstoque.Qtd != 0 && itemEntradaEstoque.Valor != 0)
                 {
+                    if (itemEntradaEstoque.CodBitola == 0)
+                        itemEntradaEstoque.CodBitola = null;
                     _repositorioDataContext.ItemEntradaEstoques.InsertOnSubmit(itemEntradaEstoque);
                     _repositorioDataContext.SubmitChanges();
                 }
@@ -197,7 +200,7 @@ namespace Nissi.Repositorio
             }
         }
     #endregion
-
+        #region Método que altera o item do Estoque
         internal void Alterar(List<Model.ItemEntradaEstoqueInsumoVO> itens, int codEntradaEstoque)
         {
             var lstItemEntradaEstoque = itens.Where(i => i.CodItemEntradaEstoqueInsumo == 0).Select(i => new ItemEntradaEstoque()
@@ -246,8 +249,19 @@ namespace Nissi.Repositorio
                     itemEntradaEstoque.CertificadoScanneado = item.CertificadoScanneado;
                 }
                 _repositorioDataContext.SubmitChanges();
-            }           
-
+            }
+        }
+        #endregion
+        internal byte[] GetCertificado(int lote)
+        {
+            var queryitem = (from i in _repositorioDataContext.ItemEntradaEstoques
+                             where i.Lote == lote
+                             select new ItemEntradaEstoqueVO()
+                                        {
+                                            CertificadoScanneado = i.CertificadoScanneado.ToArray()
+                                        }).FirstOrDefault();
+            byte[] certigicadoScanneado = queryitem != null? queryitem.CertificadoScanneado: new byte[0];
+            return certigicadoScanneado;
         }
     }
 }

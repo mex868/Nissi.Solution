@@ -108,7 +108,8 @@ namespace Nissi.WebPresentation.EntradaEstoque
 
                 if (rbLote.Checked && !string.IsNullOrEmpty(txtLote.Text))
                 {
-                    itemEntradaEstoqueVos = new BS.EntradaEstoque().ListarPorLote(txtLote.Text);
+                    int lote = int.Parse(txtLote.Text);
+                    itemEntradaEstoqueVos = new BS.EntradaEstoque().ListarPorLote(lote);
                 }
                 if (!string.IsNullOrEmpty(hdfCodEntradaEstoque.Value))
                 {
@@ -315,6 +316,11 @@ namespace Nissi.WebPresentation.EntradaEstoque
         protected void StoreListaResultado_RefreshData(object sender, Ext.Net.StoreRefreshDataEventArgs e)
         {
             Pesquisar();
+        }
+
+        protected void lkbArquivoPdf_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("GerarPDF.aspx?Variavel_Cache=PDF&lote=" + hdfLote.Value);
         }
     
     }

@@ -35,7 +35,7 @@ namespace Nissi.Model
         #endregion
         #region Propriedades
 
-        public decimal? ResistenciaTracao { get; set; }
+        public string ResistenciaTracao { get; set; }
         public string Especificacao { get; set; }
         public UnidadeVO UnidadeVo{get;set;}
 

@@ -28,6 +28,7 @@ namespace Nissi.Repositorio
                                                                              Valor = i.Valor,
                                                                              DataCadastro = i.DataCadastro,
                                                                              UsuarioInc = i.UsuarioInc,
+                                                                             idStatus = 0,
                                                                          });
             _repositorioDataContext.ItemPedidoCompras.InsertAllOnSubmit(lstItemPedidoCompra);
             _repositorioDataContext.SubmitChanges();
@@ -165,6 +166,43 @@ namespace Nissi.Repositorio
             //--------------------------------
     }
     #endregion
- 
-}
+        #region Método para finalizar item
+        internal void FinalizarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            IQueryable<ItemPedidoCompra> query = from i in _repositorioDataContext.ItemPedidoCompras
+                                                 where i.CodItemPedidoCompra == codItemPedidoCompra
+                                                 select i;
+            var itemPedidoCompra = query.FirstOrDefault();
+            itemPedidoCompra.idStatus = 1;
+            itemPedidoCompra.DataAlteracao = DateTime.Now;
+            itemPedidoCompra.UsuarioAlt = codUsuario;
+            _repositorioDataContext.SubmitChanges();
+        }
+        #endregion
+        #region Método para cancelar item do pedido de compra
+        internal void CancelarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            IQueryable<ItemPedidoCompra> query = from i in _repositorioDataContext.ItemPedidoCompras
+                                                 where i.CodItemPedidoCompra == codItemPedidoCompra
+                                                 select i;
+            var itemPedidoCompra = query.FirstOrDefault();
+            itemPedidoCompra.idStatus = 2;
+            itemPedidoCompra.DataAlteracao = DateTime.Now;
+            itemPedidoCompra.UsuarioAlt = codUsuario;
+            _repositorioDataContext.SubmitChanges();
+        }
+        #endregion
+
+        internal void Desfazer(int codItemPedidoCompra, int codUsuario)
+        {
+            IQueryable<ItemPedidoCompra> query = from i in _repositorioDataContext.ItemPedidoCompras
+                                                 where i.CodItemPedidoCompra == codItemPedidoCompra
+                                                 select i;
+            var itemPedidoCompra = query.FirstOrDefault();
+            itemPedidoCompra.idStatus = 0;
+            itemPedidoCompra.DataAlteracao = DateTime.Now;
+            itemPedidoCompra.UsuarioAlt = codUsuario;
+            _repositorioDataContext.SubmitChanges();
+        }
+    }
     }

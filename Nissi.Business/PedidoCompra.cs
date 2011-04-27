@@ -96,5 +96,23 @@ namespace Nissi.Business
         }
 
         #endregion
+        #region Método que finaliza item do pedido de compra
+        public void FinalizarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            new PedidoCompraRepositorio().FinalizarItem(codItemPedidoCompra, codUsuario);
+        }
+        #endregion
+        #region Método que desfaz a ação executada
+        public void Desfazer(int codItemPedidoCompra, int codUsuario)
+        {
+            new PedidoCompraRepositorio().Desfazer(codItemPedidoCompra, codUsuario);
+        }
+        #endregion
+        #region Método para cancelar item do pedido de compra
+        public void CancelarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            new PedidoCompraRepositorio().CancelarItem(codItemPedidoCompra, codUsuario);
+        }
+        #endregion
     }
 }

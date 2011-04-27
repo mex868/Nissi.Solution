@@ -20,7 +20,7 @@ namespace Nissi.Model
 
         }
         public int CodEntradaEstoque{get; set;}
-        public FornecedorVO Fornecedor { get; set; }
+        public PessoaVO Fornecedor { get; set; }
         public PedidoCompraVO PedidoCompra { get; set; }
         public DateTime DataEmissao { get; set; }
         public DateTime DataEntrada { get; set; }

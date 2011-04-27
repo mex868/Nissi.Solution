@@ -90,12 +90,13 @@
                                 showpagedetails="True" 
                                 AllowPaging="True" 
                                 MultiSelection="True" 
-                                ShowHeaderCheckBoxColumn="false" 
-                                ShowOptionColumn="false" 
+                                ShowHeaderCheckBoxColumn="False" 
+                                ShowOptionColumn="False" 
                                 CssClass="alinhamento" 
                                 onpageindexchanging="grdListaResultado_PageIndexChanging" 
                                 onrowcommand="grdListaResultado_RowCommand" 
-                                onrowdatabound="grdListaResultado_RowDataBound" Width="95%">
+                                onrowdatabound="grdListaResultado_RowDataBound" Width="95%" 
+                                EnableModelValidation="True">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Ações">
                                         <itemtemplate>
@@ -125,6 +126,10 @@
                                          <HeaderStyle CssClass="headerGrid" />
                                         <ItemStyle HorizontalAlign="Left" Width="20%"  />
                                     </asp:BoundField>
+                                    <asp:ImageField DataImageUrlField="IMAGE" 
+                                        DataImageUrlFormatString="~/GeraImagem.aspx?Variavel_Cache=pdf" 
+                                        HeaderText="Teste">
+                                    </asp:ImageField>
                                 </Columns>
                             </cc1:RDCGrid>
                         </div>

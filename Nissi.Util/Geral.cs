@@ -36,5 +36,25 @@ namespace Nissi.Util
            }
         }
 
+        /// <summary>
+        /// Método geral para carregar DropDownList
+        /// </summary>
+        /// <param name="ddl">DropDownList passar por referência</param>
+        /// <param name="lista">Array com dados para carregar na DropDownList</param>
+        /// <param name="strDataValueField">campo do List que será o DataValueField da DropDownList</param>
+        /// <param name="strDataTextField">campo do List que será o DataTextField da DropDownList</param>
+        public static void CarregarSelectBox(ref Ext.Net.SelectBox ddl, Array lista, string strDataValueField, string strDataTextField)
+        {
+            if (lista.Length > 0)
+            {
+                var store = ddl.GetStore();
+                store.DataSource = lista;
+                ddl.ValueField = strDataValueField;
+                ddl.DisplayField = strDataTextField;
+                store.DataBind();
+                ddl.Items.Insert(0, new Ext.Net.ListItem("(Selecione)"));
+            }
+        }
+
     }
 }

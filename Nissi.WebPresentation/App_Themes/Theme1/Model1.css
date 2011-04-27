@@ -74,7 +74,7 @@ input[type=text],input[type=password], select {
 .x-toolbar
 {
 	TEXT-ALIGN: left;
-	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF);    
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF); 
 }
 
 .botao
@@ -103,6 +103,11 @@ input[type=text],input[type=password], select {
 	background-color: #f3f3f3;
 }
 
+.x-grid3-hd-inner{
+    font-family : Arial !important; 
+	font-size : 12px !important;   
+}
+
 .FundoLinha2 {
 	background-color: #e3e3e3;
 }
@@ -127,7 +132,7 @@ iframe.skm
     text-align : left; 
 	color :White;
 	background-image:url("../../Imagens/menufundo.jpg");
-    z-index:auto;
+    z-index:99999;
     font-family : Verdana; 
 	font-size       : 11px;
     font-weight : bold; 
@@ -172,7 +177,13 @@ iframe.skm
     font-family : Arial; 
 	font-size : 18px;
 }
-
+18px;
+	height:330px !important;
+}
+.dirty-row
+{
+    background: red;
+}
 .alinhamento
 {
 	border: 1px solid #000000;

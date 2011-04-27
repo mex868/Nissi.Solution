@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NISSI" Class="RepositorioDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=MAX-PC\SQLEXPRESS;Initial Catalog=NISSI;User ID=amaximiano" SettingsObjectName="Nissi.Repositorio.Properties.Settings" SettingsPropertyName="NissiDataBase" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MAX-PC\SQLEXPRESS;Initial Catalog=NISSI;User ID=amaximiano" SettingsObjectName="Nissi.Repositorio.Properties.Settings" SettingsPropertyName="NISSIConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ClasseTipo" Member="ClasseTipos">
     <Type Name="ClasseTipo">
       <Column Name="CodClasseTipo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -32,8 +32,8 @@
       <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Bitola_ResistenciaTracao" Member="ResistenciaTracaos" ThisKey="CodBitola" OtherKey="CodBitola" Type="ResistenciaTracao" />
-      <Association Name="Bitola_ItemPedidoCompra" Member="ItemPedidoCompras" ThisKey="CodBitola" OtherKey="CodBitola" Type="ItemPedidoCompra" />
       <Association Name="Bitola_ItemEntradaEstoque" Member="ItemEntradaEstoques" ThisKey="CodBitola" OtherKey="CodBitola" Type="ItemEntradaEstoque" />
+      <Association Name="Bitola_ProdutoNovo" Member="ProdutoNovos" ThisKey="CodBitola" OtherKey="CodBitola" Type="ProdutoNovo" />
     </Type>
   </Table>
   <Table Name="dbo.ResistenciaTracao" Member="ResistenciaTracaos">
@@ -63,8 +63,7 @@
       <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="MateriaPrima_ResistenciaTracao" Member="ResistenciaTracaos" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="ResistenciaTracao" />
       <Association Name="MateriaPrima_ComposicaoMateriaPrima" Member="ComposicaoMateriaPrimas" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="ComposicaoMateriaPrima" />
-      <Association Name="MateriaPrima_ItemPedidoCompra" Member="ItemPedidoCompras" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="ItemPedidoCompra" />
-      <Association Name="MateriaPrima_ItemEntradaEstoque" Member="ItemEntradaEstoques" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="ItemEntradaEstoque" />
+      <Association Name="MateriaPrima_ProdutoNovo" Member="ProdutoNovos" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="ProdutoNovo" />
       <Association Name="ClasseTipo_MateriaPrima" Member="ClasseTipo" ThisKey="CodClasseTipo" OtherKey="CodClasseTipo" Type="ClasseTipo" IsForeignKey="true" />
       <Association Name="Norma_MateriaPrima" Member="Norma" ThisKey="CodNorma" OtherKey="CodNorma" Type="Norma" IsForeignKey="true" />
     </Type>
@@ -269,28 +268,8 @@
       <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ItemPedidoCompra" Member="ItemPedidoCompras">
-    <Type Name="ItemPedidoCompra">
-      <Column Name="CodItemPedidoCompra" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CodPedidoCompra" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CodMateriaPrima" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Qtd" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
-      <Column Name="CodBitola" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
-      <Column Name="Valor" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
-      <Column Name="IPI" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
-      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CodUnidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="QtdEntrega" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="ResistenciaTracao" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
-      <Column Name="Especificacao" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Association Name="Bitola_ItemPedidoCompra" Member="Bitola" ThisKey="CodBitola" OtherKey="CodBitola" Type="Bitola" IsForeignKey="true" />
-      <Association Name="MateriaPrima_ItemPedidoCompra" Member="MateriaPrima" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="MateriaPrima" IsForeignKey="true" />
-      <Association Name="PedidoCompra_ItemPedidoCompra" Member="PedidoCompra" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="PedidoCompra" IsForeignKey="true" />
+      <Association Name="Unidade_Produto" Member="Produtos" ThisKey="CodUnidade" OtherKey="CodUnidade" Type="Produto" />
+      <Association Name="Unidade_ProdutoNovo" Member="ProdutoNovos" ThisKey="CodUnidade" OtherKey="CodUnidade" Type="ProdutoNovo" />
     </Type>
   </Table>
   <Table Name="dbo.ProdutoInsumo" Member="ProdutoInsumos">
@@ -323,8 +302,8 @@
       <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DataPrazoEntrega" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Tipo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="PedidoCompra_ItemPedidoCompra" Member="ItemPedidoCompras" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="ItemPedidoCompra" />
       <Association Name="PedidoCompra_EntradaEstoque" Member="EntradaEstoques" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="EntradaEstoque" />
+      <Association Name="PedidoCompra_ItemPedidoCompra" Member="ItemPedidoCompras" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="ItemPedidoCompra" />
       <Association Name="FormaPgto_PedidoCompra" Member="FormaPgto" ThisKey="CodFormaPgto" OtherKey="CodFormaPgto" Type="FormaPgto" IsForeignKey="true" />
     </Type>
   </Table>
@@ -368,6 +347,20 @@
       <Association Name="PedidoCompra_EntradaEstoque" Member="PedidoCompra" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="PedidoCompra" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Produto" Member="Produtos">
+    <Type Name="Produto">
+      <Column Name="CodProduto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="CodUnidade" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NCM" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Unidade_Produto" Member="Unidade" ThisKey="CodUnidade" OtherKey="CodUnidade" Type="Unidade" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.ItemEntradaEstoque" Member="ItemEntradaEstoques">
     <Type Name="ItemEntradaEstoque">
       <Column Name="CodItemEntradaEstoque" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -407,7 +400,184 @@
       <Column Name="IPI" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
       <Association Name="Bitola_ItemEntradaEstoque" Member="Bitola" ThisKey="CodBitola" OtherKey="CodBitola" Type="Bitola" IsForeignKey="true" />
       <Association Name="EntradaEstoque_ItemEntradaEstoque" Member="EntradaEstoque" ThisKey="CodEntradaEstoque" OtherKey="CodEntradaEstoque" Type="EntradaEstoque" IsForeignKey="true" />
-      <Association Name="MateriaPrima_ItemEntradaEstoque" Member="MateriaPrima" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="MateriaPrima" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AcabamentoXFichaTecnica" Member="AcabamentoXFichaTecnicas">
+    <Type Name="AcabamentoXFichaTecnica">
+      <Column Name="CodAcabamento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodFichaTecnica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodCaracteristica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Especificacao" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="FichaTecnica_AcabamentoXFichaTecnica" Member="FichaTecnica" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="FichaTecnica" IsForeignKey="true" />
+      <Association Name="Caracteristica_AcabamentoXFichaTecnica" Member="Caracteristica" ThisKey="CodCaracteristica" OtherKey="CodCaracteristica" Type="Caracteristica" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DadoTecnicoXFichaTecnica" Member="DadoTecnicoXFichaTecnicas">
+    <Type Name="DadoTecnicoXFichaTecnica">
+      <Column Name="CodDadoTecnico" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodFichaTecnica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodCaracteristica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nominal" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="Maximo" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="Minimo" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="FichaTecnica_DadoTecnicoXFichaTecnica" Member="FichaTecnica" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="FichaTecnica" IsForeignKey="true" />
+      <Association Name="Caracteristica_DadoTecnicoXFichaTecnica" Member="Caracteristica" ThisKey="CodCaracteristica" OtherKey="CodCaracteristica" Type="Caracteristica" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ControleProducao" Member="ControleProducaos">
+    <Type Name="ControleProducao">
+      <Column Name="CodControleProducao" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodFichaTecnica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrdemProducao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataControleProducao" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Quantidade" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="Peso" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="CodUnidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CodUsuarioResponsavel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="FichaTecnica_ControleProducao" Member="FichaTecnica" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="FichaTecnica" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FichaTecnica" Member="FichaTecnicas">
+    <Type Name="FichaTecnica">
+      <Column Name="CodFichaTecnica" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodProduto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sentido" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Mandril" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="NumeroDesenho" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="DataDesenho" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RevisaoDesenho" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DataFichaTecnica" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Desenvol" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="PesoUnit" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="PesoMilheiro" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="Embalagem" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="CodUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Observacao" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Desenho" Type="System.Data.Linq.Binary" DbType="VarBinary(1)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="FichaTecnica_AcabamentoXFichaTecnica" Member="AcabamentoXFichaTecnicas" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="AcabamentoXFichaTecnica" />
+      <Association Name="FichaTecnica_DadoTecnicoXFichaTecnica" Member="DadoTecnicoXFichaTecnicas" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="DadoTecnicoXFichaTecnica" />
+      <Association Name="FichaTecnica_ControleProducao" Member="ControleProducaos" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="ControleProducao" />
+      <Association Name="FichaTecnica_ProcessoXFichaTecnica" Member="ProcessoXFichaTecnicas" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="ProcessoXFichaTecnica" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Processo" Member="Processos">
+    <Type Name="Processo">
+      <Column Name="CodProcesso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Processo_ProcessoXFichaTecnica" Member="ProcessoXFichaTecnicas" ThisKey="CodProcesso" OtherKey="CodProcesso" Type="ProcessoXFichaTecnica" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessoXFichaTecnica" Member="ProcessoXFichaTecnicas">
+    <Type Name="ProcessoXFichaTecnica">
+      <Column Name="CodProcessoXFichaTecnica" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodFichaTecnica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodProcesso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ordem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FichaTecnica_ProcessoXFichaTecnica" Member="FichaTecnica" ThisKey="CodFichaTecnica" OtherKey="CodFichaTecnica" Type="FichaTecnica" IsForeignKey="true" />
+      <Association Name="Processo_ProcessoXFichaTecnica" Member="Processo" ThisKey="CodProcesso" OtherKey="CodProcesso" Type="Processo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoGancho" Member="TipoGanchos">
+    <Type Name="TipoGancho">
+      <Column Name="CodTipoGancho" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Desenho" Type="System.Data.Linq.Binary" DbType="VarBinary(1)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TipoGancho_ProdutoNovo" Member="ProdutoNovos" ThisKey="CodTipoGancho" OtherKey="CodTipoGancho" Type="ProdutoNovo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoMola" Member="TipoMolas">
+    <Type Name="TipoMola">
+      <Column Name="CodTipoMola" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Desenho" Type="System.Data.Linq.Binary" DbType="VarBinary(1)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TipoMola_ProdutoNovo" Member="ProdutoNovos" ThisKey="CodTipoMola" OtherKey="CodTipoMola" Type="ProdutoNovo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProdutoNovo" Member="ProdutoNovos">
+    <Type Name="ProdutoNovo">
+      <Column Name="CodProduto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ordem" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="CodCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodTipoMola" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodTipoGancho" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodMateriaPrima" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodUnidade" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodBitola" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mandril" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Sentido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Bitola_ProdutoNovo" Member="Bitola" ThisKey="CodBitola" OtherKey="CodBitola" Type="Bitola" IsForeignKey="true" />
+      <Association Name="MateriaPrima_ProdutoNovo" Member="MateriaPrima" ThisKey="CodMateriaPrima" OtherKey="CodMateriaPrima" Type="MateriaPrima" IsForeignKey="true" />
+      <Association Name="TipoMola_ProdutoNovo" Member="TipoMola" ThisKey="CodTipoMola" OtherKey="CodTipoMola" Type="TipoMola" IsForeignKey="true" />
+      <Association Name="TipoGancho_ProdutoNovo" Member="TipoGancho" ThisKey="CodTipoGancho" OtherKey="CodTipoGancho" Type="TipoGancho" IsForeignKey="true" />
+      <Association Name="Unidade_ProdutoNovo" Member="Unidade" ThisKey="CodUnidade" OtherKey="CodUnidade" Type="Unidade" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Caracteristica" Member="Caracteristicas">
+    <Type Name="Caracteristica">
+      <Column Name="CodCaracteristica" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descricao" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Caracteristica_AcabamentoXFichaTecnica" Member="AcabamentoXFichaTecnicas" ThisKey="CodCaracteristica" OtherKey="CodCaracteristica" Type="AcabamentoXFichaTecnica" />
+      <Association Name="Caracteristica_DadoTecnicoXFichaTecnica" Member="DadoTecnicoXFichaTecnicas" ThisKey="CodCaracteristica" OtherKey="CodCaracteristica" Type="DadoTecnicoXFichaTecnica" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ItemPedidoCompra" Member="ItemPedidoCompras">
+    <Type Name="ItemPedidoCompra">
+      <Column Name="CodItemPedidoCompra" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodPedidoCompra" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodMateriaPrima" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Qtd" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CodBitola" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Valor" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="IPI" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="DataCadastro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UsuarioInc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataAlteracao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UsuarioAlt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CodUnidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QtdEntrega" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ResistenciaTracao" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Especificacao" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="idStatus" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Association Name="PedidoCompra_ItemPedidoCompra" Member="PedidoCompra" ThisKey="CodPedidoCompra" OtherKey="CodPedidoCompra" Type="PedidoCompra" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -16,7 +16,7 @@ namespace Nissi.Repositorio
         #region Métodos de Listagem
         public List<BitolaVO> Listar()
         {
-            var query = from b in _repositorioDataContext.Bitolas
+            var query = (from b in _repositorioDataContext.Bitolas
                         select new BitolaVO()
                                    {
 
@@ -26,7 +26,7 @@ namespace Nissi.Repositorio
                                        DataAlteracao = b.DataAlteracao,
                                        UsuarioInc = b.UsuarioInc,
                                        UsuarioAlt = b.UsuarioAlt
-                                   };
+                                   }).OrderBy(b=>b.Bitola);
             var lstBitolaVo = new List<BitolaVO>();
             if (query.Count() > 0)
                 lstBitolaVo = query.ToList();

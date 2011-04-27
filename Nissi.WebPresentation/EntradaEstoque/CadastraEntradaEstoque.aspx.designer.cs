@@ -696,6 +696,15 @@ public partial class CadastraEntradaEstoque {
     protected global::System.Web.UI.WebControls.TextBox txtData;
     
     /// <summary>
+    /// ddlProduto control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.DropDownList ddlProduto;
+    
+    /// <summary>
     /// txtNorma control.
     /// </summary>
     /// <remarks>
@@ -874,6 +883,15 @@ public partial class CadastraEntradaEstoque {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.DropDownList ddlUnidade;
+    
+    /// <summary>
+    /// RequiredFieldValidator4 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
     
     /// <summary>
     /// txtIPI control.
@@ -1189,42 +1207,6 @@ public partial class CadastraEntradaEstoque {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.TextBox txtObservacaoItem;
-    
-    /// <summary>
-    /// upFileUp control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.FileUpload upFileUp;
-    
-    /// <summary>
-    /// lkbArquivoPdf control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.LinkButton lkbArquivoPdf;
-    
-    /// <summary>
-    /// btnCarregarCertificado control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.LinkButton btnCarregarCertificado;
-    
-    /// <summary>
-    /// btnLimparImagem control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.LinkButton btnLimparImagem;
     
     /// <summary>
     /// btnCancelarItem control.

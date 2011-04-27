@@ -570,6 +570,15 @@ public partial class CadastrarPedidoCompra {
     protected global::System.Web.UI.WebControls.Button btnAtualizarMateriaPrima;
     
     /// <summary>
+    /// btnAtualizarBitola control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btnAtualizarBitola;
+    
+    /// <summary>
     /// updProduto control.
     /// </summary>
     /// <remarks>
@@ -586,6 +595,15 @@ public partial class CadastrarPedidoCompra {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HiddenField hdfTipoAcaoItemPedidoCompra;
+    
+    /// <summary>
+    /// hdfShowItem control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField hdfShowItem;
     
     /// <summary>
     /// grdProduto control.
@@ -712,6 +730,15 @@ public partial class CadastrarPedidoCompra {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.HiddenField hdfTipoAcaoItemPedidoCompraInsumo;
+    
+    /// <summary>
+    /// hdfShowItemInsumo control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField hdfShowItemInsumo;
     
     /// <summary>
     /// grdProdutoInsumo control.

@@ -269,6 +269,7 @@ public partial class CadastrarPedidoCompra : BasePage
     private void LimparCamposItemPedidoCompra()
     {
         hdfTipoAcaoItemPedidoCompra.Value = "Incluir";
+        hdfShowItem.Value = "hiddenYes";
         hdfCodMateriaPrima.Value =
             hdfCodBitola.Value =
             txtNorma.Text =
@@ -288,7 +289,7 @@ public partial class CadastrarPedidoCompra : BasePage
     private void LimparCamposItemPedidoCompraInsumo()
     {
         hdfTipoAcaoItemPedidoCompraInsumo.Value = "Incluir";
-
+        hdfShowItemInsumo.Value = "hiddenYes";
         txtQtdInsumo.Text =
         ddlProdutoInsumo.Text =
         ddlUnidadeInsumo.Text =
@@ -590,7 +591,7 @@ public partial class CadastrarPedidoCompra : BasePage
         string norma = ddlMateriaPrima.SelectedItem.Text;
         decimal bitola = !string.IsNullOrEmpty(ddlBitola.SelectedItem.Text) ? decimal.Parse(ddlBitola.SelectedItem.Text) : 0;
         string unidade = ddlUnidade.SelectedItem.Text;
-        decimal resistenciaTracao = !string.IsNullOrEmpty(txtResistenciaTracao.Text) ? decimal.Parse(txtResistenciaTracao.Text) : 0;
+        string resistenciaTracao = txtResistenciaTracao.Text;
         string especificacao = txtEspecificacao.Text;
         decimal Ipi = !string.IsNullOrEmpty(txtIPI.Text) ? decimal.Parse(txtIPI.Text) : 0;
 
@@ -957,16 +958,33 @@ public partial class CadastrarPedidoCompra : BasePage
     {
         Geral.CarregarDDL(ref ddlMateriaPrima, new MateriaPrima().Listar().ToArray(), "CodMateriaPrima", "Descricao");
         Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
-        hdfTipoAcaoItemPedidoCompra.Value = "hiddenNo";
+        hdfShowItem.Value = "hiddenNo";
     }
 
     protected void btnAtualizarProdutoInsumo_Click(object sender, EventArgs e)
     {
         Geral.CarregarDDL(ref ddlUnidadeInsumo, new Unidade().Listar(new UnidadeVO()).ToArray(), "CodUnidade", "TipoUnidade");
         Geral.CarregarDDL(ref ddlProdutoInsumo, ProdutoInsumo.Listar().ToArray(), "CodProdutoInsumo", "Descricao");
-        hdfTipoAcaoItemPedidoCompraInsumo.Value = "hiddenNo";
+        hdfShowItemInsumo.Value = "hiddenNo";
     }
 
+    protected void btnAtualizarBitola_Click(object sender, EventArgs e)
+    {
+        Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
+        hdfShowItem.Value = "hiddenNo";
+    }
 
-
+    protected void ddlBitola_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ResistenciaTracaoVO resistenciaTracao = new ResistenciaTracaoVO();
+        if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue) && !string.IsNullOrEmpty(ddlBitola.SelectedValue))
+        {  resistenciaTracao = new MateriaPrima().ListarResistenciaTracao(int.Parse(ddlMateriaPrima.SelectedValue),
+                                                                               int.Parse(ddlBitola.SelectedValue));
+            if (resistenciaTracao.Minimo != 0)
+            {
+                txtResistenciaTracao.Text = resistenciaTracao.Minimo + " à " + resistenciaTracao.Maximo;
+            }
+        }
+        hdfShowItem.Value = "hiddenNo";
+    }
 }

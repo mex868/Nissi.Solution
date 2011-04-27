@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -53,7 +54,103 @@ namespace Nissi.WebPresentation.PedidoCompra
                 CarregarCombos();
                 Master.PosicionarFoco(txtPedidoCompra);
             }
+            //this.pnl2.CustomConfig.Add(new Ext.Net.ConfigItem("submitUrl", this.ResolveUrl("~/WebService.asmx/UploadFileAjax"), Ext.Net.ParameterMode.Value));
         }
+
+        #region Propriedades
+        private EntradaEstoqueVO DadosEntradaEstoque
+        {
+            get
+            {
+                EntradaEstoqueVO identEntradaEstoqueVo = new EntradaEstoqueVO();
+                //if (!string.IsNullOrEmpty(hdfCodEntradaEstoque.Value))
+                    //identEntradaEstoqueVo.CodEntradaEstoque = int.Parse(hdfCodEntradaEstoque.Value);
+                identEntradaEstoqueVo.PedidoCompra.CodPedidoCompra = int.Parse(hdfCodPedidoCompraItem.Value);
+                if (!string.IsNullOrEmpty(hdfCodFornecedor.Value))
+                    identEntradaEstoqueVo.Fornecedor.CodPessoa = int.Parse(hdfCodFornecedor.Value);
+                    //txtEntradaEstoque.Text = identEntradaEstoqueVo.CodEntradaEstoque.ToString().PadLeft(8, '0');
+                if (!string.IsNullOrEmpty(txtData.Text))
+                    identEntradaEstoqueVo.DataEntrada = Convert.ToDateTime(txtData.Text);
+                if (!string.IsNullOrEmpty(txtDataNotaFiscalItem.Text))
+                    identEntradaEstoqueVo.DataNotaFiscal = Convert.ToDateTime(txtDataNotaFiscalItem.Text);
+                if (!string.IsNullOrEmpty(txtNotaFiscalItem.Text))
+                    identEntradaEstoqueVo.NotaFiscal = txtNotaFiscalItem.Text;
+                identEntradaEstoqueVo.Itens = itemEntradaEstoqueVOs;
+                return identEntradaEstoqueVo;
+            }
+        }
+
+        private List<ItemEntradaEstoqueVO> itemEntradaEstoqueVOs
+        {
+            get
+            {
+                //será incluido no grid de ICMS manualmente (não incluirá no banco ainda)
+                //pois só deverá ser incluido no banco quando salvar o produto
+                List<ItemEntradaEstoqueVO> newlstItemEntradaEstoque = new List<ItemEntradaEstoqueVO>();
+                int codMateriaPrima = int.Parse(ddlMateriaPrimaItem.SelectedValue);
+                int codBitola = int.Parse(ddlBitolaItem.SelectedValue);
+                decimal qtde = !string.IsNullOrEmpty(txtQtde.Text) ? decimal.Parse(txtQtde.Text) : 0;
+                decimal qtdePedido = !string.IsNullOrEmpty(txtQtdePedidoCompra.Text) ? decimal.Parse(txtQtdePedidoCompra.Text) : 0;
+                decimal valor = !string.IsNullOrEmpty(txtValorUnit.Text) ? decimal.Parse(txtValorUnit.Text) : 0;
+                string norma = ddlMateriaPrimaItem.Text;
+                decimal bitola = !string.IsNullOrEmpty(ddlBitola.Text) ? decimal.Parse(ddlBitola.Text) : 0;
+                string unidade = ddlUnidade.Text;
+                string especificacao = txtEspecificacao.Text;
+                decimal Ipi = !string.IsNullOrEmpty(txtIPI.Text) ? decimal.Parse(txtIPI.Text) : 0;
+                //se for edição de ICMS, atualizar o list
+                if (hdfTipoAcaoItem.Value.Equals("IncluirItem"))
+                {
+                    /************************************************************************
+                    Se a ação for inclusão, simplesmente verifica se o ítem já foi cadastrado
+                    se já for, exibe mensagem e não inclui o ítem
+                    /***********************************************************************/
+
+                    //senão, incluir novo ítem no list
+                    ItemEntradaEstoqueVO lstItemEntradaEstoqueAux = new ItemEntradaEstoqueVO();
+                    lstItemEntradaEstoqueAux.Lote = !string.IsNullOrEmpty(txtLote.Text)? int.Parse(txtLote.Text): 0;
+                    lstItemEntradaEstoqueAux.Certificado = txtCertificado.Text;
+                    lstItemEntradaEstoqueAux.Corrida = txtCorrida.Text;
+                    lstItemEntradaEstoqueAux.MateriaPrimaVo.CodMateriaPrima = codMateriaPrima;
+                    lstItemEntradaEstoqueAux.MateriaPrimaVo.NormaVo.Descricao = norma;
+                    lstItemEntradaEstoqueAux.BitolaVo.CodBitola = codBitola;
+                    lstItemEntradaEstoqueAux.BitolaVo.Bitola = bitola;
+                    lstItemEntradaEstoqueAux.Qtd = qtde;
+                    lstItemEntradaEstoqueAux.QtdPedidoCompra = qtdePedido;
+                    lstItemEntradaEstoqueAux.UnidadeVo.CodUnidade = !string.IsNullOrEmpty(ddlUnidade.Text)?int.Parse(ddlUnidade.Text):0;
+                    lstItemEntradaEstoqueAux.UnidadeVo.TipoUnidade = unidade;
+                    lstItemEntradaEstoqueAux.Especificacao = especificacao;
+                    lstItemEntradaEstoqueAux.Ipi = Ipi;
+                    lstItemEntradaEstoqueAux.Valor = valor;
+                    lstItemEntradaEstoqueAux.C = !string.IsNullOrEmpty(txtC.Text) ? decimal.Parse(txtC.Text) : 0;
+                    lstItemEntradaEstoqueAux.Si = !string.IsNullOrEmpty(txtSi.Text) ? decimal.Parse(txtSi.Text) : 0;
+                    lstItemEntradaEstoqueAux.Mn = !string.IsNullOrEmpty(txtMn.Text) ? decimal.Parse(txtMn.Text) : 0;
+                    lstItemEntradaEstoqueAux.P = !string.IsNullOrEmpty(txtP.Text) ? decimal.Parse(txtP.Text) : 0;
+                    lstItemEntradaEstoqueAux.S = !string.IsNullOrEmpty(txtS.Text) ? decimal.Parse(txtS.Text) : 0;
+                    lstItemEntradaEstoqueAux.Cr = !string.IsNullOrEmpty(txtCr.Text) ? decimal.Parse(txtCr.Text) : 0;
+                    lstItemEntradaEstoqueAux.Ni = !string.IsNullOrEmpty(txtNi.Text) ? decimal.Parse(txtNi.Text) : 0;
+                    lstItemEntradaEstoqueAux.Mo = !string.IsNullOrEmpty(txtMo.Text) ? decimal.Parse(txtMo.Text) : 0;
+                    lstItemEntradaEstoqueAux.Cu = !string.IsNullOrEmpty(txtCu.Text) ? decimal.Parse(txtCu.Text) : 0;
+                    lstItemEntradaEstoqueAux.Ti = !string.IsNullOrEmpty(txtTi.Text) ? decimal.Parse(txtTi.Text) : 0;
+                    lstItemEntradaEstoqueAux.N2 = !string.IsNullOrEmpty(txtN2.Text) ? decimal.Parse(txtN2.Text) : 0;
+                    lstItemEntradaEstoqueAux.Co = !string.IsNullOrEmpty(txtCo.Text) ? decimal.Parse(txtCo.Text) : 0;
+                    lstItemEntradaEstoqueAux.Al = !string.IsNullOrEmpty(txtAl.Text) ? decimal.Parse(txtAl.Text) : 0;
+                    lstItemEntradaEstoqueAux.Resistencia = !string.IsNullOrEmpty(txtResistenciaTracao.Text) ? decimal.Parse(txtResistenciaTracao.Text) : 0;
+                    lstItemEntradaEstoqueAux.Dureza = !string.IsNullOrEmpty(txtDureza.Text) ? decimal.Parse(txtDureza.Text) : 0;
+                    lstItemEntradaEstoqueAux.Nota = !string.IsNullOrEmpty(txtNota.Text) ? decimal.Parse(txtNota.Text) : 0;
+                    lstItemEntradaEstoqueAux.CertificadoScanneado = NissiSession.ArquivoPdf;
+
+                    newlstItemEntradaEstoque.Add(lstItemEntradaEstoqueAux);
+                }
+                return newlstItemEntradaEstoque;
+            }
+        }
+        #endregion
+        protected void Cell_Click(object sender, DirectEventArgs e)
+        {
+            RowSelectionModel sm = this.grdListaResultado1.SelectionModel.Primary as RowSelectionModel;
+            if (sm != null) sm.BackColor = Color.Red;
+        }
+
         private void EscolherOpcao(string opcao)
         {
             string tvar = string.Empty;
@@ -94,8 +191,6 @@ namespace Nissi.WebPresentation.PedidoCompra
             int codPessoa;
             int codPedidoCompra;
             var itemPedidoCompraVos = new List<ListItemPedidoCompraVO>();
-            grdListaResultado.DataSource = null;
-            grdListaResultado.DataBind();
             grdListaResultado1.Hidden = true;
 
             if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value) && !hdfIdRazaoSocial.Equals("null"))
@@ -137,8 +232,6 @@ namespace Nissi.WebPresentation.PedidoCompra
 
             if (itemPedidoCompraVos.Count > 0)
             {
-                //grdListaResultado.DataSource = itemPedidoCompraVos;
-                //grdListaResultado.DataBind();
                 grdListaResultado1.Show();
                 StoreListaResultado.DataSource = itemPedidoCompraVos;
                 StoreListaResultado.DataBind();
@@ -151,140 +244,7 @@ namespace Nissi.WebPresentation.PedidoCompra
         }
 
         #endregion
-
-        #region Métodos do Grid
-        protected void grdListaResultado_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-
-        }
-
-        protected void grdListaResultado_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (!e.CommandName.Equals("Page"))
-            {
-                ItemPedidoCompraVO itemPedidoCompraVo = new ItemPedidoCompraVO();
-                string[] args = e.CommandArgument.ToString().Split('|');
-                itemPedidoCompraVo.PedidoCompraVo.CodPedidoCompra = int.Parse(args[0]);
-                switch (e.CommandName)
-                {
-                        //Modulo de Edicao
-                    case "Editar":
-                        if (rbPedidoCompra.Checked && !string.IsNullOrEmpty(txtPedidoCompra.Text))
-                        {
-                            hdfValor.Value = txtPedidoCompra.Text;
-                            hdfOpcao.Value = "PedidoCompra";
-                        }
-                        if (rbBitola.Checked && !string.IsNullOrEmpty(ddlBitola.SelectedValue))
-                        {
-                            hdfValor.Value = ddlBitola.SelectedValue;
-                            hdfOpcao.Value = "Bitola";
-                        }
-                        if (rbRazaoSocial.Checked && !string.IsNullOrEmpty(txtRazaoSocial.Text))
-                        {
-                            hdfValor.Value = txtRazaoSocial.Text;
-                            hdfOpcao.Value = "RazaoSocial";
-                        }
-                        if (rbClasseTipo.Checked && !string.IsNullOrEmpty(ddlClasseTipo.SelectedValue))
-                        {
-                            hdfValor.Value = ddlClasseTipo.SelectedValue;
-                            hdfOpcao.Value = "ClasseTipo";
-                        }
-                        Response.Redirect("CadastraPedidoCompra.aspx?acao=Editar&CodPedidoCompra=" +
-                                          itemPedidoCompraVo.PedidoCompraVo.CodPedidoCompra + "&tipo=" + args[1] +
-                                          "&valor=" + hdfValor.Value + "&opcao=" + hdfOpcao.Value);
-                        break;
-                        //Modulo de Excluir
-                    case "Excluir":
-                        new Business.PedidoCompra().Excluir(itemPedidoCompraVo.PedidoCompraVo.CodPedidoCompra);
-                        //Atualizar Lista
-                        Pesquisar();
-                        break;
-                        //Modulo de Imprimir
-                    case "Imprimir":
-                        break;
-                        //Modulo de Enviar
-                    case "Enviar":
-                        break;
-                }
-            }
-        }
         
-        protected void grdListaResultado_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                var itemPedidoCompraVo = (ListItemPedidoCompraVO)e.Row.DataItem;
-                e.Row.Cells[1].Text = itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8,'0');
-                e.Row.Cells[2].Text = itemPedidoCompraVo.DataEmissao.ToString("dd/MM/yyyy");
-                e.Row.Cells[3].Text = itemPedidoCompraVo.Fornecedor;
-                e.Row.Cells[4].Text = itemPedidoCompraVo.Bitola.ToString();
-                e.Row.Cells[5].Text = itemPedidoCompraVo.MateriaPrimaVo.Descricao;
-                e.Row.Cells[6].Text = itemPedidoCompraVo.Preco.ToString();
-                e.Row.Cells[7].Text = itemPedidoCompraVo.Ipi.ToString();
-                e.Row.Cells[8].Text = itemPedidoCompraVo.Qtde.ToString();
-                if (itemPedidoCompraVo.DataPrevista != null)
-                    e.Row.Cells[9].Text = itemPedidoCompraVo.DataPrevista.Value.ToString("dd/MM/yyyy");
-                e.Row.Cells[10].Text = itemPedidoCompraVo.QtdeEntregue.ToString();
-                e.Row.Cells[10].Attributes.Add("align", "right");
-                e.Row.Cells[11].Text = itemPedidoCompraVo.Saldo.ToString();
-                e.Row.Cells[11].Attributes.Add("align", "right");
-                switch (itemPedidoCompraVo.Situacao)
-                {
-                    case "Aberto":
-                        e.Row.Cells[12].CssClass = "verde";
-                        break;
-                    case "Atrasado":
-                        e.Row.Cells[12].CssClass = "vermelho";
-                        break;
-                    case "Entregue em Atraso":
-                        e.Row.Cells[12].CssClass = "vermelho";
-                        break;
-                }
-                e.Row.Cells[12].Text = itemPedidoCompraVo.Situacao;
-                e.Row.Cells[12].Attributes.Add("align", "right");
-                e.Row.Cells[13].CssClass = itemPedidoCompraVo.DiaEmAtraso < 0 ? "vermelho" : "verde";
-                e.Row.Cells[13].Text = itemPedidoCompraVo.DiaEmAtraso.ToString();
-                #region Botao Editar
-                ImageButton imgEditar = (ImageButton)e.Row.FindControl("imgEditar");
-                imgEditar.ImageUrl = caminhoAplicacao + @"Imagens\editar.png";
-                imgEditar.CommandArgument = itemPedidoCompraVo.OrdemCompra+"|"+itemPedidoCompraVo.Tipo;
-                imgEditar.CommandName = "Editar";
-                imgEditar.Style.Add("cursor", "hand");
-                imgEditar.ToolTip = "Editar dados do Pedido de Compra [" + itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8, '0') + "] - Fornecedor [" + itemPedidoCompraVo.Fornecedor.Trim() + "]";
-                #endregion
-                #region Botao Excluir
-                ImageButton imgExcluir = (ImageButton)e.Row.FindControl("imgExcluir");
-                imgExcluir.ImageUrl = caminhoAplicacao + @"Imagens\excluir.png";
-                imgExcluir.CommandArgument = itemPedidoCompraVo.OrdemCompra.ToString();
-                imgExcluir.Attributes["onclick"] = "return confirm('Confirmar cancelamento do Pedido de Compra [" + itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8, '0') + "] - Fornecedor [" + itemPedidoCompraVo.Fornecedor.Trim() + "]?');";
-
-                imgExcluir.CommandName = "Excluir";
-                imgExcluir.Style.Add("cursor", "hand");
-                imgExcluir.ToolTip = "Cancelar dados do Pedido de Compra [" + itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8, '0') + "] - Fornecedor [" + itemPedidoCompraVo.Fornecedor.Trim() + "]";
-                #endregion
-                #region Botao Imprimir
-                ImageButton imgImprimir = (ImageButton)e.Row.FindControl("imgImprimir");
-                imgImprimir.ImageUrl = caminhoAplicacao + @"Imagens\Imprimir.png";
-                imgImprimir.ToolTip = "Emissão de Pedido de Compra [" + itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8, '0') + "]";
-                imgImprimir.Attributes.Add("onclick", "ChamaPedidoCompra(" + itemPedidoCompraVo.OrdemCompra + ")");
-                imgImprimir.CommandArgument = itemPedidoCompraVo.OrdemCompra.ToString();
-                imgImprimir.CommandName = "Imprimir";
-                #endregion
-                #region Botao EnviarEmail
-                ImageButton imgEnviarEmail = (ImageButton)e.Row.FindControl("imgEnviarEmail");
-                imgEnviarEmail.ImageUrl = caminhoAplicacao + @"Imagens\Enviar.png";
-                imgEnviarEmail.ToolTip = "Enviar  Pedido de Compra por E-mail [" + itemPedidoCompraVo.OrdemCompra.ToString().PadLeft(8, '0') + "]";
-                imgEnviarEmail.Attributes.Add("onclick", "EnviarPedidoCompra(" + itemPedidoCompraVo.OrdemCompra + ","+itemPedidoCompraVo.CodPessoa+")");
-                imgEnviarEmail.CommandArgument = itemPedidoCompraVo.OrdemCompra.ToString();
-                imgEnviarEmail.CommandName = "Enviar";
-                #endregion
-                if (e.Row.RowState == DataControlRowState.Normal)
-                    e.Row.CssClass = "FundoLinha1";
-                else if (e.Row.RowState == DataControlRowState.Alternate)
-                    e.Row.CssClass = "FundoLinha2";
-            }
-        }
-        #endregion
         #region btnPesquisar_Click
         protected void btnPesquisar_Click(object sender, EventArgs e)
         {
@@ -311,11 +271,1083 @@ namespace Nissi.WebPresentation.PedidoCompra
         {
             Geral.CarregarDDL(ref ddlClasseTipo, new ClasseTipo().Listar().ToArray(), "CodClasseTipo", "Descricao");
             Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
+            Geral.CarregarDDL(ref ddlMateriaPrimaItem, new BS.MateriaPrima().Listar().ToArray() , "CodMateriaPrima", "Descricao");
+            Geral.CarregarDDL(ref ddlBitolaItem, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
+            Geral.CarregarDDL(ref ddlUnidade, new Unidade().Listar(new UnidadeVO()).ToArray(), "CodUnidade", "TipoUnidade");
         }
 
         protected void StoreListaResultado_RefreshData(object sender, Ext.Net.StoreRefreshDataEventArgs e)
         {
             Pesquisar();
-        }        
+        }
+
+        protected void btnIncluirItem_Click(object sender, EventArgs e)
+        {
+            CreateEntrada(TypePedido.Compra);
+            LimparCamposItemEntradaEstoque();
+            mpeIncluirItem.Hide();
+            ExecutarScript(updCadastroItem, new StringBuilder("onClickPesquisar();"));
+        }
+
+        private int CreateEntrada(TypePedido typePedido)
+        {
+            int codEntradaEstoque = 0;
+            switch (typePedido)
+            {
+                case TypePedido.Compra:
+                    codEntradaEstoque = new BS.EntradaEstoque().Incluir(DadosEntradaEstoque.Fornecedor.CodPessoa,
+                                                                 DadosEntradaEstoque.PedidoCompra.CodPedidoCompra,
+                                                                 DadosEntradaEstoque.DataNotaFiscal,
+                                                                 DadosEntradaEstoque.DataEntrada,
+                                                                 DadosEntradaEstoque.NotaFiscal,
+                                                                 UsuarioAtivo.CodFuncionario.Value,
+                                                                 DadosEntradaEstoque.Itens, typePedido);
+                    if (ckbFinalizarItem.Checked)
+                    {
+                        int codItemPedidoCompra = int.Parse(hdfCodItemPedidoCompra.Value);
+                        new BS.PedidoCompra().FinalizarItem(codItemPedidoCompra, UsuarioAtivo.CodFuncionario.Value);
+                    }
+                    break;
+                //case TypePedido.CompraInsumo:
+                //    codEntradaEstoque = new EntradaEstoque().Incluir(DadosEntradaEstoqueInsumo.Fornecedor.CodPessoa,
+                //                                                 DadosEntradaEstoqueInsumo.PedidoCompra.CodPedidoCompra,
+                //                                                 DadosEntradaEstoqueInsumo.DataNotaFiscal,
+                //                                                 DadosEntradaEstoqueInsumo.DataEntrada,
+                //                                                 DadosEntradaEstoqueInsumo.NotaFiscal,
+                //                                                 UsuarioAtivo.CodFuncionario.Value,
+                //                                                 DadosEntradaEstoqueInsumo.Itens, typePedido);
+                //    break;
+            }
+            return codEntradaEstoque;
+        }
+
+
+        protected void lkbArquivoPdf_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("GerarPDF.aspx?Variavel_Cache=PDF&lote="+hdfLote.Value);
+        }
+
+        private void LimparCamposItemEntradaEstoque()
+        {
+            hdfTipoAcaoItem.Value = "Incluir";
+            hdfCodMateriaPrima.Value =
+            hdfCodBitola.Value =
+            txtLote.Text =
+            txtCertificado.Text =
+            txtCorrida.Text =
+            ddlBitola.Text =
+            txtQtdePedidoCompra.Text =
+            txtQtde.Text =
+            txtValorUnit.Text =
+            txtC.Text =
+            txtSi.Text =
+            txtMn.Text =
+            txtP.Text =
+            txtS.Text =
+            txtCr.Text =
+            txtNi.Text =
+            txtMo.Text =
+            txtCu.Text =
+            txtTi.Text =
+            txtN2.Text =
+            txtCo.Text =
+            txtAl.Text =
+            txtResistenciaTracao.Text =
+            txtDureza.Text =
+            ddlBitolaItem.Text =
+            ddlMateriaPrimaItem.Text =
+            ddlUnidade.Text =
+            txtNotaFiscalItem.Text =
+            txtDataNotaFiscalItem.Text =
+            //hdfCodMateriaPrima.Text =
+            //hdfCodBitola.Text =
+            //txtUnidade.Text =
+            txtIPI.Text =
+            txtNota.Text = string.Empty;
+            lkbArquivoPdf.Text = "(Nenhum arquivo carregado)";
+            NissiSession.ArquivoPdf = new byte[0];
+            NissiSession.ComposicaoMateriaPrima = null;
+            NissiSession.ResistenciaTracao = null;
+        }
+
+        protected void ddlBitola_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(ddlBitola.SelectedValue))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(ddlBitola.SelectedItem.Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.BitolaMaxima && value < newlstComposicaoMateriaPrimaVo.BitolaMinima)
+                        {
+                            if (verificado == false)
+                            {
+                                mensagem = newlstComposicaoMateriaPrimaVo.BitolaMinima + " - " + newlstComposicaoMateriaPrimaVo.BitolaMaxima;
+                                verificado = true;
+                            }
+                        }
+                        else
+                        {
+                            if (value > newlstComposicaoMateriaPrimaVo.BitolaMaxima && verificado == false)
+                            {
+                                mensagem = newlstComposicaoMateriaPrimaVo.BitolaMinima + " - " + newlstComposicaoMateriaPrimaVo.BitolaMaxima;
+                            }
+                            else
+                            {
+                                verificado = true;
+                                mensagem = string.Empty;
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanBi.Attributes.Add("title", mensagem);
+                        spanBi.Style.Add("display", "inline");
+                        ddlBitola.BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanBi.Style.Add("display", "none");
+                        ddlBitola.BackColor = Color.White;
+                    }
+                }
+                if (!string.IsNullOrEmpty(ddlMateriaPrimaItem.SelectedValue))
+                {
+                    var resistenciaTracao = new ResistenciaTracaoVO();
+                    if (!string.IsNullOrEmpty(ddlMateriaPrimaItem.SelectedValue) && !string.IsNullOrEmpty(ddlBitolaItem.SelectedValue))
+                        resistenciaTracao =
+                            new BS.MateriaPrima().ListarResistenciaTracao(int.Parse(ddlMateriaPrimaItem.SelectedValue),
+                                                                       int.Parse(ddlBitola.SelectedValue));
+                    NissiSession.ResistenciaTracao = resistenciaTracao;
+                }
+            }
+        }
+
+        protected void txtAl_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.AlMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.AlMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.AlMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.AlMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.AlMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.AlMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.AlMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanAl.Attributes.Add("title", mensagem);
+                        spanAl.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanAl.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtC.Focus();
+        }
+
+
+        protected void txtC_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.CMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.CMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanC.Attributes.Add("title", mensagem);
+                        spanC.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanC.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtSi.Focus();
+        }
+
+        protected void txtSi_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.SiMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.SiMinimo)
+                            {
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.SiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.SiMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.SiMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.SiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.SiMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanSi.Attributes.Add("title", mensagem);
+                        spanSi.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanSi.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtMn.Focus();
+        }
+
+        protected void txtMn_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+
+                        if (0 != newlstComposicaoMateriaPrimaVo.MnMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.MnMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.MnMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.MnMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.MnMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.MnMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.MnMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanMn.Attributes.Add("title", mensagem);
+                        spanMn.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanMn.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtP.Focus();
+        }
+
+        protected void txtP_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.PMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.PMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.PMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.PMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.PMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.PMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.PMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanP.Attributes.Add("title", mensagem);
+                        spanP.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanP.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtS.Focus();
+        }
+
+        protected void txtS_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+
+                        if (0 != newlstComposicaoMateriaPrimaVo.SMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.SMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.SMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.SMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.SMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.SMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.SMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanS.Attributes.Add("title", mensagem);
+                        spanS.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanS.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtCr.Focus();
+        }
+
+        protected void txtCr_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.CrMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.CrMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CrMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CrMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CrMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CrMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CrMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanCr.Attributes.Add("title", mensagem);
+                        spanCr.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanCr.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtNi.Focus();
+        }
+
+        protected void txtNi_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+
+                        if (0 != newlstComposicaoMateriaPrimaVo.NiMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.NiMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.NiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.NiMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.NiMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.NiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.NiMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanNi.Attributes.Add("title", mensagem);
+                        spanNi.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanNi.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtMo.Focus();
+        }
+
+        protected void txtMo_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+
+                        if (0 != newlstComposicaoMateriaPrimaVo.MoMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.MoMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.MoMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.MoMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.MoMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.MoMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.MoMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanMo.Attributes.Add("title", mensagem);
+                        spanMo.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanMo.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtCu.Focus();
+        }
+
+        protected void txtCu_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.CuMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.CuMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CuMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CuMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CuMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CuMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CuMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanCu.Attributes.Add("title", mensagem);
+                        spanCu.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanCu.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtTi.Focus();
+        }
+
+        protected void txtTi_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.TiMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.TiMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.TiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.TiMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.TiMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.TiMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanTi.Attributes.Add("title", mensagem);
+                        spanTi.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanTi.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtN2.Focus();
+        }
+
+        protected void txtN2_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.N2Maximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.N2Minimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.N2Minimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.N2Maximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.N2Minimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.N2Maximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanN2.Attributes.Add("title", mensagem);
+                        spanN2.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanN2.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtCo.Focus();
+        }
+
+        protected void txtCo_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ComposicaoMateriaPrima != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    
+                    List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                    bool verificado = false;
+                    foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
+                    {
+                        if (0 != newlstComposicaoMateriaPrimaVo.CoMaximo)
+                        {
+                            if (value < newlstComposicaoMateriaPrimaVo.CoMinimo)
+                            {
+
+                                if (verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CoMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CoMaximo;
+                                    verificado = true;
+                                }
+                            }
+                            else
+                            {
+                                if (value > newlstComposicaoMateriaPrimaVo.CoMaximo && verificado == false)
+                                {
+                                    mensagem = newlstComposicaoMateriaPrimaVo.CoMinimo + " - " +
+                                               newlstComposicaoMateriaPrimaVo.CoMaximo;
+                                }
+                                else
+                                {
+                                    verificado = true;
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanCo.Attributes.Add("title", mensagem);
+                        spanCo.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanCo.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+                }
+            }
+            txtResistenciaTracao.Focus();
+        }
+
+        protected void txtResistenciaTracao_TextChanged(object sender, EventArgs e)
+        {
+            string mensagem = string.Empty;
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                if (NissiSession.ResistenciaTracao != null)
+                {
+                    value = decimal.Parse(((TextBox)sender).Text);
+                    //armazena em viewstate a linha selecionada para posterior atualização
+                    var resistenciaTracao = NissiSession.ResistenciaTracao;
+                    if (0 != resistenciaTracao.Maximo)
+                        {
+                            if (value < resistenciaTracao.Minimo)
+                            {
+
+                                    mensagem = resistenciaTracao.Minimo + " - " +
+                                               resistenciaTracao.Maximo;
+                            }
+                            else
+                            {
+                                if (value > resistenciaTracao.Maximo)
+                                {
+                                    mensagem = resistenciaTracao.Minimo + " - " +
+                                               resistenciaTracao.Maximo;
+                                }
+                                else
+                                {
+
+                                    mensagem = string.Empty;
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(mensagem))
+                    {
+                        spanRt.Attributes.Add("title", mensagem);
+                        spanRt.Style.Add("display", "inline");
+                        ((TextBox)sender).BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        spanRt.Style.Add("display", "none");
+                        ((TextBox)sender).BackColor = Color.White;
+                    }
+            }
+            txtDureza.Focus();
+        }
+
+        protected void ddlMateriaPrima_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var lstComposicaoMateriaPrima = new List<ComposicaoMateriaPrimaVO>();
+            if (!string.IsNullOrEmpty(ddlMateriaPrimaItem.SelectedValue))
+                lstComposicaoMateriaPrima = new BS.MateriaPrima().ListarComposicaoMateriaPrima(int.Parse(ddlMateriaPrimaItem.SelectedValue));
+            NissiSession.ComposicaoMateriaPrima = lstComposicaoMateriaPrima;
+        }
+
+        protected void btnCancelarItemHide_Click(object sender, EventArgs e)
+        {
+            int codItemPedidoCompra = int.Parse(hdfCodItemPedidoCompra.Value);
+            new BS.PedidoCompra().CancelarItem(codItemPedidoCompra, UsuarioAtivo.CodFuncionario.Value);
+            ExecutarScript(updBotoes, new StringBuilder("onClickPesquisar();"));
+        }
+
+        protected void btnFinalizar_Click(object sender, EventArgs e)
+        {
+            int codItemPedidoCompra = int.Parse(hdfCodItemPedidoCompra.Value);
+            new BS.PedidoCompra().FinalizarItem(codItemPedidoCompra, UsuarioAtivo.CodFuncionario.Value);
+            ExecutarScript(updBotoes, new StringBuilder("onClickPesquisar();"));
+        }
+
+        protected void btnDesfazer_Click(object sender, EventArgs e)
+        {
+            int codItemPedidoCompra = int.Parse(hdfCodItemPedidoCompra.Value);
+            new BS.PedidoCompra().Desfazer(codItemPedidoCompra, UsuarioAtivo.CodFuncionario.Value);
+            ExecutarScript(updBotoes, new StringBuilder("onClickPesquisar();"));
+        }
+
+        protected void btnCarregarValores_Click(object sender, EventArgs e)
+        {
+            var lstComposicaoMateriaPrima = new List<ComposicaoMateriaPrimaVO>();
+            if (!string.IsNullOrEmpty(ddlMateriaPrimaItem.SelectedValue))
+                lstComposicaoMateriaPrima =
+                    new BS.MateriaPrima().ListarComposicaoMateriaPrima(int.Parse(ddlMateriaPrimaItem.SelectedValue));
+            NissiSession.ComposicaoMateriaPrima = lstComposicaoMateriaPrima;
+            var resistenciaTracao = new ResistenciaTracaoVO();
+            if (!string.IsNullOrEmpty(ddlMateriaPrimaItem.SelectedValue) && !string.IsNullOrEmpty(ddlBitolaItem.SelectedValue))
+                resistenciaTracao =
+                    new BS.MateriaPrima().ListarResistenciaTracao(int.Parse(ddlMateriaPrimaItem.SelectedValue),
+                                                               int.Parse(ddlBitolaItem.SelectedValue));
+            NissiSession.ResistenciaTracao = resistenciaTracao;
+            txtCertificado.Focus();
+        }
+
+        protected void btnCarregaCertificado_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void RemoveFromCache(string id)
+        {
+            ResourceManager1.AddScript("removeFromCache({0});", JSON.Serialize(id));
+        }
+
+        private void AddToCache(string id)
+        {
+            ResourceManager1.AddScript("addToCache({0});", JSON.Serialize(id));
+        }
+
+        protected void BeforeExpand(object sender, DirectEventArgs e)
+        {
+            string id = e.ExtraParams["id"];
+
+            Store store = new Store {ID = "StoreRow_" + id};
+
+            JsonReader reader = new JsonReader();
+            reader.IDProperty = "ID";
+            reader.Fields.Add("ID", "Name");
+            store.Reader.Add(reader);
+
+            List<object> data = new List<object>();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                data.Add(new {ID = "P" + i, Name = "Lote " + i});
+            }
+
+            store.DataSource = data;
+
+            this.RemoveFromCache(store.ID);
+            store.Render();
+            this.AddToCache(store.ID);
+
+            GridPanel grid = new GridPanel
+                                 {
+                                     ID = "GridPanelRow_" + id,
+                                     StoreID = "{raw}StoreRow_" + id,
+                                     Height = 200
+                                 };
+
+            grid.ColumnModel.Columns.Add(new Column
+                                             {
+                                                 Header = "Products's Name",
+                                                 DataIndex = "Name"
+                                             });
+            grid.ColumnModel.ID = "GridPanelRowCM_" + id;
+
+            grid.ColumnModel.Columns.Add(new Column
+            {
+                Header = "Products's Name",
+                DataIndex = "Name"
+            });
+
+            grid.View.Add(new Ext.Net.GridView {ID = "GridPanelRowView_" + id, ForceFit = true});
+
+            //important
+            X.Get("row-" + id).SwallowEvent(new string[] {"click", "mousedown", "mouseup", "dblclick"}, true);
+
+            this.RemoveFromCache(grid.ID);
+            grid.Render("row-" + id, RenderMode.RenderTo);
+            this.AddToCache(grid.ID);
+        }
     }
 }
