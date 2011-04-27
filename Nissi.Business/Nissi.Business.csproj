@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Banco.cs" />
     <Compile Include="Bitola.cs" />
+    <Compile Include="Caracteristica.cs" />
     <Compile Include="Cargo.cs" />
     <Compile Include="CEP.cs" />
     <Compile Include="CFOP.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="PedidoCompra.cs" />
     <Compile Include="PerfilAcesso.cs" />
     <Compile Include="PrazoEntrega.cs" />
+    <Compile Include="Processo.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="ProdutoInsumo.cs" />
     <Compile Include="ProdutoNF.cs" />

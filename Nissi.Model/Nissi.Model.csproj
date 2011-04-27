@@ -79,6 +79,7 @@
     <Compile Include="BairroVO.cs" />
     <Compile Include="BancoVO.cs" />
     <Compile Include="BitolaVO.cs" />
+    <Compile Include="CaracteristicaVO.cs" />
     <Compile Include="CargoVO.cs" />
     <Compile Include="CEPVO.cs" />
     <Compile Include="CFOPVO.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="PerfilAcessoVO.cs" />
     <Compile Include="PessoaVO.cs" />
     <Compile Include="PrazoEntregaVO.cs" />
+    <Compile Include="ProcessoVO.cs" />
     <Compile Include="ProdutoInsumoVO.cs" />
     <Compile Include="ProdutoNFVO.cs" />
     <Compile Include="ProdutoVO.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="SubMenuVO.cs" />
     <Compile Include="TipoFornecimentoVO.cs" />
     <Compile Include="TipoLogradouroVO.cs" />
+    <Compile Include="TipoMolaVO.cs" />
     <Compile Include="TransportadoraVO.cs" />
     <Compile Include="TypePedido.cs" />
     <Compile Include="UnidadeFederacaoVO.cs" />

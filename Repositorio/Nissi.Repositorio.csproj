@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitolaRepositorio.cs" />
+    <Compile Include="CaracteristicaRepositorio.cs" />
     <Compile Include="ClasseTipoRepositorio.cs" />
     <Compile Include="ComposicaoMateriaPrimaRepositorio.cs" />
     <Compile Include="EmailEmitenteRepositorio.cs" />
@@ -52,12 +53,15 @@
     <Compile Include="Factory\ProdutoProdutoInsumo.cs" />
     <Compile Include="FormaPgtoRepositorio.cs" />
     <Compile Include="FornecedorRepositorio.cs" />
+    <Compile Include="ICaracteristica.cs" />
+    <Compile Include="IProcesso.cs" />
     <Compile Include="ItemEntradaEstoqueRepositorio.cs" />
     <Compile Include="ItemPedidoCompraRepositorio.cs" />
     <Compile Include="MateriaPrimaRepositorio.cs" />
     <Compile Include="NormaRepositorio.cs" />
     <Compile Include="PedidoCompraRepositorio.cs" />
     <Compile Include="PrazoEntregaRepositorio.cs" />
+    <Compile Include="ProcessoRepositorio.cs" />
     <Compile Include="ProdutoInsumoRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -85,6 +89,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Repositorio.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>

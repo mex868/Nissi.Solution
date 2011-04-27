@@ -125,7 +125,6 @@
             var txtCorrida = $get("<%=txtCorrida.ClientID %>");
             var rbCertificado = $get("<%=rbCertificado.ClientID %>");
             var txtCertificado = $get("<%=txtCertificado.ClientID %>");
-            var txtCertificado = $get("<%=txtCertificado.ClientID %>");
             var hdfValor = $get("<%=hdfValor.ClientID %>");
             var hdfOpcao = $get("<%=hdfOpcao.ClientID %>");
             if (rbEntradaEstoque.checked && txtEntradaEstoque.value != "") {
@@ -166,16 +165,29 @@
         }
 
         //--------------------------------------------------------------------------------
+        //Criado por...: Alexandre Maximiano - 12/09/2010
+        //Objetivo.....: Visualizar Certificado Cadastrado
+        //--------------------------------------------------------------------------------
+        function ChamaVisualizarCertificado(lote) {
+            //WaitAsyncPostBack(true);
+            //WaitAsyncPostBack(false);
+            lkbArquivoPdf = $get("<%=lkbArquivoPdf.ClientID %>");
+            hdfLote = $get("<%=hdfLote.ClientID %>");
+            hdfLote.value = lote;
+            lkbArquivoPdf.click();
+        }
+
+        //--------------------------------------------------------------------------------
         //Criado por...:Alexandre Maximiano - 04/11/2010
         //Objetivo.....: Efetua consulta com o retorno do autocomplete
         //--------------------------------------------------------------------------------
         function CarregarValores(source, eventArgs) {
             $get('<%=hdfIdRazaoSocial.ClientID%>').value = eventArgs.get_value();
             $get('<%=txtRazaoSocial.ClientID %>').value = eventArgs._item.outerText;
-            $get('<%=btnPesquisar.ClientID%>').click();
+            $get('<%=btnPesquisarExt.ClientID%>').click();
         }
         function BuscaDados() {
-            $get('<%=btnPesquisar.ClientID%>').click();
+            $get('<%=btnPesquisarExt.ClientID%>').click();
         }
         //--------------------------------------------------------------------------------
         //Criado por...: Alexandre Maximiano - 02/11/2009
@@ -185,7 +197,7 @@
             if (event.keyCode == 13) {
                 event.returnValue = false;
                 event.cancel = true;
-                $get('<%=btnPesquisar.ClientID%>').click();
+                $get('<%=btnPesquisarExt.ClientID%>').click();
             }
         }
         var template = '<span style="color:{0};">{1}</span>';
@@ -211,6 +223,9 @@ function (btn) {
             if (command == "Editar") {
                 ChamaEntradaEstoque(record.data.CodEntradaEstoque, record.data.Tipo);
             }
+            if (command == "Certificado") {
+                ChamaVisualizarCertificado(record.data.Lote);
+            }
         }
         var beforedelete = function (ar) {
             var args = arguments;
@@ -223,7 +238,7 @@ function (btn) {
                 <asp:Image ID="ImgCadastro" runat="server" ImageUrl="~/Imagens/layout.png" />
             </td>
             <td style="width: 95%; text-align: left" class="titulo">
-                Cadastro de Entrada de Estoque
+                Cadastro de Entrada de Mão de Obra
             </td>
         </tr>
     </table>
@@ -305,7 +320,7 @@ function (btn) {
             </td>
 
         </tr>
-        <tr>
+        <tr style="display:none">
             <td style="text-align: left" colspan="3">
                 <asp:Button ID="btnVoltar" runat="server" OnClick="btnVoltar_Click" CssClass="botao"
                     Text="Voltar" Width="100px" UseSubmitBehavior="False" />
@@ -314,11 +329,16 @@ function (btn) {
                 <asp:UpdatePanel ID="updBotoes" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:HiddenField ID="hdfIdRazaoSocial" runat="server" />
+                        <asp:HiddenField ID="hdfLote" runat="server" />
+                        <asp:LinkButton ID="lkbArquivoPdf" runat="server" onclick="lkbArquivoPdf_Click"> (Nenhuma arquivo carregada)</asp:LinkButton>
                         <asp:Button ID="btnPesquisar" OnClientClick="return ValidaCampos()" runat="server"
                             ValidationGroup="pesquisar" CssClass="botao" Text="Pesquisar" Width="100px" OnClick="btnPesquisar_Click" />
                         &nbsp;<asp:Button ID="btnIncluir" runat="server" CssClass="botao" Width="100px" Text="Incluir Novo"
                             OnClick="btnIncluir_Click" />
                     </ContentTemplate>
+                    <Triggers>
+                        <asp:PostBackTrigger ControlID="lkbArquivoPdf" />
+                    </Triggers>
                 </asp:UpdatePanel>
             </td>
         </tr>
@@ -365,7 +385,7 @@ function (btn) {
                             <ItemStyle HorizontalAlign="Left" Width="25%" />
                             <HeaderStyle CssClass="headerGrid" />
                         </asp:BoundField>
-                        <asp:BoundField HeaderText="Matéria Prima">             
+                        <asp:BoundField HeaderText="Produto">             
                             <HeaderStyle CssClass="headerGrid" />
                            <ItemStyle HorizontalAlign="Left" Width="30%" />
                         </asp:BoundField>
@@ -418,14 +438,14 @@ function (btn) {
                             <ext:GridPanel ID="grdListaResultado1" runat="server" 
                             StoreID="StoreListaResultado"
                             StripeRows="true"
-                            Title="Lista de Entrada de Estoque"
+                            Title="Lista de Entrada de Mão de Obra"
                             AutoExpandColumn="CodEntradaEstoque" 
                             Collapsible="true" 
                             EnableColumnMove="true"
                             Height="350" ColumnLines="True" CtCls="GridLayout">
                            <ColumnModel ID="ColumnModel1" runat="server">
 		                    <Columns>
-                                <ext:CommandColumn Width="60" Header="Ações">
+                                <ext:CommandColumn Width="85" Header="Ações">
                                     <Commands>
                                         <ext:GridCommand Icon="NoteEdit" CommandName="Editar">
                                             <ToolTip Text="Editar dados da Entrada de Estoque" />
@@ -434,19 +454,23 @@ function (btn) {
                                          <ext:GridCommand Icon="Delete" CommandName="Excluir">
                                             <ToolTip Text="Cancelar dados da Entrada de Estoque" />
                                         </ext:GridCommand>
+                                         <ext:CommandSeparator />
+                                        <ext:GridCommand Icon="Note" CommandName="Certificado">
+                                            <ToolTip Text="Visualizar Certificado" />
+                                        </ext:GridCommand>
                                     </Commands>
                                 </ext:CommandColumn>
                                 <ext:Column ColumnId="CodEntradaEstoque" Align="Right"  Header="CodEntradaEstoque" DataIndex="CodEntradaEstoque" Hidden="true" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="CodPessoa" Align="Right"  Header="CodPessoa" DataIndex="CodPessoa" Hidden="true" Css="font-family : Arial; 	font-size : 16px;" />
                                 <ext:Column ColumnId="Tipo" Align="Right"  Header="Tipo" DataIndex="Tipo" Hidden="true" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:Column ColumnId="Lote" Header="Lote" Align="Right"   Width="80" DataIndex="Lote" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:Column ColumnId="Corrida" Header="Corrida" Align="Right"   Width="80" DataIndex="Corrida" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:Column ColumnId="Certificado" Header="Certificado" Align="Right"   Width="80" DataIndex="Certificado" Hidden="False" Css="font-family : Arial; 	font-size : 16px;"/>
-                                <ext:Column ColumnId="Fornecedor" Header="Fornecedor"  Width="276" DataIndex="Fornecedor" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                               <ext:Column ColumnId="Descricao" Header="Material/Produto"   Width="208" DataIndex="Descricao" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:Column ColumnId="Unidade"  Header="Unidade"  Width="72" DataIndex="Unidade" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:Column ColumnId="Qtd" Align="Right"  Header="Qtde"  Width="60" DataIndex="Qtd" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" />
-                                <ext:DateColumn ColumnId="Entregue" Format="dd/MM/yyyy" Header="Entregue" Width="90" DataIndex="Entregue" Hidden="False" Css="font-family : Arial; 	font-size : 16px;" RightCommandAlign="True" />
+                                <ext:Column ColumnId="Lote" Header="Lote" Align="Right"   Width="80" DataIndex="Lote" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-left:1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                                <ext:Column ColumnId="Corrida" Header="Corrida" Align="Right"   Width="80" DataIndex="Corrida" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                                <ext:Column ColumnId="Certificado" Header="Certificado" Align="Right"   Width="80" DataIndex="Certificado" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"/>
+                                <ext:Column ColumnId="Fornecedor" Header="Fornecedor"  Width="276" DataIndex="Fornecedor" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                               <ext:Column ColumnId="Descricao" Header="Material/Produto"   Width="208" DataIndex="Descricao" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                                <ext:Column ColumnId="Unidade"  Header="Unidade"  Width="72" DataIndex="Unidade" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                                <ext:Column ColumnId="Qtd" Align="Right"  Header="Qtde"  Width="60" DataIndex="Qtd" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" />
+                                <ext:DateColumn ColumnId="Entregue" Format="dd/MM/yyyy" Header="Entregue" Width="90" DataIndex="Entregue" Hidden="False" Css="font-family : Arial; 	font-size : 16px; border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" RightCommandAlign="True" />
                             </Columns>
                             </ColumnModel>
                             <Listeners>

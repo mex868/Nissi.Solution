@@ -6,6 +6,7 @@
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
 <<<<<<< HEAD
+<<<<<<< HEAD
   &lt;ConnectionString&gt;Data Source=MAX-PC\SQLEXPRESS;Initial Catalog=NISSI;User ID=amaximiano;Password=Drica250479&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
@@ -16,6 +17,12 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=nissi-server\sqlexpress;Initial Catalog=NISSI;User ID=sa;Password=Nissi@2009</Value>
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+  &lt;ConnectionString&gt;Data Source=max-pc\sqlexpress;Initial Catalog=NISSI;User ID=sa;Password=Nissi@2009&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=max-pc\sqlexpress;Initial Catalog=NISSI;User ID=sa;Password=Nissi@2009</Value>
+>>>>>>> local
     </Setting>
   </Settings>
 </SettingsFile>

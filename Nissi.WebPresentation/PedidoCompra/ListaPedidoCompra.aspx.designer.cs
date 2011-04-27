@@ -193,6 +193,33 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::System.Web.UI.WebControls.HiddenField hdfIdRazaoSocial;
         
         /// <summary>
+        /// hdfCodItemPedidoCompra control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodItemPedidoCompra;
+        
+        /// <summary>
+        /// hdfLote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfLote;
+        
+        /// <summary>
+        /// lkbArquivoPdf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lkbArquivoPdf;
+        
+        /// <summary>
         /// btnPesquisar control.
         /// </summary>
         /// <remarks>
@@ -211,6 +238,42 @@ namespace Nissi.WebPresentation.PedidoCompra {
         protected global::System.Web.UI.WebControls.Button btnIncluir;
         
         /// <summary>
+        /// btnCancelarItemHide control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelarItemHide;
+        
+        /// <summary>
+        /// btnFinalizar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFinalizar;
+        
+        /// <summary>
+        /// btnDesfazer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDesfazer;
+        
+        /// <summary>
+        /// btnCarregarValores control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCarregarValores;
+        
+        /// <summary>
         /// udpListaResultado control.
         /// </summary>
         /// <remarks>
@@ -218,15 +281,6 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel udpListaResultado;
-        
-        /// <summary>
-        /// grdListaResultado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::RDC.Tools.RDCGrid grdListaResultado;
         
         /// <summary>
         /// ResourceManager1 control.
@@ -245,6 +299,15 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Ext.Net.Store StoreListaResultado;
+        
+        /// <summary>
+        /// FormatType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.Hidden FormatType;
         
         /// <summary>
         /// Panel1 control.
@@ -293,17 +356,63 @@ namespace Nissi.WebPresentation.PedidoCompra {
         
         /// <summary>
 <<<<<<< HEAD
+<<<<<<< HEAD
         /// btnNovoItem control.
+=======
+        /// btnImprimir control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.Button btnNovoItem;
         
         /// <summary>
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+        protected global::Ext.Net.Button btnImprimir;
+        
+        /// <summary>
+        /// btnEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.Button btnEmail;
+        
+        /// <summary>
+        /// btnDbCancelarItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.Button btnDbCancelarItem;
+        
+        /// <summary>
+        /// btnFinalizarItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.Button btnFinalizarItem;
+        
+        /// <summary>
+        /// btnDesfazerItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.Button btnDesfazerItem;
+        
+        /// <summary>
+>>>>>>> local
         /// grdListaResultado1 control.
         /// </summary>
         /// <remarks>
@@ -311,6 +420,15 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Ext.Net.GridPanel grdListaResultado1;
+        
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Ext.Net.GridView GridView1;
         
         /// <summary>
         /// hdfCodPedidoCompra control.
@@ -341,121 +459,47 @@ namespace Nissi.WebPresentation.PedidoCompra {
         
         /// <summary>
 <<<<<<< HEAD
+<<<<<<< HEAD
         /// Window1 control.
+=======
+        /// hdfTargetIncluirItem control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.Window Window1;
+=======
+        protected global::System.Web.UI.WebControls.HiddenField hdfTargetIncluirItem;
         
         /// <summary>
-        /// hdfTipoAcaoItem control.
+        /// mpeIncluirItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Ext.Net.Hidden hdfTipoAcaoItem;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeIncluirItem;
         
         /// <summary>
-        /// hdfCodMateriaPrima control.
+        /// pnlIncluirItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Ext.Net.Hidden hdfCodMateriaPrima;
+        protected global::System.Web.UI.WebControls.Panel pnlIncluirItem;
         
         /// <summary>
-        /// hdfCodBitola control.
+        /// updCadastroItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Ext.Net.Hidden hdfCodBitola;
-        
-        /// <summary>
-        /// txtLote control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.TextField txtLote;
-        
-        /// <summary>
-        /// txtData control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.TextField txtData;
-        
-        /// <summary>
-        /// txtNorma control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.TextField txtNorma;
-        
-        /// <summary>
-        /// RequiredFieldValidator5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
-        
-        /// <summary>
-        /// txtBitola control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.TextField txtBitola;
-        
-        /// <summary>
-        /// RequiredFieldValidator6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
-        
-        /// <summary>
-        /// spanBi control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanBi;
-        
-        /// <summary>
-        /// hdfCodFornecedor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.Hidden hdfCodFornecedor;
-        
-        /// <summary>
-        /// txtPedidoCompraItem control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Ext.Net.TextField txtPedidoCompraItem;
+        protected global::System.Web.UI.UpdatePanel updCadastroItem;
         
         /// <summary>
         /// hdfCodPedidoCompraItem control.
@@ -464,43 +508,280 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodPedidoCompraItem;
+>>>>>>> local
+        
+        /// <summary>
+        /// hdfTipoAcaoItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.Hidden hdfTipoAcaoItem;
+=======
+        protected global::System.Web.UI.WebControls.HiddenField hdfTipoAcaoItem;
+        
+        /// <summary>
+        /// hdfCodFornecedor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodFornecedor;
+        
+        /// <summary>
+        /// hdfCodUnidade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodUnidade;
+>>>>>>> local
+        
+        /// <summary>
+        /// hdfCodMateriaPrima control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.Hidden hdfCodMateriaPrima;
+=======
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodMateriaPrima;
+>>>>>>> local
+        
+        /// <summary>
+        /// hdfCodBitola control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.Hidden hdfCodBitola;
+=======
+        protected global::System.Web.UI.WebControls.HiddenField hdfCodBitola;
+>>>>>>> local
+        
+        /// <summary>
+        /// txtLote control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.TextField txtLote;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtLote;
+>>>>>>> local
+        
+        /// <summary>
+        /// txtData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.TextField txtData;
+        
+        /// <summary>
+        /// txtNorma control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtData;
+        
+        /// <summary>
+        /// MaskedEditExtenderFromDate control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.TextField txtNorma;
+        
+        /// <summary>
+        /// RequiredFieldValidator5 control.
+=======
+        protected global::AjaxControlToolkit.MaskedEditExtender MaskedEditExtenderFromDate;
+        
+        /// <summary>
+        /// ddlMateriaPrimaItem control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+        
+        /// <summary>
+        /// txtBitola control.
+=======
+        protected global::System.Web.UI.WebControls.DropDownList ddlMateriaPrimaItem;
+        
+        /// <summary>
+        /// RequiredFieldValidator5 control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.TextField txtBitola;
+        
+        /// <summary>
+        /// RequiredFieldValidator6 control.
+=======
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+        
+        /// <summary>
+        /// ddlBitolaItem control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+        
+        /// <summary>
+        /// spanBi control.
+=======
+        protected global::System.Web.UI.WebControls.DropDownList ddlBitolaItem;
+        
+        /// <summary>
+        /// RequiredFieldValidator6 control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanBi;
+        
+        /// <summary>
+        /// hdfCodFornecedor control.
+=======
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+        
+        /// <summary>
+        /// spanBi control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.Hidden hdfCodFornecedor;
+=======
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanBi;
+>>>>>>> local
+        
+        /// <summary>
+        /// txtPedidoCompraItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
+        protected global::Ext.Net.TextField txtPedidoCompraItem;
+        
+        /// <summary>
+        /// hdfCodPedidoCompraItem control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtPedidoCompraItem;
+        
+        /// <summary>
+        /// txtFornecedor control.
+>>>>>>> local
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.Hidden hdfCodPedidoCompraItem;
         
         /// <summary>
         /// txtFornecedor control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtFornecedor;
+        
+        /// <summary>
+        /// txtCertificado control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtFornecedor;
         
         /// <summary>
         /// txtCertificado control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtCertificado;
+        
+        /// <summary>
+        /// txtNotaFiscalItem control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtCertificado;
         
         /// <summary>
         /// txtNotaFiscalItem control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtNotaFiscalItem;
+        
+        /// <summary>
+        /// txtDataNotaFiscalItem control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtNotaFiscalItem;
         
         /// <summary>
         /// txtDataNotaFiscalItem control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtDataNotaFiscalItem;
+        
+        /// <summary>
+        /// MaskedEditExtender1 control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtDataNotaFiscalItem;
+=======
+        protected global::AjaxControlToolkit.MaskedEditExtender MaskedEditExtender1;
+>>>>>>> local
         
         /// <summary>
         /// txtEspecificacao control.
@@ -509,7 +790,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtEspecificacao;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtEspecificacao;
+>>>>>>> local
         
         /// <summary>
         /// txtCorrida control.
@@ -518,7 +803,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtCorrida;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtCorrida;
+>>>>>>> local
         
         /// <summary>
         /// txtQtdePedidoCompra control.
@@ -527,7 +816,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtQtdePedidoCompra;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtQtdePedidoCompra;
+>>>>>>> local
         
         /// <summary>
         /// txtQtde control.
@@ -536,7 +829,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtQtde;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtQtde;
+>>>>>>> local
         
         /// <summary>
         /// RequiredFieldValidator13 control.
@@ -554,7 +851,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.SelectBox ddlUnidade;
+=======
+        protected global::System.Web.UI.WebControls.DropDownList ddlUnidade;
+>>>>>>> local
         
         /// <summary>
         /// txtIPI control.
@@ -563,7 +864,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtIPI;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtIPI;
+>>>>>>> local
         
         /// <summary>
         /// txtValorUnit control.
@@ -572,7 +877,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtValorUnit;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtValorUnit;
+>>>>>>> local
         
         /// <summary>
         /// RequiredFieldValidator15 control.
@@ -590,7 +899,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtAl;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtAl;
+>>>>>>> local
         
         /// <summary>
         /// spanAl control.
@@ -608,7 +921,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtC;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtC;
+>>>>>>> local
         
         /// <summary>
         /// spanC control.
@@ -626,7 +943,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtSi;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtSi;
+>>>>>>> local
         
         /// <summary>
         /// spanSi control.
@@ -644,7 +965,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtMn;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtMn;
+>>>>>>> local
         
         /// <summary>
         /// spanMn control.
@@ -662,7 +987,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtP;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtP;
+>>>>>>> local
         
         /// <summary>
         /// spanP control.
@@ -680,7 +1009,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtS;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtS;
+>>>>>>> local
         
         /// <summary>
         /// spanS control.
@@ -698,7 +1031,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtCr;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtCr;
+>>>>>>> local
         
         /// <summary>
         /// spanCr control.
@@ -716,7 +1053,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtNi;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtNi;
+>>>>>>> local
         
         /// <summary>
         /// spanNi control.
@@ -734,7 +1075,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtMo;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtMo;
+>>>>>>> local
         
         /// <summary>
         /// spanMo control.
@@ -752,7 +1097,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtCu;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtCu;
+>>>>>>> local
         
         /// <summary>
         /// spanCu control.
@@ -770,7 +1119,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtTi;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtTi;
+>>>>>>> local
         
         /// <summary>
         /// spanTi control.
@@ -788,7 +1141,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtN2;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtN2;
+>>>>>>> local
         
         /// <summary>
         /// spanN2 control.
@@ -806,7 +1163,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtCo;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtCo;
+>>>>>>> local
         
         /// <summary>
         /// spanCo control.
@@ -824,7 +1185,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtResistenciaTracao;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtResistenciaTracao;
+>>>>>>> local
         
         /// <summary>
         /// spanRt control.
@@ -842,7 +1207,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtDureza;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtDureza;
+>>>>>>> local
         
         /// <summary>
         /// txtNota control.
@@ -851,7 +1220,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtNota;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtNota;
+>>>>>>> local
         
         /// <summary>
         /// txtSituacao control.
@@ -860,7 +1233,11 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextField txtSituacao;
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtSituacao;
+>>>>>>> local
         
         /// <summary>
         /// txtObservacaoItem control.
@@ -869,6 +1246,7 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.TextArea txtObservacaoItem;
         
         /// <summary>
@@ -936,12 +1314,22 @@ namespace Nissi.WebPresentation.PedidoCompra {
         
         /// <summary>
         /// btnCancelarItem control.
+=======
+        protected global::System.Web.UI.WebControls.TextBox txtObservacaoItem;
+        
+        /// <summary>
+        /// ckbFinalizarItem control.
+>>>>>>> local
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.Button btnCancelarItem;
+=======
+        protected global::System.Web.UI.WebControls.CheckBox ckbFinalizarItem;
+>>>>>>> local
         
         /// <summary>
         /// btnIncluirItem control.
@@ -950,11 +1338,17 @@ namespace Nissi.WebPresentation.PedidoCompra {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::Ext.Net.Button btnIncluirItem;
         
         /// <summary>
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+        protected global::System.Web.UI.WebControls.Button btnIncluirItem;
+        
+        /// <summary>
+>>>>>>> local
         /// Master property.
         /// </summary>
         /// <remarks>

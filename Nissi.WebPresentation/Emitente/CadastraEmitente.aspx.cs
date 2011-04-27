@@ -49,7 +49,6 @@ public partial class CadastraEmitente : BasePage
             imgImagem.ImageUrl ="~/GeraImagem.aspx?Variavel_Cache=" + sVarCache;
             imgImagem.AlternateText = "";
             updImage.Update();
-           
         }
     }
 

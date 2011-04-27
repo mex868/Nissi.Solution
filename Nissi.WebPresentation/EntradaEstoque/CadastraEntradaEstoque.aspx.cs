@@ -16,7 +16,7 @@ using System.Globalization;
 public partial class CadastraEntradaEstoque : BasePage
 {
     #region Propriedades
-    private FornecedorVO DadosRazaoSocial
+    private PessoaVO DadosRazaoSocial
     {
         set {
             if (value.CodPessoa > 0)
@@ -70,11 +70,10 @@ public partial class CadastraEntradaEstoque : BasePage
         get 
         {
             EntradaEstoqueVO identEntradaEstoqueVo = new EntradaEstoqueVO();
-            ItemEntradaEstoqueVO[] lstitemEntradaEstoqueVO = (ItemEntradaEstoqueVO[])Session["lstItemEntradaEstoque"];
-            List<ItemEntradaEstoqueVO> newlstitemEntradaEstoqueVO = new List<ItemEntradaEstoqueVO>(lstitemEntradaEstoqueVO);
+            List<ItemEntradaEstoqueVO> newlstitemEntradaEstoqueVO = NissiSession.ItemEntradaEstoques;
             if (!string.IsNullOrEmpty(hdfCodEntradaEstoque.Value))
                 identEntradaEstoqueVo.CodEntradaEstoque = int.Parse(hdfCodEntradaEstoque.Value);
-            identEntradaEstoqueVo.PedidoCompra.CodPedidoCompra = int.Parse(txtPedidoCompra.Text);
+            identEntradaEstoqueVo.PedidoCompra.CodPedidoCompra = !string.IsNullOrEmpty(txtPedidoCompra.Text)? int.Parse(txtPedidoCompra.Text): 0;
             if (!string.IsNullOrEmpty(hdfIdRazaoSocial.Value))
                 identEntradaEstoqueVo.Fornecedor.CodPessoa = int.Parse(hdfIdRazaoSocial.Value);
             txtEntradaEstoque.Text = identEntradaEstoqueVo.CodEntradaEstoque.ToString().PadLeft(8, '0');
@@ -119,8 +118,7 @@ public partial class CadastraEntradaEstoque : BasePage
         get
         {
             EntradaEstoqueInsumoVO identEntradaEstoqueInsumoVo = new EntradaEstoqueInsumoVO();
-            ItemEntradaEstoqueInsumoVO[] lstitemEntradaEstoqueInsumoVO = (ItemEntradaEstoqueInsumoVO[])Session["lstItemEntradaEstoqueInsumo"];
-            List<ItemEntradaEstoqueInsumoVO> newlstitemEntradaEstoqueInsumoVO = new List<ItemEntradaEstoqueInsumoVO>(lstitemEntradaEstoqueInsumoVO);
+            List<ItemEntradaEstoqueInsumoVO> newlstitemEntradaEstoqueInsumoVO = NissiSession.ItemEntradaEstoqueInsumos;
             if (!string.IsNullOrEmpty(hdfCodEntradaEstoque.Value))
                 identEntradaEstoqueInsumoVo.CodEntradaEstoque = int.Parse(hdfCodEntradaEstoque.Value);
             identEntradaEstoqueInsumoVo.PedidoCompra.CodPedidoCompra = int.Parse(txtPedidoCompra.Text);
@@ -203,8 +201,7 @@ public partial class CadastraEntradaEstoque : BasePage
             //btnIncluirProduto.Attributes.Add("onclick", "ChamaPopup();");
             //criar Session para armazenar valores do grid dos Itens da Nota Fiscal
             //este grid só salvará quando salvar a Nota Fiscal inteira
-            Session.Add("lstItemEntradaEstoque", lstItemEntradaEstoque.ToArray());
-            Session.Add("lstItemEntradaEstoqueInsumo", lstItemEntradaEstoqueInsumo.ToArray());
+            NissiSession.ItemEntradaEstoques = lstItemEntradaEstoque;
             //criar ViewState para armazenar valores do grid das Duplicatas
             //este grid só salvará quando salvar a Nota Fiscal inteira
             Master.PosicionarFoco(txtPedidoCompra);
@@ -226,11 +223,13 @@ public partial class CadastraEntradaEstoque : BasePage
             {
                 codEntradaEstoque = AlterEntrada((TypePedido)int.Parse(hdfTipoPedido.Value));
             }
-
+            LimparCampos();
+            LimparCamposItemEntradaEstoque();
             Response.Redirect("ListaEntradaEstoque.aspx?CodEntradaEstoque=" + codEntradaEstoque);
         }
         else
             MensagemCliente(updDados, "Não foi associado nenhuma matéria prima a entrada de estoque!");
+       
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
@@ -260,30 +259,20 @@ public partial class CadastraEntradaEstoque : BasePage
 
     private void LimparCampos()
     {
-        Session.Remove("ItemEntradaEstoque");
-        Session.Remove("AcaoProduto");
+        NissiSession.ItemEntradaEstoques = null;
+        NissiSession.ComposicaoMateriaPrima = null;
+        NissiSession.ResistenciaTracao = null;
+        NissiSession.ItemEntradaEstoqueInsumos = null;
+        ViewState.Remove("LinhaSelecionadaItemEntradaEstoque");
     }
 
-    private void Load_Pdf()
-    {
-        byte[] pdfBytes = (byte[])ViewState[key_Pdf];
-        if (pdfBytes == null)
-        {
-            lkbArquivoPdf.Text = "(Nenhum arquivo carregado)";
-        }
-        else
-        {
-            string sVarCache = "PDF";
-            Cache[sVarCache] = pdfBytes;
-            lkbArquivoPdf.Text = "(Arquivo carregado)";
-        }
-    }
 
     private void CarregarCombos()
     {
-        Geral.CarregarDDL(ref ddlMateriaPrima, new MateriaPrima().Listar().ToArray(), "CodMateriaPrima", "Descricao");
+        //Geral.CarregarDDL(ref ddlMateriaPrima, new MateriaPrima().Listar().ToArray(), "CodMateriaPrima", "Descricao");
         Geral.CarregarDDL(ref ddlBitola, new Bitola().Listar().ToArray(), "CodBitola", "Bitola");
         Geral.CarregarDDL(ref ddlUnidade, new Unidade().Listar(new UnidadeVO()).ToArray(),"CodUnidade","TipoUnidade");
+        Geral.CarregarDDL(ref ddlProduto,new Produto().Listar(new ProdutoVO(){Codigo = hdfCodigoFornecedor.Value}).ToArray(),"CodProduto","Descricao");
     }
     private void CarregarCombosInsumo()
     {
@@ -371,11 +360,9 @@ public partial class CadastraEntradaEstoque : BasePage
             int linha = row.RowIndex;
             string[] codigos = e.CommandArgument.ToString().Split('|');
             int codMateriaPrima = Convert.ToInt32(codigos[0]);
-            int codItemEntradaEstoque = Convert.ToInt32(codigos[1]);
             //armazena em viewstate a linha selecionada para posterior atualização
             ViewState["LinhaSelecionadaItemEntradaEstoque"] = codMateriaPrima;
-            ItemEntradaEstoqueVO[] lstItemEntradaEstoque = (ItemEntradaEstoqueVO[]) Session["lstItemEntradaEstoque"];
-            List<ItemEntradaEstoqueVO> newlstItemEntradaEstoque = new List<ItemEntradaEstoqueVO>(lstItemEntradaEstoque);
+            List<ItemEntradaEstoqueVO> newlstItemEntradaEstoque = NissiSession.ItemEntradaEstoques;
 
             if (e.CommandName == "Editar")
             {
@@ -385,14 +372,15 @@ public partial class CadastraEntradaEstoque : BasePage
                 var item =
                     newlstItemEntradaEstoque.Where(
                         r =>
-                        r.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima &&
-                        r.BitolaVo.CodBitola == codItemEntradaEstoque).Select(r => r)
+                        r.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima).Select(r => r)
                         .FirstOrDefault();
                 //busca no vo os valores para a linha selecionada
                 CarregarCombos();
                 //atribui aos campos da tela para alteração
-                ddlMateriaPrima.SelectedValue = item.MateriaPrimaVo.CodMateriaPrima.ToString();
-                ddlBitola.SelectedValue = item.BitolaVo.CodBitola.ToString();
+                ddlProduto.SelectedValue = item.MateriaPrimaVo.CodMateriaPrima.ToString();
+                //ddlMateriaPrima.SelectedValue = item.MateriaPrimaVo.CodMateriaPrima.ToString();
+                if (item.BitolaVo != null)
+                    ddlBitola.SelectedValue = item.BitolaVo.CodBitola.ToString();
                 ddlUnidade.SelectedValue = item.UnidadeVo.CodUnidade.ToString();
                 txtEspecificacao.Text = item.Especificacao;
                 txtQtdePedidoCompra.Text = item.QtdPedidoCompra.ToString();
@@ -424,21 +412,18 @@ public partial class CadastraEntradaEstoque : BasePage
                 txtDataNotaFiscalItem.Text = txtDataNotaFiscal.Text;
                 txtIPI.Text = item.Ipi.ToString();
                 Master.PosicionarFoco(txtLote);
-                ViewState[key_Pdf] = item.CertificadoScanneado;
-                Load_Pdf();
+                NissiSession.ArquivoPdf = item.CertificadoScanneado;
                 var lstComposicaoMateriaPrima = new List<ComposicaoMateriaPrimaVO>();
                 if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue))
                     lstComposicaoMateriaPrima =
                         new MateriaPrima().ListarComposicaoMateriaPrima(item.MateriaPrimaVo.CodMateriaPrima);
-                Session.Add("ComposicaoMateriaPrima", lstComposicaoMateriaPrima.ToArray());
+                NissiSession.ComposicaoMateriaPrima = lstComposicaoMateriaPrima;
                 var resistenciaTracao = new ResistenciaTracaoVO();
-                if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue))
+                if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue) && !string.IsNullOrEmpty(ddlBitola.SelectedValue))
                     resistenciaTracao =
                         new MateriaPrima().ListarResistenciaTracao(item.MateriaPrimaVo.CodMateriaPrima,
                                                                    item.BitolaVo.CodBitola);
-                var lstResistenciaTracao = new List<ResistenciaTracaoVO>();
-                lstResistenciaTracao.Add(resistenciaTracao);
-                Session.Add("ResistenciaTracao", lstResistenciaTracao.ToArray());
+                NissiSession.ResistenciaTracao = resistenciaTracao;
                 mpeIncluirItem.Show();
             }
             else if (e.CommandName == "Excluir")
@@ -448,7 +433,7 @@ public partial class CadastraEntradaEstoque : BasePage
                 grdProduto.DataBind();
                 updProduto.Update();
                 //atualiza lstItemEntradaEstoque
-                Session["lstItemEntradaEstoque"] = newlstItemEntradaEstoque.ToArray();
+                NissiSession.ItemEntradaEstoques = newlstItemEntradaEstoque;
             }
         }
 
@@ -461,11 +446,11 @@ public partial class CadastraEntradaEstoque : BasePage
         {
             ItemEntradaEstoqueVO identItemEntradaEstoque = (ItemEntradaEstoqueVO)e.Row.DataItem;
             e.Row.Cells[1].Text = identItemEntradaEstoque.Lote.ToString();      
-            string descricao = identItemEntradaEstoque.MateriaPrimaVo.NormaVo.Descricao + "/" + identItemEntradaEstoque.MateriaPrimaVo.NormaVo.Revisao;
-            if (identItemEntradaEstoque.MateriaPrimaVo.ClasseTipoVo != null)
-                descricao += identItemEntradaEstoque.MateriaPrimaVo.ClasseTipoVo.Descricao;
-                e.Row.Cells[2].Text = descricao;
-            e.Row.Cells[3].Text = identItemEntradaEstoque.BitolaVo.Bitola.ToString();
+            e.Row.Cells[2].Text = identItemEntradaEstoque.MateriaPrimaVo.Descricao;
+            if (identItemEntradaEstoque.BitolaVo != null)
+                e.Row.Cells[3].Text = identItemEntradaEstoque.BitolaVo.Bitola.ToString();
+            else
+                e.Row.Cells[3].Text = "0";
             e.Row.Cells[4].Text = identItemEntradaEstoque.QtdPedidoCompra.ToString();
             e.Row.Cells[5].Text = identItemEntradaEstoque.Qtd.ToString();
             e.Row.Cells[6].Text = identItemEntradaEstoque.UnidadeVo.TipoUnidade;
@@ -480,10 +465,10 @@ public partial class CadastraEntradaEstoque : BasePage
             ImageButton imgEditarFatura = (ImageButton)e.Row.FindControl("imgEditar");
             imgEditarFatura.ImageUrl = caminhoAplicacao + @"Imagens\editar.png";
             //imgEditarFatura.CommandArgument = identItemEntradaEstoque.CodItemEntradaEstoque.ToString();
-            imgEditarFatura.CommandArgument = identItemEntradaEstoque.MateriaPrimaVo.CodMateriaPrima+"|"+identItemEntradaEstoque.BitolaVo.CodBitola;
+            imgEditarFatura.CommandArgument = identItemEntradaEstoque.MateriaPrimaVo.CodMateriaPrima.ToString();
             imgEditarFatura.CommandName = "Editar";
             imgEditarFatura.Style.Add("cursor", "hand");
-            imgEditarFatura.ToolTip = "Editar dados do Produto ["+descricao+"]";
+            imgEditarFatura.ToolTip = "Editar dados do Produto ["+identItemEntradaEstoque.MateriaPrimaVo.Descricao+"]";
             #endregion
 
             #region Botão Excluir
@@ -492,7 +477,7 @@ public partial class CadastraEntradaEstoque : BasePage
             //imgExcluirFatura.CommandArgument = identItemEntradaEstoque.CodItemEntradaEstoque.ToString();
             imgExcluirFatura.CommandArgument = identItemEntradaEstoque.MateriaPrimaVo.CodMateriaPrima.ToString();
             imgExcluirFatura.CommandName = "Excluir";
-            imgExcluirFatura.Attributes["onclick"] = "return confirm('Confirmar exclusão do Produto ["+descricao+"]?');";
+            imgExcluirFatura.Attributes["onclick"] = "return confirm('Confirmar exclusão do Produto ["+identItemEntradaEstoque.MateriaPrimaVo.Descricao+"]?');";
             imgExcluirFatura.Style.Add("cursor", "hand");
             imgExcluirFatura.ToolTip = "Excluir Produto";
             #endregion
@@ -554,11 +539,11 @@ public partial class CadastraEntradaEstoque : BasePage
         txtEspecificacoes.Text =
         txtIPI.Text =
         txtNota.Text = string.Empty;
-        lkbArquivoPdf.Text = "(Nenhum arquivo carregado)";
-        Cache[key_Pdf] = "";
+        NissiSession.ArquivoPdf = new byte[0];
         ViewState.Clear();
-        Session.Remove("ComposicaoMateriaPrima");
-        Session.Remove("ResistenciaTracao");
+        //NissiSession.ItemEntradaEstoques = null;
+        NissiSession.ComposicaoMateriaPrima = null;
+        NissiSession.ResistenciaTracao = null;
     }
 
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
@@ -576,48 +561,16 @@ public partial class CadastraEntradaEstoque : BasePage
 
     protected void btnCarregarValores_Click(object sender, EventArgs e)
     {
-        FornecedorVO identFornecedor = new FornecedorVO();
+        ClienteVO identFornecedor = new ClienteVO();
         //Todo: Depois do tratamento na procedure, remover a linha abaixo
         identFornecedor.CodPessoa = Convert.ToInt32(hdfIdRazaoSocial.Value);
-        DadosRazaoSocial = new Fornecedor().Listar(identFornecedor).First();
+        DadosRazaoSocial = new Cliente().Listar(identFornecedor).First(); ;
         ExecutarScript(updCadastroItem, new StringBuilder("showItens();"));
     }
 
     protected void btnSalvarItem_Click(object sender, EventArgs e)
     {
 
-    }
-
-    protected void btnLimparImagem_Click(object sender, EventArgs e)
-    {
-        lkbArquivoPdf.Text = "(Nenhum arquivo carregado)";
-        ViewState.Clear();
-    }
-
-    private const string key_Pdf = "PDF";
-    protected void btnCarregarImagem_Click(object sender, EventArgs e)
-    {
-        //btnCarregarImagem.Attributes.Add("onclick", "return ValidaArquivoImagem();");
-        if ((upFileUp.PostedFile == null) || (upFileUp.PostedFile.ContentLength == 0)
-            || !upFileUp.PostedFile.ContentType.Contains("pdf"))
-        {
-            mpeIncluirItem.Show();
-            MensagemCliente(updBotoes, "Informe um arquivo de pdf válido");          
-        }
-        else
-        {
-            mpeIncluirItem.Show(); 
-            Stream Input = upFileUp.PostedFile.InputStream;
-            // Inicializa o buffer			
-            byte[] certificadoPdf = new byte[Input.Length];
-            // Lê a imagem do arquivo          			 
-            Input.Read(certificadoPdf, 0, Convert.ToInt32(Input.Length));
-            // Joga no ViewState
-            ViewState[key_Pdf] = certificadoPdf;
-            lkbArquivoPdf.Text = "(Arquivo carregado)";
-            string sVarCache = "PDF";
-            Cache[sVarCache] = certificadoPdf;
-        }
     }
 
     protected void btnNovoItem_Click(object sender, EventArgs e)
@@ -645,12 +598,11 @@ public partial class CadastraEntradaEstoque : BasePage
         //pois só deverá ser incluido no banco quando salvar o produto
 
         //armazena em viewstate a linha selecionada para posterior atualização
-        ItemEntradaEstoqueVO[] lstItemEntradaEstoque = (ItemEntradaEstoqueVO[])Session["lstItemEntradaEstoque"];
-        List<ItemEntradaEstoqueVO> newlstItemEntradaEstoque = new List<ItemEntradaEstoqueVO>(lstItemEntradaEstoque);
+        List<ItemEntradaEstoqueVO> newlstItemEntradaEstoque = NissiSession.ItemEntradaEstoques;
         int codMateriaPrima = 0;
         try
         {
-            codMateriaPrima = int.Parse(ddlMateriaPrima.SelectedValue);
+            codMateriaPrima = int.Parse(ddlProduto.SelectedValue);
         }
         catch (Exception)
         {
@@ -658,25 +610,26 @@ public partial class CadastraEntradaEstoque : BasePage
             return;
         }
 
-        int codBitola = 0;
-        try
-        {
-            codBitola = int.Parse(ddlBitola.SelectedValue);
-        }
-        catch (Exception)
-        {
-            MensagemCliente(updCadastroItem, "Escolha um valor na lista para a Bitola!");
-            return;
-        }
+        const int codBitola = 0;
+        //try
+        //{
+        //    codBitola = int.Parse(ddlBitola.SelectedValue);
+        //}
+        //catch (Exception)
+        //{
+        //    MensagemCliente(updCadastroItem, "Escolha um valor na lista para a Bitola!");
+        //    return;
+        //}
 
         decimal qtde = !string.IsNullOrEmpty(txtQtde.Text) ? decimal.Parse(txtQtde.Text) : 0;
         decimal valor = !string.IsNullOrEmpty(txtValorUnit.Text) ? decimal.Parse(txtValorUnit.Text) : 0;
-        string norma = ddlMateriaPrima.SelectedItem.Text;
-        decimal bitola = !string.IsNullOrEmpty(ddlBitola.SelectedItem.Text) ? decimal.Parse(ddlBitola.SelectedItem.Text) : 0;
+        string norma = ddlProduto.SelectedItem.Text;
+        decimal bitola = !string.IsNullOrEmpty(ddlBitola.SelectedItem.Text) && ddlBitola.SelectedValue != "" ? decimal.Parse(ddlBitola.SelectedItem.Text) : 0;
         string unidade = ddlUnidade.SelectedItem.Text;
         string especificacao = txtEspecificacao.Text;
         decimal Ipi = !string.IsNullOrEmpty(txtIPI.Text) ? decimal.Parse(txtIPI.Text) : 0;
-        //se for edição de ICMS, atualizar o list
+        int codUnidade = !string.IsNullOrEmpty(ddlUnidade.SelectedValue) ? int.Parse(ddlUnidade.SelectedValue) : 0;
+        //se for edição de ICMS, atualizar o list))
         if (hdfTipoAcaoItem.Value.Equals("Incluir"))
         {
             /************************************************************************
@@ -686,13 +639,13 @@ public partial class CadastraEntradaEstoque : BasePage
             ItemEntradaEstoqueVO result = newlstItemEntradaEstoque.Find(
             delegate(ItemEntradaEstoqueVO bk)
             {
-                return bk.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima && bk.BitolaVo.CodBitola == codBitola;
+                return bk.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima;
             }
             );
             if (result != null)
             {
 
-                MensagemCliente(updCadastroItem, "Material já cadastrado!");
+                MensagemCliente(updCadastroItem, "Produto já cadastrado!");
                 return;
             }
             /************************************************************************/
@@ -700,7 +653,7 @@ public partial class CadastraEntradaEstoque : BasePage
 
             //senão, incluir novo ítem no list
             ItemEntradaEstoqueVO lstItemEntradaEstoqueAux = new ItemEntradaEstoqueVO();
-            lstItemEntradaEstoqueAux.Lote = int.Parse(txtLote.Text);
+            lstItemEntradaEstoqueAux.Lote = !string.IsNullOrEmpty(txtLote.Text)? int.Parse(txtLote.Text):0;
             lstItemEntradaEstoqueAux.Certificado = txtCertificado.Text;
             lstItemEntradaEstoqueAux.Corrida = txtCorrida.Text;
             lstItemEntradaEstoqueAux.MateriaPrimaVo.CodMateriaPrima = codMateriaPrima;
@@ -708,6 +661,7 @@ public partial class CadastraEntradaEstoque : BasePage
             lstItemEntradaEstoqueAux.BitolaVo.CodBitola = codBitola;
             lstItemEntradaEstoqueAux.BitolaVo.Bitola = bitola;
             lstItemEntradaEstoqueAux.Qtd = qtde;
+            lstItemEntradaEstoqueAux.UnidadeVo.CodUnidade = codUnidade;
             lstItemEntradaEstoqueAux.UnidadeVo.TipoUnidade = unidade;
             lstItemEntradaEstoqueAux.Especificacao = especificacao;
             lstItemEntradaEstoqueAux.Ipi = Ipi;
@@ -728,7 +682,7 @@ public partial class CadastraEntradaEstoque : BasePage
             lstItemEntradaEstoqueAux.Resistencia = !string.IsNullOrEmpty(txtResistenciaTracao.Text) ? decimal.Parse(txtResistenciaTracao.Text) : 0;
             lstItemEntradaEstoqueAux.Dureza = !string.IsNullOrEmpty(txtDureza.Text) ? decimal.Parse(txtDureza.Text) : 0;
             lstItemEntradaEstoqueAux.Nota = !string.IsNullOrEmpty(txtNota.Text) ? decimal.Parse(txtNota.Text) : 0;
-            lstItemEntradaEstoqueAux.CertificadoScanneado = (byte[]) ViewState[key_Pdf];
+            lstItemEntradaEstoqueAux.CertificadoScanneado = NissiSession.ArquivoPdf;
 
             newlstItemEntradaEstoque.Add(lstItemEntradaEstoqueAux);
         }
@@ -742,11 +696,11 @@ public partial class CadastraEntradaEstoque : BasePage
             if (linha != codMateriaPrima)
             {
                 var item1 =
-                    newlstItemEntradaEstoque.Where(r => r.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima && r.BitolaVo.CodBitola == codBitola).Select(r => r).
+                    newlstItemEntradaEstoque.Where(r => r.MateriaPrimaVo.CodMateriaPrima == codMateriaPrima).Select(r => r).
                         FirstOrDefault();
                 if (item1 != null)
                 {
-                    MensagemCliente(updCadastroItem, "Material já cadastrado!");
+                    MensagemCliente(updCadastroItem, "Produto já cadastrado!");
                     return;
                 }
             }
@@ -761,7 +715,8 @@ public partial class CadastraEntradaEstoque : BasePage
             item.MateriaPrimaVo.NormaVo.Descricao = norma;
             item.BitolaVo.CodBitola = codBitola;
             item.BitolaVo.Bitola = bitola;
-            item.Lote = int.Parse(txtLote.Text);
+            item.UnidadeVo.CodUnidade = codUnidade;
+            item.Lote = !string.IsNullOrEmpty(txtLote.Text)? int.Parse(txtLote.Text):0;
             item.Certificado = txtCertificado.Text;
             item.Corrida = txtCorrida.Text;
             item.Qtd = qtde;
@@ -785,14 +740,14 @@ public partial class CadastraEntradaEstoque : BasePage
             item.Resistencia = !string.IsNullOrEmpty(txtResistenciaTracao.Text) ? decimal.Parse(txtResistenciaTracao.Text) : 0;
             item.Dureza = !string.IsNullOrEmpty(txtDureza.Text) ? decimal.Parse(txtDureza.Text) : 0;
             item.Nota = !string.IsNullOrEmpty(txtNota.Text) ? decimal.Parse(txtNota.Text) : 0;
-            item.CertificadoScanneado = (byte[]) ViewState[key_Pdf];
+            item.CertificadoScanneado = NissiSession.ArquivoPdf;
 
             //sai do for
         }
         grdProduto.DataSource = newlstItemEntradaEstoque;
         grdProduto.DataBind();
         //atualiza viewstate
-        Session["lstItemEntradaEstoque"] = newlstItemEntradaEstoque.ToArray();
+        NissiSession.ItemEntradaEstoques = newlstItemEntradaEstoque;
         LimparCamposItemEntradaEstoque();        
         mpeIncluirItem.Hide();
     }
@@ -838,14 +793,14 @@ public partial class CadastraEntradaEstoque : BasePage
             itemEntradaEstoque.BitolaVo = itemPedidoCompraVo.BitolaVo;
             itemEntradaEstoque.QtdPedidoCompra = itemPedidoCompraVo.Saldo;
             itemEntradaEstoque.Valor = itemPedidoCompraVo.Valor;
-            itemEntradaEstoque.Resistencia = itemPedidoCompraVo.ResistenciaTracao;
+            //itemEntradaEstoque.Resistencia = itemPedidoCompraVo.ResistenciaTracao;
             itemEntradaEstoque.Especificacao = itemPedidoCompraVo.Especificacao;
             itemEntradaEstoque.UnidadeVo.CodUnidade = itemPedidoCompraVo.UnidadeVo.CodUnidade;
             itemEntradaEstoque.UnidadeVo.TipoUnidade = itemPedidoCompraVo.UnidadeVo.TipoUnidade;
             itemEntradaEstoque.Ipi = itemPedidoCompraVo.Ipi;
             itemEntradaEstoqueVos.Add(itemEntradaEstoque);
         }
-        Session["lstItemEntradaEstoque"] = itemEntradaEstoqueVos.ToArray();
+        NissiSession.ItemEntradaEstoques = itemEntradaEstoqueVos;
         return itemEntradaEstoqueVos;
     }
     private List<ItemEntradaEstoqueInsumoVO> ConvertToItemEntradaEstoqueInsumo(List<ItemPedidoCompraVO> itemPedidoCompraVos)
@@ -868,9 +823,10 @@ public partial class CadastraEntradaEstoque : BasePage
             itemEntradaEstoque.CertificadoScanneado = new byte[0];
             itemEntradaEstoqueVos.Add(itemEntradaEstoque);
         }
-        Session["lstItemEntradaEstoqueInsumo"] = itemEntradaEstoqueVos.ToArray();
+        NissiSession.ItemEntradaEstoqueInsumos = itemEntradaEstoqueVos;
         return itemEntradaEstoqueVos;
     }
+<<<<<<< HEAD
     protected void lkbArquivoPdf_Click(object sender, EventArgs e)
     {
         Response.Redirect("GerarPDF.aspx?Variavel_Cache=PDF");
@@ -889,19 +845,22 @@ public partial class CadastraEntradaEstoque : BasePage
         Session.Add("ComposicaoMateriaPrima",lstComposicaoMateriaPrima.ToArray());
     }
 
+=======
+
+
+>>>>>>> local
     protected void ddlBitola_SelectedIndexChanged(object sender, EventArgs e)
     {
         string mensagem = string.Empty;
         decimal value = 0;
         if (!string.IsNullOrEmpty(ddlBitola.SelectedValue))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(ddlBitola.SelectedItem.Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.BitolaMaxima && value < newlstComposicaoMateriaPrimaVo.BitolaMinima)
@@ -940,13 +899,11 @@ public partial class CadastraEntradaEstoque : BasePage
             if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue))
             {
                 var resistenciaTracao = new ResistenciaTracaoVO();
-                if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue))
+                if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue) && !string.IsNullOrEmpty(ddlBitola.SelectedValue))
                     resistenciaTracao =
                         new MateriaPrima().ListarResistenciaTracao(int.Parse(ddlMateriaPrima.SelectedValue),
                                                                    int.Parse(ddlBitola.SelectedValue));
-                var lstResistenciaTracao = new List<ResistenciaTracaoVO>();
-                lstResistenciaTracao.Add(resistenciaTracao);
-                Session.Add("ResistenciaTracao", lstResistenciaTracao.ToArray());
+                NissiSession.ResistenciaTracao = resistenciaTracao;
             }
         }
     }
@@ -957,13 +914,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.AlMaximo)
@@ -1016,13 +973,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.CMaximo)
@@ -1056,7 +1013,7 @@ public partial class CadastraEntradaEstoque : BasePage
                 {
                     spanC.Attributes.Add("title", mensagem);
                     spanC.Style.Add("display", "inline");
-                    ((TextBox) sender).BackColor = Color.Yellow;
+                    ((TextBox)sender).BackColor = Color.Yellow;
                 }
                 else
                 {
@@ -1074,13 +1031,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.SiMaximo)
@@ -1132,12 +1089,12 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
                 bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
@@ -1191,13 +1148,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.PMaximo)
@@ -1249,13 +1206,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
 
@@ -1308,13 +1265,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.CrMaximo)
@@ -1366,12 +1323,12 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
                 bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
@@ -1425,13 +1382,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
 
@@ -1484,13 +1441,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.CuMaximo)
@@ -1542,13 +1499,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.TiMaximo)
@@ -1600,13 +1557,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.N2Maximo)
@@ -1658,13 +1615,13 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ComposicaoMateriaPrima"] != null)
+            if (NissiSession.ComposicaoMateriaPrima != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ComposicaoMateriaPrimaVO[] lstComposicaoMateriaPrimaVos = (ComposicaoMateriaPrimaVO[])Session["ComposicaoMateriaPrima"];
-                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = new List<ComposicaoMateriaPrimaVO>(lstComposicaoMateriaPrimaVos);
-                bool verificado = false; 
+
+                List<ComposicaoMateriaPrimaVO> newlstComposicaoMateriaPrimaVos = NissiSession.ComposicaoMateriaPrima;
+                bool verificado = false;
                 foreach (var newlstComposicaoMateriaPrimaVo in newlstComposicaoMateriaPrimaVos)
                 {
                     if (0 != newlstComposicaoMateriaPrimaVo.CoMaximo)
@@ -1716,56 +1673,55 @@ public partial class CadastraEntradaEstoque : BasePage
         decimal value = 0;
         if (!string.IsNullOrEmpty(((TextBox)sender).Text))
         {
-            if (Session["ResistenciaTracao"] != null)
+            if (NissiSession.ResistenciaTracao != null)
             {
                 value = decimal.Parse(((TextBox)sender).Text);
                 //armazena em viewstate a linha selecionada para posterior atualização
-                ResistenciaTracaoVO[] lstResistenciaTracao = (ResistenciaTracaoVO[])Session["ResistenciaTracao"];
-                List<ResistenciaTracaoVO> newlstResistenciaTracaoVos = new List<ResistenciaTracaoVO>(lstResistenciaTracao);
-                bool verificado = false;
-                foreach (var newlstresistenciaTracaoVo in newlstResistenciaTracaoVos)
+                var resistenciaTracao = NissiSession.ResistenciaTracao;
+                if (0 != resistenciaTracao.Maximo)
                 {
-                    if (0 != newlstresistenciaTracaoVo.Maximo)
+                    if (value < resistenciaTracao.Minimo)
                     {
-                        if (value < newlstresistenciaTracaoVo.Minimo)
-                        {
 
-                            if (verificado == false)
-                            {
-                                mensagem = newlstresistenciaTracaoVo.Minimo + " - " +
-                                           newlstresistenciaTracaoVo.Maximo;
-                                verificado = true;
-                            }
+                        mensagem = resistenciaTracao.Minimo + " - " +
+                                   resistenciaTracao.Maximo;
+                    }
+                    else
+                    {
+                        if (value > resistenciaTracao.Maximo)
+                        {
+                            mensagem = resistenciaTracao.Minimo + " - " +
+                                       resistenciaTracao.Maximo;
                         }
                         else
                         {
-                            if (value > newlstresistenciaTracaoVo.Maximo && verificado == false)
-                            {
-                                mensagem = newlstresistenciaTracaoVo.Minimo + " - " +
-                                           newlstresistenciaTracaoVo.Maximo;
-                            }
-                            else
-                            {
-                                verificado = true;
-                                mensagem = string.Empty;
-                            }
+
+                            mensagem = string.Empty;
                         }
                     }
                 }
-                if (!string.IsNullOrEmpty(mensagem))
-                {
-                    spanRt.Attributes.Add("title", mensagem);
-                    spanRt.Style.Add("display", "inline");
-                    ((TextBox)sender).BackColor = Color.Yellow;
-                }
-                else
-                {
-                    spanRt.Style.Add("display", "none");
-                    ((TextBox)sender).BackColor = Color.White;
-                }
+            }
+            if (!string.IsNullOrEmpty(mensagem))
+            {
+                spanRt.Attributes.Add("title", mensagem);
+                spanRt.Style.Add("display", "inline");
+                ((TextBox)sender).BackColor = Color.Yellow;
+            }
+            else
+            {
+                spanRt.Style.Add("display", "none");
+                ((TextBox)sender).BackColor = Color.White;
             }
         }
         txtDureza.Focus();
+    }
+
+    protected void ddlMateriaPrima_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var lstComposicaoMateriaPrima = new List<ComposicaoMateriaPrimaVO>();
+        if (!string.IsNullOrEmpty(ddlMateriaPrima.SelectedValue))
+            lstComposicaoMateriaPrima = new MateriaPrima().ListarComposicaoMateriaPrima(int.Parse(ddlMateriaPrima.SelectedValue));
+        NissiSession.ComposicaoMateriaPrima = lstComposicaoMateriaPrima;
     }
 
     protected void hdfTipoPedido_ValueChanged(object sender, EventArgs e)
@@ -1782,8 +1738,7 @@ public partial class CadastraEntradaEstoque : BasePage
         //pois só deverá ser incluido no banco quando salvar o produto
 
         //armazena em viewstate a linha selecionada para posterior atualização
-        ItemEntradaEstoqueInsumoVO[] lstItemEntradaEstoqueInsumo = (ItemEntradaEstoqueInsumoVO[])Session["lstItemEntradaEstoqueInsumo"];
-        List<ItemEntradaEstoqueInsumoVO> newlstItemEntradaEstoqueInsumo = new List<ItemEntradaEstoqueInsumoVO>(lstItemEntradaEstoqueInsumo);
+        List<ItemEntradaEstoqueInsumoVO> newlstItemEntradaEstoqueInsumo = NissiSession.ItemEntradaEstoqueInsumos;
         int codProdutoInsumo = 0;
         try
         {
@@ -1889,7 +1844,7 @@ public partial class CadastraEntradaEstoque : BasePage
         grdProdutoInsumo.DataSource = newlstItemEntradaEstoqueInsumo;
         grdProdutoInsumo.DataBind();
         //atualiza viewstate
-        Session["lstItemEntradaEstoqueInsumo"] = newlstItemEntradaEstoqueInsumo.ToArray();
+        NissiSession.ItemEntradaEstoqueInsumos = newlstItemEntradaEstoqueInsumo;
         LimparCamposItemPedidoCompraInsumo();
         Master.PosicionarFoco(ddlProdutoInsumo);
         ExecutarScript(updItensInsumo, new StringBuilder("showItensInsumo();"));
@@ -1929,10 +1884,8 @@ public partial class CadastraEntradaEstoque : BasePage
             int codItemEntradaEstoqueInsumo = Convert.ToInt32(codigos[1]);
             //armazena em viewstate a linha selecionada para posterior atualização
             ViewState["LinhaSelecionadaItemEntradaEstoqueInsumo"] = codProdutoInsumo;
-            ItemEntradaEstoqueInsumoVO[] lstItemEntradaEstoqueInsumo =
-                (ItemEntradaEstoqueInsumoVO[]) Session["lstItemEntradaEstoqueInsumo"];
             List<ItemEntradaEstoqueInsumoVO> newlstItemEntradaEstoqueInsumo =
-                new List<ItemEntradaEstoqueInsumoVO>(lstItemEntradaEstoqueInsumo);
+                NissiSession.ItemEntradaEstoqueInsumos;
 
             if (e.CommandName == "Editar")
             {

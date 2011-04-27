@@ -26,7 +26,8 @@
             WaitAsyncPostBack(false);
             loadDate();
             loadTabs();
-            if ($get("<%=hdfTipoAcaoItemPedidoCompra.ClientID %>").value != "hiddenNo" && $get("<%=hdfTipoAcaoItemPedidoCompraInsumo.ClientID %>").value != "hiddenNo")
+            OcultarBotaoCarregarValores();
+            if ($get("<%=hdfShowItemInsumo.ClientID %>").value != "hiddenNo" && $get("<%=hdfShowItem.ClientID %>").value != "hiddenNo")
                 hiddenItens();
         }
 
@@ -60,20 +61,30 @@
             $get('<%=btnCarregarValores.ClientID%>').style.display = "none";
             $get('<%=btnAtualizarProdutoInsumo.ClientID%>').style.display = "none";
             $get('<%=btnAtualizarMateriaPrima.ClientID%>').style.display = "none";
-
+            $get('<%=btnAtualizarBitola.ClientID%>').style.display = "none";
         }
+
         function ChamaPopupMateriaPrima() {
             WaitAsyncPostBack(true);
             window.showModalDialog('<%=caminhoAplicacao%>' + "MateriaPrima/CadastraMateriaPrima.aspx?popup=sim", "", "dialogHeight=600px;dialogWidth=950px;status=no,toolbar=no,menubar=no,location=no;unadorned=no;help=no; resizable: No; status: No; scroll:no;");
             WaitAsyncPostBack(false);
             $get('<%=btnAtualizarMateriaPrima.ClientID%>').click();
         }
+
+        function ChamaPopupBitola() {
+            WaitAsyncPostBack(true);
+            window.showModalDialog('<%=caminhoAplicacao%>' + "MateriaPrima/CadastraBitola.aspx?popup=sim", "", "dialogHeight=150px;dialogWidth=900px;status=no,toolbar=no,menubar=no,location=no;unadorned=no;help=no; resizable: No; status: No; scroll:no;");
+            WaitAsyncPostBack(false);
+            $get('<%=btnAtualizarBitola.ClientID%>').click();
+        }
+
         function ChamaPopupProdutoInsumo() {
             WaitAsyncPostBack(true);
             window.showModalDialog('<%=caminhoAplicacao%>' + "Produto/CadastraProdutoInsumo.aspx?popup=sim", "", "dialogHeight=200px;dialogWidth=900px;status=no,toolbar=no,menubar=no,location=no;unadorned=no;help=no; resizable: No; status: No; scroll:no;");
             WaitAsyncPostBack(false);
             $get('<%=btnAtualizarProdutoInsumo.ClientID%>').click();
         }
+
         function ChamaPopup() {
             var codigoFornecedor = $get("<%=hdfCodigoFornecedor.ClientID%>").value;
             if (codigoFornecedor == "") {
@@ -378,13 +389,16 @@
                                                                 MinimumPrefixLength="1" ServiceMethod="GetBitola" CompletionInterval="800" OnClientItemSelected="CarregarValoresBitola"
                                                                 OnClientPopulated="ClientPopulated" DelimiterCharacters="" Enabled="True" ServicePath="">
                                                             </ajaxToolkit:AutoCompleteExtender>
-                                                            <asp:DropDownList ID="ddlBitola" runat="server">
+                                                            <asp:DropDownList ID="ddlBitola" runat="server" AutoPostBack="True" 
+                                                                onselectedindexchanged="ddlBitola_SelectedIndexChanged">
                                                             </asp:DropDownList>
                                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtBitola"
                                                                 ErrorMessage="Bitola falta ser preenchido." ValidationGroup="ValidaDadosItens">*</asp:RequiredFieldValidator>
+                                                            <img alt="" src="../Imagens/Incluir.png" onclick="ChamaPopupBitola();" title="Incluir Bitola" style="width:18px; height:18px; cursor:hand"/>
                                                         </td>
                                                         <td>
-                                                            <asp:TextBox ID="txtResistenciaTracao" runat="server" Width="60px"  onkeypress="OnlyMoney();"></asp:TextBox>
+                                                            <asp:TextBox ID="txtResistenciaTracao" runat="server" Width="129px"  
+                                                                onkeypress="OnlyMoney();"></asp:TextBox>
                                                         </td>
                                                         <td>
                                                             <asp:TextBox ID="txtEspecificacao" runat="server" Width="90px"></asp:TextBox>
@@ -433,6 +447,8 @@
                                                                 Width="80px" CssClass="botao" OnClick="btnSalvarItem_Click" ValidationGroup="ValidaDadosItens" />
                                                             <asp:Button ID="btnAtualizarMateriaPrima" runat="server" CssClass="botao" 
                                                                 onclick="btnAtualizarMateriaPrima_Click" Width="0px" />
+                                                            <asp:Button ID="btnAtualizarBitola" runat="server" CssClass="botao" 
+                                                                 Width="0px" onclick="btnAtualizarBitola_Click" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -445,11 +461,14 @@
                                                 EventName="SelectedIndexChanged" />
                                             <asp:AsyncPostBackTrigger ControlID="btnAtualizarMateriaPrima" 
                                                 EventName="Click" />
+                                            <asp:AsyncPostBackTrigger ControlID="btnAtualizarBitola" 
+                                                EventName="Click" />
                                         </Triggers>
                                     </asp:UpdatePanel>
                                     <asp:UpdatePanel ID="updProduto" runat="server" UpdateMode="Conditional">
                                                     <ContentTemplate>
                                                         <asp:HiddenField ID="hdfTipoAcaoItemPedidoCompra" runat="server" Value="Incluir" />
+                                                        <asp:HiddenField ID="hdfShowItem" runat="server" Value="hiddenYes" />
                                                         <cc1:RDCGrid ID="grdProduto" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                                                             BorderColor="Black" BorderWidth="1px" CellPadding="1" CellSpacing="3" CssClass="alinhamento"
                                                             GridLines="None" MultiSelection="True" OnPageIndexChanging="grdProduto_PageIndexChanging"
@@ -509,7 +528,11 @@
                                                         <asp:AsyncPostBackTrigger ControlID="btnIncluirItem" EventName="Click" />
                                                         <asp:AsyncPostBackTrigger ControlID="btnAtualizarMateriaPrima" 
                                                             EventName="Click" />
-                                                    </Triggers>
+                                                        <asp:AsyncPostBackTrigger ControlID="btnAtualizarBitola" 
+                                                            EventName="Click" />
+                                                <asp:AsyncPostBackTrigger ControlID="ddlBitola" 
+                                                    EventName="SelectedIndexChanged" />
+                                                </Triggers>
                                                 </asp:UpdatePanel>
                                             </td>
                                         </tr>
@@ -600,6 +623,7 @@
                                                     <ContentTemplate>
                                                         <asp:HiddenField ID="hdfTipoAcaoItemPedidoCompraInsumo" runat="server" 
                                                             Value="Incluir" />
+                                                        <asp:HiddenField ID="hdfShowItemInsumo" runat="server" Value="hiddenYes" />
                                                         <cc1:RDCGrid ID="grdProdutoInsumo" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                                                             BorderColor="Black" BorderWidth="1px" CellPadding="1" CellSpacing="3" CssClass="alinhamento"
                                                             GridLines="None" MultiSelection="True" OnPageIndexChanging="grdProdutoInsumo_PageIndexChanging"
@@ -695,4 +719,7 @@
             ValidationGroup="ValidaDados"></asp:ValidationSummary>
     </div>
     <br />
+    <script language="jscript" type="text/javascript">
+        OcultarBotaoCarregarValores();
+    </script>
 </asp:Content>

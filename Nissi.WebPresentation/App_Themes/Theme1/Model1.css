@@ -75,10 +75,14 @@ input[type=text],input[type=password], select {
 {
 	TEXT-ALIGN: left;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF); 
 =======
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF);    
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#DDDDDD, EndColorStr=#FFFFFF); 
+>>>>>>> local
 }
 
 .botao
@@ -105,6 +109,11 @@ input[type=text],input[type=password], select {
 
 .FundoLinha1 {
 	background-color: #f3f3f3;
+}
+
+.x-grid3-hd-inner{
+    font-family : Arial !important; 
+	font-size : 12px !important;   
 }
 
 .FundoLinha2 {
@@ -177,13 +186,22 @@ iframe.skm
 	font-size : 18px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+18px;
+	height:330px !important;
+}
+>>>>>>> local
 .dirty-row
 {
     background: red;
 }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+>>>>>>> local
 .alinhamento
 {
 	border: 1px solid #000000;

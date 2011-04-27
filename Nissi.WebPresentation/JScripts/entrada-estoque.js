@@ -34,9 +34,38 @@
                     if (nota <= 1) retorno = "Não conformidade com devolução da material";
         $(".situacao").val(retorno);
     }
+    uploadFileAjax = function () {
+        //Function to upload file.
+        new AjaxUpload('#uploadFile', {
+            action: 'FileUploadHandler.axd',
+            name: 'upload',
+            onComplete: function (file) {
+                $('<div><img src="../../imagens/exclusao_Canc.png" style="width:16px;height:16px" alt="Excluir arquivo" class="delete"/>' + file + '</div>').appendTo('#fileList');
+                $('#uploadStatus').html("Arquivo Carregado.");
+            },
+            onSubmit: function (file, ext) {
+                if (!(ext && /^(pdf)$/i.test(ext))) {
+                    Ext.Msg.alert('Fomato Inválido.');
+                    return false;
+                }
+                $('#uploadStatus').html("Carregando...");
+            }
+
+        });
+        //Function to delete uploaded file in server.
+        $('img').live("click", function () { $('#uploadStatus').html("Deleting"); ; deleteFile($(this)); });
+    }
+
+    function deleteFile(objfile) {
+        $.ajax({ url: 'FileUploadHandler.axd?del=' + objfile.parent().text(), success: function () { objfile.parent().hide(); } });
+        $('#uploadStatus').html("Excluído");
+    }
+
     loadDate();
     loadTabs();
     hiddenItens();
+    uploadFileAjax();
+
     showItensInsumo = function () {
         $("#cadastraritensInsumo").animate({
             height: "toggle",

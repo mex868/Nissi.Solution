@@ -25,39 +25,12 @@ namespace Nissi.Repositorio
                             on c.CodBairro equals b.CodBairro
                         join ci in _repositorioDataContext.Cidades
                             on c.CodCidade equals ci.CodCidade
-                        join p in _repositorioDataContext.PedidoCompras
-                            on e.CodPedidoCompra equals p.CodPedidoCompra
                         where e.CodEntradaEstoque == codEntradaEstoque
+                        && e.CodPedidoCompra == null
                         select new EntradaEstoqueVO()
                                    {
                                        CodEntradaEstoque = e.CodEntradaEstoque,
                                        Tipo = e.Tipo != null ? (TypePedido)e.Tipo : 0,
-                                       PedidoCompra = new PedidoCompraVO()
-                                                          {
-                                                              CodPedidoCompra = p.CodPedidoCompra,
-                                                              CondicaoFornecimento = p.CondicaoFornecimento,
-                                                              FuncionarioComprador = (from pc in _repositorioDataContext.Pessoas
-                                                                                      join ec in _repositorioDataContext.Funcionarios
-                                                                                      on pc.CodPessoa equals ec.CodPessoa
-                                                                                      where p.CodFuncionarioComprador == ec.CodFuncionario
-                                                                                      select new FuncionarioVO()
-                                                                                      {
-                                                                                          CodPessoa = pc.CodPessoa,
-                                                                                          Nome = pc.RazaoSocial
-                                                                                      }).FirstOrDefault(),
-                                                              FuncionarioAprovador = (from pa in _repositorioDataContext.Pessoas
-                                                                                      join ea in _repositorioDataContext.Funcionarios
-                                                                                      on pa.CodPessoa equals ea.CodPessoa
-                                                                                      where p.CodFuncionarioAprovador == ea.CodFuncionario
-                                                                                      select new FuncionarioVO()
-                                                                                      {
-                                                                                          CodPessoa = pa.CodPessoa,
-                                                                                          Nome = pa.RazaoSocial
-                                                                                      }).FirstOrDefault(),
-                                       TipoRetirada = p.TipoRetirada,
-                                       Observacao = p.Observacao,
-                                       DataEmissao = p.DataEmissao,
-                                                          },
                                        Fornecedor = new FornecedorVO()
                                                         {
                                                             CodPessoa = f.CodPessoa,
@@ -96,27 +69,37 @@ namespace Nissi.Repositorio
                                                          select new ItemEntradaEstoqueVO()
                                                                     {
                                                                         CodItemEntradaEstoque = i.CodItemEntradaEstoque,
-                                                                        MateriaPrimaVo = (from m in _repositorioDataContext.MateriaPrimas
-                                                                                          join n in _repositorioDataContext.Normas
-                                                                                              on m.CodNorma equals (n.CodNorma)
-                                                                                          where m.CodMateriaPrima == i.CodMateriaPrima
+                                                                        MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                                                          where pi.CodProduto == i.CodMateriaPrima
                                                                                           select new MateriaPrimaVO()
                                                                                           {
-                                                                                              CodMateriaPrima = m.CodMateriaPrima,
-                                                                                              ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                                              where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                                              select new ClasseTipoVO()
-                                                                                                              {
-                                                                                                                  CodClasseTipo = ct.CodClasseTipo,
-                                                                                                                  Descricao = ct.Descricao
-                                                                                                              }).FirstOrDefault(),
-                                                                                              NormaVo = new NormaVO()
-                                                                                              {
-                                                                                                  CodNorma = n.CodNorma,
-                                                                                                  Descricao = n.Descricao,
-                                                                                                  Revisao = n.Revisao
-                                                                                              }
+                                                                                              CodMateriaPrima = i.CodMateriaPrima,
+                                                                                              DescricaoInsumo = pi.Descricao
                                                                                           }).FirstOrDefault(),
+                                                                        //MateriaPrimaVo = (e.Tipo == 0
+                                                                        //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                                                        //                       join n in _repositorioDataContext.Normas
+                                                                        //                           on m.CodNorma equals (n.CodNorma)
+                                                                        //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                                                        //                       select new MateriaPrimaVO()
+                                                                        //                       {
+                                                                        //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                                                        //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                                                        //                                           select new ClasseTipoVO()
+                                                                        //                                           {
+                                                                        //                                               Descricao = ct.Descricao
+                                                                        //                                           }).FirstOrDefault(),
+                                                                        //                           NormaVo = new NormaVO()
+                                                                        //                           {
+                                                                        //                               Descricao = n.Descricao,
+                                                                        //                               Revisao = n.Revisao
+                                                                        //                           }
+                                                                        //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                                                        //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                                                        //                                              select new MateriaPrimaVO()
+                                                                        //                                              {
+                                                                        //                                                  DescricaoInsumo = pi.Descricao
+                                                                        //                                              }).FirstOrDefault()),
                                                                         BitolaVo = (from bi in _repositorioDataContext.Bitolas
                                                                                     where bi.CodBitola == i.CodBitola
                                                                                     select new BitolaVO()
@@ -170,6 +153,7 @@ namespace Nissi.Repositorio
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
                              where i.CodEntradaEstoque == codEntradaEstoque
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                                         {
                                             CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -186,30 +170,37 @@ namespace Nissi.Repositorio
                                             DataEntrada = e.DataEntrada,
                                             DataNotaFiscal = e.DataNotaFiscal,
                                             },
-                                            MateriaPrimaVo = (e.Tipo == 0
-                                                                ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                   join n in _repositorioDataContext.Normas
-                                                                       on m.CodNorma equals (n.CodNorma)
-                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                   select new MateriaPrimaVO()
-                                                                   {
-                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                       select new ClasseTipoVO()
-                                                                                       {
-                                                                                           Descricao = ct.Descricao
-                                                                                       }).FirstOrDefault(),
-                                                                       NormaVo = new NormaVO()
-                                                                       {
-                                                                           Descricao = n.Descricao,
-                                                                           Revisao = n.Revisao
-                                                                       }
-                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                                                                          select new MateriaPrimaVO()
-                                                                                          {
-                                                                                              DescricaoInsumo = pi.Descricao
-                                                                                          }).FirstOrDefault()),
+                                            MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                              where pi.CodProduto == i.CodMateriaPrima
+                                                              select new MateriaPrimaVO()
+                                                              {
+                                                                  CodMateriaPrima = i.CodMateriaPrima,
+                                                                  DescricaoInsumo = pi.Descricao
+                                                              }).FirstOrDefault(),
+                                            //MateriaPrimaVo = (e.Tipo == 0
+                                            //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                            //                       join n in _repositorioDataContext.Normas
+                                            //                           on m.CodNorma equals (n.CodNorma)
+                                            //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                            //                       select new MateriaPrimaVO()
+                                            //                       {
+                                            //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                            //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                            //                                           select new ClasseTipoVO()
+                                            //                                           {
+                                            //                                               Descricao = ct.Descricao
+                                            //                                           }).FirstOrDefault(),
+                                            //                           NormaVo = new NormaVO()
+                                            //                           {
+                                            //                               Descricao = n.Descricao,
+                                            //                               Revisao = n.Revisao
+                                            //                           }
+                                            //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                            //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            //                                              select new MateriaPrimaVO()
+                                            //                                              {
+                                            //                                                  DescricaoInsumo = pi.Descricao
+                                            //                                              }).FirstOrDefault()),
                                             BitolaVo = (e.Tipo == 0
                                                                 ?(from bi in _repositorioDataContext.Bitolas
                                                         where bi.CodBitola == i.CodBitola
@@ -259,14 +250,15 @@ namespace Nissi.Repositorio
             lstItemEntradaEstoque = queryitem.ToList();
             return lstItemEntradaEstoque;
     }
-        public List<ItemEntradaEstoqueVO> ListarPorFornecedor(int codFornecedor)
-        {
-            var queryitem = (from i in _repositorioDataContext.ItemEntradaEstoques
+    public List<ItemEntradaEstoqueVO> ListarPorFornecedor(int codFornecedor)
+    {
+        var queryitem = (from i in _repositorioDataContext.ItemEntradaEstoques
                              join e in _repositorioDataContext.EntradaEstoques
                                  on i.CodEntradaEstoque equals e.CodEntradaEstoque
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
                              where f.CodPessoa == codFornecedor
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                                         {
                                             CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -283,30 +275,36 @@ namespace Nissi.Repositorio
                                             DataEntrada = e.DataEntrada,
                                             DataNotaFiscal = e.DataNotaFiscal,
                                             },
-                                            MateriaPrimaVo = (e.Tipo == 0
-                                                                ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                   join n in _repositorioDataContext.Normas
-                                                                       on m.CodNorma equals (n.CodNorma)
-                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                   select new MateriaPrimaVO()
-                                                                   {
-                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                       select new ClasseTipoVO()
-                                                                                       {
-                                                                                           Descricao = ct.Descricao
-                                                                                       }).FirstOrDefault(),
-                                                                       NormaVo = new NormaVO()
-                                                                       {
-                                                                           Descricao = n.Descricao,
-                                                                           Revisao = n.Revisao
-                                                                       }
-                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                                                          where pi.CodProduto == i.CodMateriaPrima
                                                                                           select new MateriaPrimaVO()
                                                                                           {
                                                                                               DescricaoInsumo = pi.Descricao
-                                                                                          }).FirstOrDefault()),
+                                                                                          }).FirstOrDefault(),
+                                            //MateriaPrimaVo = (e.Tipo == 0
+                                            //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                            //                       join n in _repositorioDataContext.Normas
+                                            //                           on m.CodNorma equals (n.CodNorma)
+                                            //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                            //                       select new MateriaPrimaVO()
+                                            //                       {
+                                            //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                            //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                            //                                           select new ClasseTipoVO()
+                                            //                                           {
+                                            //                                               Descricao = ct.Descricao
+                                            //                                           }).FirstOrDefault(),
+                                            //                           NormaVo = new NormaVO()
+                                            //                           {
+                                            //                               Descricao = n.Descricao,
+                                            //                               Revisao = n.Revisao
+                                            //                           }
+                                            //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                            //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            //                                              select new MateriaPrimaVO()
+                                            //                                              {
+                                            //                                                  DescricaoInsumo = pi.Descricao
+                                            //                                              }).FirstOrDefault()),
                                             BitolaVo = (e.Tipo == 0
                                                                 ? (from bi in _repositorioDataContext.Bitolas
                                                                    where bi.CodBitola == i.CodBitola
@@ -359,14 +357,15 @@ namespace Nissi.Repositorio
             lstItemEntradaEstoque = queryitem.ToList();
             return lstItemEntradaEstoque;
         }
-        public List<ItemEntradaEstoqueVO> ListarPorLote(string lote)
+        public List<ItemEntradaEstoqueVO> ListarPorLote(int lote)
         {
             var queryitem = (from i in _repositorioDataContext.ItemEntradaEstoques
                              join e in _repositorioDataContext.EntradaEstoques
                                  on i.CodEntradaEstoque equals e.CodEntradaEstoque
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
-                             where i.Lote.Equals(lote)
+                             where i.Lote == lote
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                                         {
                                             CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -383,30 +382,36 @@ namespace Nissi.Repositorio
                                             DataEntrada = e.DataEntrada,
                                             DataNotaFiscal = e.DataNotaFiscal,
                                             },
-                                            MateriaPrimaVo = (e.Tipo == 0
-                                                                ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                   join n in _repositorioDataContext.Normas
-                                                                       on m.CodNorma equals (n.CodNorma)
-                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                   select new MateriaPrimaVO()
-                                                                   {
-                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                       select new ClasseTipoVO()
-                                                                                       {
-                                                                                           Descricao = ct.Descricao
-                                                                                       }).FirstOrDefault(),
-                                                                       NormaVo = new NormaVO()
-                                                                       {
-                                                                           Descricao = n.Descricao,
-                                                                           Revisao = n.Revisao
-                                                                       }
-                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                                                                          select new MateriaPrimaVO()
-                                                                                          {
-                                                                                              DescricaoInsumo = pi.Descricao
-                                                                                          }).FirstOrDefault()),
+                                            MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                              where pi.CodProduto == i.CodMateriaPrima
+                                                              select new MateriaPrimaVO()
+                                                              {
+                                                                  DescricaoInsumo = pi.Descricao
+                                                              }).FirstOrDefault(),
+                                            //MateriaPrimaVo = (e.Tipo == 0
+                                            //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                            //                       join n in _repositorioDataContext.Normas
+                                            //                           on m.CodNorma equals (n.CodNorma)
+                                            //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                            //                       select new MateriaPrimaVO()
+                                            //                       {
+                                            //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                            //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                            //                                           select new ClasseTipoVO()
+                                            //                                           {
+                                            //                                               Descricao = ct.Descricao
+                                            //                                           }).FirstOrDefault(),
+                                            //                           NormaVo = new NormaVO()
+                                            //                           {
+                                            //                               Descricao = n.Descricao,
+                                            //                               Revisao = n.Revisao
+                                            //                           }
+                                            //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                            //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            //                                              select new MateriaPrimaVO()
+                                            //                                              {
+                                            //                                                  DescricaoInsumo = pi.Descricao
+                                            //                                              }).FirstOrDefault()),
                                             BitolaVo = (e.Tipo == 0
                                                                 ? (from bi in _repositorioDataContext.Bitolas
                                                                    where bi.CodBitola == i.CodBitola
@@ -467,6 +472,7 @@ namespace Nissi.Repositorio
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
                              where e.DataEntrada >= dataInicio && e.DataEntrada <= dataFim
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                              {
                                  CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -483,30 +489,36 @@ namespace Nissi.Repositorio
                                      DataEntrada = e.DataEntrada,
                                      DataNotaFiscal = e.DataNotaFiscal,
                                  },
-                                 MateriaPrimaVo = (e.Tipo == 0
-                                                     ? (from m in _repositorioDataContext.MateriaPrimas
-                                                        join n in _repositorioDataContext.Normas
-                                                            on m.CodNorma equals (n.CodNorma)
-                                                        where m.CodMateriaPrima == i.CodMateriaPrima
-                                                        select new MateriaPrimaVO()
-                                                        {
-                                                            ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                            where ct.CodClasseTipo == m.CodClasseTipo
-                                                                            select new ClasseTipoVO()
-                                                                            {
-                                                                                Descricao = ct.Descricao
-                                                                            }).FirstOrDefault(),
-                                                            NormaVo = new NormaVO()
-                                                            {
-                                                                Descricao = n.Descricao,
-                                                                Revisao = n.Revisao
-                                                            }
-                                                        }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                               where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                                                               select new MateriaPrimaVO()
-                                                                               {
-                                                                                   DescricaoInsumo = pi.Descricao
-                                                                               }).FirstOrDefault()),
+                                 MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                   where pi.CodProduto == i.CodMateriaPrima
+                                                   select new MateriaPrimaVO()
+                                                   {
+                                                       DescricaoInsumo = pi.Descricao
+                                                   }).FirstOrDefault(),
+                                 //MateriaPrimaVo = (e.Tipo == 0
+                                 //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                 //                       join n in _repositorioDataContext.Normas
+                                 //                           on m.CodNorma equals (n.CodNorma)
+                                 //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                 //                       select new MateriaPrimaVO()
+                                 //                       {
+                                 //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                 //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                 //                                           select new ClasseTipoVO()
+                                 //                                           {
+                                 //                                               Descricao = ct.Descricao
+                                 //                                           }).FirstOrDefault(),
+                                 //                           NormaVo = new NormaVO()
+                                 //                           {
+                                 //                               Descricao = n.Descricao,
+                                 //                               Revisao = n.Revisao
+                                 //                           }
+                                 //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                 //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                 //                                              select new MateriaPrimaVO()
+                                 //                                              {
+                                 //                                                  DescricaoInsumo = pi.Descricao
+                                 //                                              }).FirstOrDefault()),
                                  BitolaVo = (e.Tipo == 0
                                                      ? (from bi in _repositorioDataContext.Bitolas
                                                         where bi.CodBitola == i.CodBitola
@@ -567,6 +579,7 @@ namespace Nissi.Repositorio
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
                              where i.Corrida.Equals(corrida)
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                                         {
                                             CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -583,30 +596,36 @@ namespace Nissi.Repositorio
                                             DataEntrada = e.DataEntrada,
                                             DataNotaFiscal = e.DataNotaFiscal,
                                             },
-                                            MateriaPrimaVo = (e.Tipo == 0
-                                                                ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                   join n in _repositorioDataContext.Normas
-                                                                       on m.CodNorma equals (n.CodNorma)
-                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                   select new MateriaPrimaVO()
-                                                                   {
-                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                       select new ClasseTipoVO()
-                                                                                       {
-                                                                                           Descricao = ct.Descricao
-                                                                                       }).FirstOrDefault(),
-                                                                       NormaVo = new NormaVO()
-                                                                       {
-                                                                           Descricao = n.Descricao,
-                                                                           Revisao = n.Revisao
-                                                                       }
-                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                                                                          select new MateriaPrimaVO()
-                                                                                          {
-                                                                                              DescricaoInsumo = pi.Descricao
-                                                                                          }).FirstOrDefault()),
+                                            MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                              where pi.CodProduto == i.CodMateriaPrima
+                                                              select new MateriaPrimaVO()
+                                                              {
+                                                                  DescricaoInsumo = pi.Descricao
+                                                              }).FirstOrDefault(),
+                                            //MateriaPrimaVo = (e.Tipo == 0
+                                            //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                            //                       join n in _repositorioDataContext.Normas
+                                            //                           on m.CodNorma equals (n.CodNorma)
+                                            //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                            //                       select new MateriaPrimaVO()
+                                            //                       {
+                                            //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                            //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                            //                                           select new ClasseTipoVO()
+                                            //                                           {
+                                            //                                               Descricao = ct.Descricao
+                                            //                                           }).FirstOrDefault(),
+                                            //                           NormaVo = new NormaVO()
+                                            //                           {
+                                            //                               Descricao = n.Descricao,
+                                            //                               Revisao = n.Revisao
+                                            //                           }
+                                            //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                            //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            //                                              select new MateriaPrimaVO()
+                                            //                                              {
+                                            //                                                  DescricaoInsumo = pi.Descricao
+                                            //                                              }).FirstOrDefault()),
                                             BitolaVo = (e.Tipo == 0
                                                                 ? (from bi in _repositorioDataContext.Bitolas
                                                                    where bi.CodBitola == i.CodBitola
@@ -667,6 +686,7 @@ namespace Nissi.Repositorio
                              join f in _repositorioDataContext.Pessoas
                                  on e.CodFornecedor equals f.CodPessoa
                              where i.Certificado.Equals(certificado)
+                             && e.CodPedidoCompra == null
                              select new ItemEntradaEstoqueVO()
                                         {
                                             CodItemEntradaEstoque = i.CodItemEntradaEstoque,
@@ -683,30 +703,36 @@ namespace Nissi.Repositorio
                                             DataEntrada = e.DataEntrada,
                                             DataNotaFiscal = e.DataNotaFiscal,
                                             },
-                                            MateriaPrimaVo = (e.Tipo == 0
-                                                                ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                   join n in _repositorioDataContext.Normas
-                                                                       on m.CodNorma equals (n.CodNorma)
-                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                   select new MateriaPrimaVO()
-                                                                   {
-                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                       select new ClasseTipoVO()
-                                                                                       {
-                                                                                           Descricao = ct.Descricao
-                                                                                       }).FirstOrDefault(),
-                                                                       NormaVo = new NormaVO()
-                                                                       {
-                                                                           Descricao = n.Descricao,
-                                                                           Revisao = n.Revisao
-                                                                       }
-                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                                                                          select new MateriaPrimaVO()
-                                                                                          {
-                                                                                              DescricaoInsumo = pi.Descricao
-                                                                                          }).FirstOrDefault()),
+                                            MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                              where pi.CodProduto == i.CodMateriaPrima
+                                                              select new MateriaPrimaVO()
+                                                              {
+                                                                  DescricaoInsumo = pi.Descricao
+                                                              }).FirstOrDefault(),
+                                            //MateriaPrimaVo = (e.Tipo == 0
+                                            //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                            //                       join n in _repositorioDataContext.Normas
+                                            //                           on m.CodNorma equals (n.CodNorma)
+                                            //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                            //                       select new MateriaPrimaVO()
+                                            //                       {
+                                            //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                            //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                            //                                           select new ClasseTipoVO()
+                                            //                                           {
+                                            //                                               Descricao = ct.Descricao
+                                            //                                           }).FirstOrDefault(),
+                                            //                           NormaVo = new NormaVO()
+                                            //                           {
+                                            //                               Descricao = n.Descricao,
+                                            //                               Revisao = n.Revisao
+                                            //                           }
+                                            //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                            //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                            //                                              select new MateriaPrimaVO()
+                                            //                                              {
+                                            //                                                  DescricaoInsumo = pi.Descricao
+                                            //                                              }).FirstOrDefault()),
                                             BitolaVo = (e.Tipo == 0
                                                                 ? (from bi in _repositorioDataContext.Bitolas
                                                                    where bi.CodBitola == i.CodBitola
@@ -875,10 +901,13 @@ namespace Nissi.Repositorio
         #region Método de Inclusão
         public int Incluir(int codFornecedor, int codPedidoCompra, DateTime dataNotaFiscal, DateTime dataEntrada, string notaFiscal, int codUsuario, List<ItemEntradaEstoqueVO> itens, TypePedido tipo)
         {
+            int? codPedidoNull = null;
+            if (codPedidoCompra != 0)
+                codPedidoNull = codPedidoCompra;
             var entradaEstoque = new EntradaEstoque()
                                      {
                                          CodFornecedor = codFornecedor,
-                                         CodPedidoCompra = codPedidoCompra,
+                                         CodPedidoCompra = codPedidoNull,
                                          DataEntrada = dataEntrada,
                                          DataNotaFiscal = dataNotaFiscal,
                                          NotaFiscal = notaFiscal,
@@ -958,6 +987,12 @@ namespace Nissi.Repositorio
             new ItemEntradaEstoqueRepositorio().ExcluirTodos(codEntradaEstoque);
             _repositorioDataContext.EntradaEstoques.DeleteOnSubmit(entradaEstoque);
             _repositorioDataContext.SubmitChanges();
+        }
+        #endregion
+        #region Método que retorna o certigficado scanneado
+        public byte[] GetCertificado(int lote)
+        {
+            return new ItemEntradaEstoqueRepositorio().GetCertificado(lote);
         }
         #endregion
 

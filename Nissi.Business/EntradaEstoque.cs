@@ -23,7 +23,7 @@ namespace Nissi.Business
         {
             return new EntradaEstoqueRepositorio().ListarPorFornecedor(codFornecedor);
         }
-        public List<ItemEntradaEstoqueVO> ListarPorLote(string lote)
+        public List<ItemEntradaEstoqueVO> ListarPorLote(int lote)
         {
             return new EntradaEstoqueRepositorio().ListarPorLote(lote);
         }
@@ -78,7 +78,12 @@ namespace Nissi.Business
             new ItemEntradaEstoqueRepositorio().Excluir(codItemEntradaEstoqueInsumo);
         }
         #endregion
-
+        #region Método que retorna o certificado scanneado
+        public byte[] GetCertificado(int lote)
+        {
+            return new EntradaEstoqueRepositorio().GetCertificado(lote);
+        }
+        #endregion
 
     }
 }

@@ -293,6 +293,7 @@ namespace Nissi.Repositorio
             var pedidoCompra = query.FirstOrDefault();
             return pedidoCompra;
         }
+
         public PedidoCompraInsumoVO ListarTudoInsumo(int codPedidoCompra)
         {
             var query = from p in _repositorioDataContext.PedidoCompras
@@ -402,6 +403,7 @@ namespace Nissi.Repositorio
             var pedidoCompra = query.FirstOrDefault();
             return pedidoCompra;
         }
+
         public List<ListItemPedidoCompraVO> ListarPorCodigo(int codPedidoCompra)
         {
             var queryitem = (from i in _repositorioDataContext.ItemPedidoCompras
@@ -413,11 +415,14 @@ namespace Nissi.Repositorio
                              select new ListItemPedidoCompraVO()
                                         {
                                             OrdemCompra = p.CodPedidoCompra,
+                                            CodItemPedidoCompra = i.CodItemPedidoCompra,
+                                            IdStatus = i.idStatus,
                                             DataEmissao = p.DataEmissao,
                                             CodPessoa = p.CodFornecedor,
                                             DataPrevista = p.DataPrazoEntrega,
-                                            Fornecedor = f.RazaoSocial,
+                                            Fornecedor = f.NomeFantasia,
                                             Tipo = p.Tipo?? 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
                                             CodBitola = i.CodBitola,
                                             CodMateriaPrima = i.CodMateriaPrima,
@@ -453,31 +458,37 @@ namespace Nissi.Repositorio
                                                                                          Bitola = b.Bitola1
                                                                                      }).FirstOrDefault().Bitola) : decimal.Zero,
 =======
+=======
+                                            CodBitola = i.CodBitola,
+                                            CodMateriaPrima = i.CodMateriaPrima,
+                                            CodUnidade = i.CodUnidade,
+>>>>>>> local
                                             MateriaPrimaVo = (p.Tipo == 0
                                                                 ? (from m in _repositorioDataContext.MateriaPrimas
-                                                                  join n in _repositorioDataContext.Normas
-                                                                      on m.CodNorma equals (n.CodNorma)
-                                                                  where m.CodMateriaPrima == i.CodMateriaPrima
-                                                                  select new MateriaPrimaVO()
-                                                                  {
-                                                                      ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
-                                                                                      where ct.CodClasseTipo == m.CodClasseTipo
-                                                                                      select new ClasseTipoVO()
-                                                                                      {
-                                                                                          Descricao = ct.Descricao
-                                                                                      }).FirstOrDefault(),
-                                                                      NormaVo = new NormaVO()
-                                                                      {
-                                                                          Descricao = n.Descricao,
-                                                                          Revisao = n.Revisao
-                                                                      }
-                                                                      }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
-                                        where pi.CodProdutoInsumo == i.CodMateriaPrima
-                                        select new MateriaPrimaVO()
-                                   {
-                                       DescricaoInsumo = pi.Descricao
-                                   }).FirstOrDefault()),
+                                                                   join n in _repositorioDataContext.Normas
+                                                                       on m.CodNorma equals (n.CodNorma)
+                                                                   where m.CodMateriaPrima == i.CodMateriaPrima
+                                                                   select new MateriaPrimaVO()
+                                                                   {
+                                                                       ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                                                                       where ct.CodClasseTipo == m.CodClasseTipo
+                                                                                       select new ClasseTipoVO()
+                                                                                       {
+                                                                                           Descricao = ct.Descricao
+                                                                                       }).FirstOrDefault(),
+                                                                       NormaVo = new NormaVO()
+                                                                       {
+                                                                           Descricao = n.Descricao,
+                                                                           Revisao = n.Revisao
+                                                                       }
+                                                                   }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                                                                          where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                                                                          select new MateriaPrimaVO()
+                                                                                          {
+                                                                                              DescricaoInsumo = pi.Descricao
+                                                                                          }).FirstOrDefault()),
                                             Bitola = p.Tipo == 0
+<<<<<<< HEAD
                                                                 ?Convert.ToDecimal((from b in _repositorioDataContext.Bitolas
                                             where b.CodBitola == i.CodBitola
                                             select new BitolaVO()
@@ -485,6 +496,14 @@ namespace Nissi.Repositorio
                                                            Bitola = b.Bitola1
                                                        }).FirstOrDefault().Bitola):decimal.Zero,
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+                                                                ? Convert.ToDecimal((from b in _repositorioDataContext.Bitolas
+                                                                                     where b.CodBitola == i.CodBitola
+                                                                                     select new BitolaVO()
+                                                                                     {
+                                                                                         Bitola = b.Bitola1
+                                                                                     }).FirstOrDefault().Bitola) : decimal.Zero,
+>>>>>>> local
                                             Ipi = i.IPI,
                                             Preco = i.Valor,
                                             Qtde = i.Qtd,
@@ -505,13 +524,29 @@ namespace Nissi.Repositorio
                                                                                                   select ie.Qtd).Sum(),
                                             DataEntrega = (from pe in _repositorioDataContext.EntradaEstoques
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                            where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                           join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                           on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                                           where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                           && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                           && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                            select new EntradaEstoqueVO()
                                                            {
                                                                DataEntrada = pe.DataEntrada
                                                            }).FirstOrDefault().DataEntrada,
                                             NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
+<<<<<<< HEAD
                                                           where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                          join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                          on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                                          where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                          && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                          && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                           select new EntradaEstoqueVO()
                                                           {
                                                               NotaFiscal = pe.NotaFiscal
@@ -526,6 +561,7 @@ namespace Nissi.Repositorio
                                                                   {
                                                                       Lote = ie.Lote
                                                                   }).FirstOrDefault().Lote : 0
+<<<<<<< HEAD
 =======
                                                                where pe.CodPedidoCompra == p.CodPedidoCompra
                                                                select new EntradaEstoqueVO()
@@ -533,6 +569,8 @@ namespace Nissi.Repositorio
                                                                              DataEntrada = pe.DataEntrada
                                                                           }).FirstOrDefault().DataEntrada
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+>>>>>>> local
 
                                  }).ToList();
 
@@ -541,6 +579,7 @@ namespace Nissi.Repositorio
                 lstItemPedidoCompra = queryitem.ToList();
                 return lstItemPedidoCompra;
         }
+
         public List<ListItemPedidoCompraVO> ListarPorData(DateTime dataInicio, DateTime dataFim)
         {
             var queryitem = (from i in _repositorioDataContext.ItemPedidoCompras
@@ -552,16 +591,24 @@ namespace Nissi.Repositorio
                              select new ListItemPedidoCompraVO()
                              {
                                  OrdemCompra = p.CodPedidoCompra,
+                                 CodItemPedidoCompra = i.CodItemPedidoCompra,
+                                 IdStatus = i.idStatus,
                                  DataEmissao = p.DataEmissao,
                                  CodPessoa = p.CodFornecedor,
                                  DataPrevista = p.DataPrazoEntrega,
-                                 Fornecedor = f.RazaoSocial,
+                                 Fornecedor = f.NomeFantasia,
                                  Tipo = p.Tipo ?? 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
                                  CodBitola = i.CodBitola,
                                  CodMateriaPrima = i.CodMateriaPrima,
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+                                 CodBitola = i.CodBitola,
+                                 CodMateriaPrima = i.CodMateriaPrima,
+                                 CodUnidade = i.CodUnidade,
+>>>>>>> local
                                  MateriaPrimaVo = (p.Tipo == 0
                                                      ? (from m in _repositorioDataContext.MateriaPrimas
                                                         join n in _repositorioDataContext.Normas
@@ -612,14 +659,28 @@ namespace Nissi.Repositorio
                                                                                      && ie.CodMateriaPrima == i.CodMateriaPrima
                                                                                      select ie.Qtd).Sum(),
                                  DataEntrega = (from pe in _repositorioDataContext.EntradaEstoques
+                                                join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
                                                 where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                && ie.CodBitola == i.CodBitola
                                                 select new EntradaEstoqueVO()
                                                 {
                                                     DataEntrada = pe.DataEntrada
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 }).FirstOrDefault().DataEntrada,
                                  NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
                                                 where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                }).FirstOrDefault().DataEntrada,
+                                 NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
+                                               join ie in _repositorioDataContext.ItemEntradaEstoques
+                                               on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                               where pe.CodPedidoCompra == p.CodPedidoCompra
+                                               && ie.CodMateriaPrima == i.CodMateriaPrima
+                                               && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                 select new EntradaEstoqueVO()
                                                 {
                                                     NotaFiscal = pe.NotaFiscal
@@ -634,17 +695,89 @@ namespace Nissi.Repositorio
                                                                         {
                                                                             Lote = ie.Lote
                                                                         }).FirstOrDefault().Lote: 0
+<<<<<<< HEAD
 =======
                                                 }).FirstOrDefault().DataEntrada
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
 
                              }).ToList();
+>>>>>>> local
+
+            var queryitemEstoque = (from i in _repositorioDataContext.ItemEntradaEstoques
+                             join e in _repositorioDataContext.EntradaEstoques
+                                 on i.CodEntradaEstoque equals e.CodEntradaEstoque
+                             join f in _repositorioDataContext.Pessoas
+                                 on e.CodFornecedor equals f.CodPessoa
+                             where e.DataEntrada >= dataInicio && e.DataEntrada <= dataFim
+                             && e.CodPedidoCompra == null
+                             select new ListItemPedidoCompraVO()
+                             {
+                                 OrdemCompra = 0,
+                                 CodItemPedidoCompra = i.CodItemEntradaEstoque,
+                                 IdStatus = 1,
+                                 DataEmissao = e.DataCadastro,
+                                 CodPessoa = e.CodFornecedor,
+                                 DataPrevista = e.DataEntrada,
+                                 Fornecedor = f.NomeFantasia,
+                                 Tipo = e.Tipo ?? 0,
+                                 CodBitola = i.CodBitola,
+                                 CodMateriaPrima = i.CodMateriaPrima,
+                                 CodUnidade = i.CodUnidade,
+                                 MateriaPrimaVo = (from pi in _repositorioDataContext.Produtos
+                                                   where pi.CodProduto == i.CodMateriaPrima
+                                                   select new MateriaPrimaVO()
+                                                   {
+                                                       DescricaoInsumo = pi.Descricao
+                                                   }).FirstOrDefault(),
+                                 //MateriaPrimaVo = (e.Tipo == 0
+                                 //                    ? (from m in _repositorioDataContext.MateriaPrimas
+                                 //                       join n in _repositorioDataContext.Normas
+                                 //                           on m.CodNorma equals (n.CodNorma)
+                                 //                       where m.CodMateriaPrima == i.CodMateriaPrima
+                                 //                       select new MateriaPrimaVO()
+                                 //                       {
+                                 //                           ClasseTipoVo = (from ct in _repositorioDataContext.ClasseTipos
+                                 //                                           where ct.CodClasseTipo == m.CodClasseTipo
+                                 //                                           select new ClasseTipoVO()
+                                 //                                           {
+                                 //                                               Descricao = ct.Descricao
+                                 //                                           }).FirstOrDefault(),
+                                 //                           NormaVo = new NormaVO()
+                                 //                           {
+                                 //                               Descricao = n.Descricao,
+                                 //                               Revisao = n.Revisao
+                                 //                           }
+                                 //                       }).FirstOrDefault() : (from pi in _repositorioDataContext.ProdutoInsumos
+                                 //                                              where pi.CodProdutoInsumo == i.CodMateriaPrima
+                                 //                                              select new MateriaPrimaVO()
+                                 //                                              {
+                                 //                                                  DescricaoInsumo = pi.Descricao
+                                 //                                              }).FirstOrDefault()),
+                                 Bitola = decimal.Zero,
+                                 Ipi = i.IPI,
+                                 Preco = i.Valor,
+                                 Qtde = i.Qtd,
+                                 Unidade = (from un in _repositorioDataContext.Unidades
+                                            where un.CodUnidade == i.CodUnidade
+                                            select un).FirstOrDefault().Unidade1,
+                                 QtdeEntregue = i.Qtd,
+                                 DataEntrega = e.DataEntrada,
+                                 NotaFiscal = e.NotaFiscal,
+                                 Lote = i.Lote,
+                             }).ToList();
+
+            var lstItemEntradaEstoque = new List<ListItemPedidoCompraVO>();
+            if (queryitemEstoque.Count() > 0)
+                lstItemEntradaEstoque = queryitemEstoque.ToList();
 
             var lstItemPedidoCompra = new List<ListItemPedidoCompraVO>();
             if (queryitem.Count() > 0)
                 lstItemPedidoCompra = queryitem.ToList();
-            return lstItemPedidoCompra;
+
+            return lstItemPedidoCompra.Union(lstItemEntradaEstoque).ToList();
         }
+
         public List<ListItemPedidoCompraVO> ListarPorFornecedor(int codFornecedor)
         {
             var queryitem = (from i in _repositorioDataContext.ItemPedidoCompras
@@ -656,16 +789,24 @@ namespace Nissi.Repositorio
                              select new ListItemPedidoCompraVO()
                              {
                                  OrdemCompra = p.CodPedidoCompra,
+                                 CodItemPedidoCompra = i.CodItemPedidoCompra,
+                                 IdStatus = i.idStatus,
                                  CodPessoa = p.CodFornecedor,
                                  DataEmissao = p.DataEmissao,
                                  DataPrevista = p.DataPrazoEntrega,
-                                 Fornecedor = f.RazaoSocial,
+                                 Fornecedor = f.NomeFantasia,
                                  Tipo = p.Tipo ?? 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
                                  CodBitola = i.CodBitola,
                                  CodMateriaPrima = i.CodMateriaPrima,
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+                                 CodBitola = i.CodBitola,
+                                 CodMateriaPrima = i.CodMateriaPrima,
+                                 CodUnidade = i.CodUnidade,
+>>>>>>> local
                                  MateriaPrimaVo = (p.Tipo == 0
                                                      ? (from m in _repositorioDataContext.MateriaPrimas
                                                         join n in _repositorioDataContext.Normas
@@ -716,14 +857,28 @@ namespace Nissi.Repositorio
                                                                                        && ie.CodMateriaPrima == i.CodMateriaPrima
                                                                                        select ie.Qtd).Sum(),
                                  DataEntrega = (from pe in _repositorioDataContext.EntradaEstoques
+                                                join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
                                                 where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                && ie.CodBitola == i.CodBitola
                                                 select new EntradaEstoqueVO()
                                                 {
                                                     DataEntrada = pe.DataEntrada
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 }).FirstOrDefault().DataEntrada,
                                  NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
                                                where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                }).FirstOrDefault().DataEntrada,
+                                 NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
+                                               join ie in _repositorioDataContext.ItemEntradaEstoques
+                                               on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                               where pe.CodPedidoCompra == p.CodPedidoCompra
+                                               && ie.CodMateriaPrima == i.CodMateriaPrima
+                                               && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                select new EntradaEstoqueVO()
                                                {
                                                    NotaFiscal = pe.NotaFiscal
@@ -738,11 +893,16 @@ namespace Nissi.Repositorio
                                                        {
                                                            Lote = ie.Lote
                                                        }).FirstOrDefault().Lote : 0
+<<<<<<< HEAD
 =======
                                                 }).FirstOrDefault().DataEntrada
 
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+>>>>>>> local
                              }).ToList();
+
+
 
             var lstItemPedidoCompra = new List<ListItemPedidoCompraVO>();
             if (queryitem.Count() > 0)
@@ -760,16 +920,24 @@ namespace Nissi.Repositorio
                              select new ListItemPedidoCompraVO()
                              {
                                  OrdemCompra = p.CodPedidoCompra,
+                                 CodItemPedidoCompra = i.CodItemPedidoCompra,
                                  CodPessoa = p.CodFornecedor,
+                                 IdStatus = i.idStatus,
                                  DataEmissao = p.DataEmissao,
                                  DataPrevista = p.DataPrazoEntrega,
-                                 Fornecedor = f.RazaoSocial,
+                                 Fornecedor = f.NomeFantasia,
                                  Tipo = p.Tipo ?? 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
                                  CodBitola = i.CodBitola,
                                  CodMateriaPrima = i.CodMateriaPrima,
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+                                 CodBitola = i.CodBitola,
+                                 CodMateriaPrima = i.CodMateriaPrima,
+                                 CodUnidade = i.CodUnidade,
+>>>>>>> local
                                  MateriaPrimaVo = (p.Tipo == 0
                                                      ? (from m in _repositorioDataContext.MateriaPrimas
                                                         join n in _repositorioDataContext.Normas
@@ -820,14 +988,28 @@ namespace Nissi.Repositorio
                                                                                        && ie.CodMateriaPrima == i.CodMateriaPrima
                                                                                        select ie.Qtd).Sum(),
                                  DataEntrega = (from pe in _repositorioDataContext.EntradaEstoques
+                                                join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
                                                 where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                && ie.CodBitola == i.CodBitola
                                                 select new EntradaEstoqueVO()
                                                 {
                                                     DataEntrada = pe.DataEntrada
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 }).FirstOrDefault().DataEntrada,
                                  NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
                                                where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                }).FirstOrDefault().DataEntrada,
+                                 NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
+                                               join ie in _repositorioDataContext.ItemEntradaEstoques
+                                               on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                               where pe.CodPedidoCompra == p.CodPedidoCompra
+                                               && ie.CodMateriaPrima == i.CodMateriaPrima
+                                               && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                select new EntradaEstoqueVO()
                                                {
                                                    NotaFiscal = pe.NotaFiscal
@@ -842,9 +1024,12 @@ namespace Nissi.Repositorio
                                                        {
                                                            Lote = ie.Lote
                                                        }).FirstOrDefault().Lote : 0
+<<<<<<< HEAD
 =======
                                                 }).FirstOrDefault().DataEntrada
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+>>>>>>> local
 
                              }).ToList();
 
@@ -866,16 +1051,24 @@ namespace Nissi.Repositorio
                              select new ListItemPedidoCompraVO()
                              {
                                  OrdemCompra = p.CodPedidoCompra,
+                                 CodItemPedidoCompra = i.CodItemPedidoCompra,
+                                 IdStatus = i.idStatus,
                                  DataEmissao = p.DataEmissao,
                                  CodPessoa = p.CodFornecedor,
                                  DataPrevista = p.DataPrazoEntrega,
-                                 Fornecedor = f.RazaoSocial,
+                                 Fornecedor = f.NomeFantasia,
                                  Tipo = p.Tipo ?? 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
                                  CodBitola = i.CodBitola,
                                  CodMateriaPrima = i.CodMateriaPrima,
 =======
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+                                 CodBitola = i.CodBitola,
+                                 CodMateriaPrima = i.CodMateriaPrima,
+                                 CodUnidade = i.CodUnidade,
+>>>>>>> local
                                  MateriaPrimaVo = (p.Tipo == 0
                                                      ? (from m in _repositorioDataContext.MateriaPrimas
                                                         join n in _repositorioDataContext.Normas
@@ -926,14 +1119,28 @@ namespace Nissi.Repositorio
                                                                                        && ie.CodMateriaPrima == i.CodMateriaPrima
                                                                                        select ie.Qtd).Sum(),
                                  DataEntrega = (from pe in _repositorioDataContext.EntradaEstoques
+                                                join ie in _repositorioDataContext.ItemEntradaEstoques
+                                                on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
                                                 where pe.CodPedidoCompra == p.CodPedidoCompra
+                                                && ie.CodMateriaPrima == i.CodMateriaPrima
+                                                && ie.CodBitola == i.CodBitola
                                                 select new EntradaEstoqueVO()
                                                 {
                                                     DataEntrada = pe.DataEntrada
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 }).FirstOrDefault().DataEntrada,
                                  NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
                                                where pe.CodPedidoCompra == p.CodPedidoCompra
+=======
+                                                }).FirstOrDefault().DataEntrada,
+                                 NotaFiscal = (from pe in _repositorioDataContext.EntradaEstoques
+                                               join ie in _repositorioDataContext.ItemEntradaEstoques
+                                               on pe.CodEntradaEstoque equals (ie.CodEntradaEstoque)
+                                               where pe.CodPedidoCompra == p.CodPedidoCompra
+                                               && ie.CodMateriaPrima == i.CodMateriaPrima
+                                               && ie.CodBitola == i.CodBitola
+>>>>>>> local
                                                select new EntradaEstoqueVO()
                                                {
                                                    NotaFiscal = pe.NotaFiscal
@@ -948,9 +1155,12 @@ namespace Nissi.Repositorio
                                                        {
                                                            Lote = ie.Lote
                                                        }).FirstOrDefault().Lote : 0
+<<<<<<< HEAD
 =======
                                                 }).FirstOrDefault().DataEntrada
 >>>>>>> 0e7e752c875b412e16e75c56679cd0618d11db3e
+=======
+>>>>>>> local
 
                              }).ToList();
 
@@ -1079,6 +1289,23 @@ namespace Nissi.Repositorio
 
         }
         #endregion
+        #region Métod para finalizar o item
+        public void FinalizarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            new ItemPedidoCompraRepositorio().FinalizarItem(codItemPedidoCompra, codUsuario);
+        }
 
+        #endregion
+
+        public void CancelarItem(int codItemPedidoCompra, int codUsuario)
+        {
+            new ItemPedidoCompraRepositorio().CancelarItem(codItemPedidoCompra, codUsuario);
+        }
+        #region Método que desfaz a ação executada
+        public void Desfazer(int codItemPedidoCompra, int codUsuario)
+        {
+            new ItemPedidoCompraRepositorio().Desfazer(codItemPedidoCompra, codUsuario);
+        }
+        #endregion
     }
 }
